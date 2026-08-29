@@ -1,0 +1,77 @@
+site_name: Server Ops Mastery Path
+site_description: A structured, module-wise Linux server administration and DevOps training program from entry level to master level.
+site_url: https://sigilipelli.github.io/server-ops-mastery-path/
+repo_url: https://github.com/SIGILIPELLI/server-ops-mastery-path
+repo_name: server-ops-mastery-path
+
+theme:
+  name: material
+  custom_dir: docs/overrides
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - content.code.copy
+    - content.code.annotate
+    - search.suggest
+    - search.highlight
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+
+extra_css:
+  - stylesheets/extra.css
+
+# --- auto-pruned stub levels (see AdSense low-value-content fix) ---
+exclude_docs: |
+  level-2/[0-9]*
+  level-3/[0-9]*
+  level-4/[0-9]*
+# --- end auto-pruned stub levels ---
+
+nav:
+  - Home: index.md
+  - Privacy Policy: privacy.md
+  - "Level 1 · Entry":
+      - Overview: level-1/index.md
+      - "01 · Server Basics & SSH Access": level-1/01-server-basics-ssh-access.md
+      - "02 · Initial Server Hardening Checklist": level-1/02-initial-hardening-checklist.md
+      - "03 · Package Management": level-1/03-package-management.md
+      - "04 · Process Management (systemd)": level-1/04-process-management-systemd.md
+      - "05 · Basic Networking Concepts": level-1/05-basic-networking-concepts.md
+      - "06 · Writing a Build/Deploy Script": level-1/06-build-deploy-script.md
+      - "07 · Environment Variables & Config Management": level-1/07-environment-variables-config.md
+      - "08 · Log Basics (journalctl, /var/log)": level-1/08-log-basics.md
+      - "09 · Cron Jobs & Scheduled Tasks": level-1/09-cron-scheduled-tasks.md
+      - "10 · Capstone — Server Bootstrap Script": level-1/10-capstone-bootstrap-script.md
+  - "Level 2 · Intermediate":
+      - Overview: level-2/index.md
+  - "Level 3 · Advanced":
+      - Overview: level-3/index.md
+  - "Level 4 · Master":
+      - Overview: level-4/index.md
