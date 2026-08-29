@@ -47,12 +47,6 @@ markdown_extensions:
 extra_css:
   - stylesheets/extra.css
 
-# --- auto-pruned stub levels (see AdSense low-value-content fix) ---
-exclude_docs: |
-  level-2/[0-9]*
-  level-3/[0-9]*
-  level-4/[0-9]*
-# --- end auto-pruned stub levels ---
 
 nav:
   - Home: index.md
@@ -75,3 +69,39 @@ nav:
       - Overview: level-3/index.md
   - "Level 4 · Master":
       - Overview: level-4/index.md
+  - "Level 2 · Intermediate":
+      - Overview: level-2/index.md
+      - "01 · Reverse Proxies (nginx basics)": level-2/01-reverse-proxies-nginx.md
+      - "02 · TLS/SSL Certificates (Let's Encrypt / certbot)": level-2/02-tls-ssl-certs.md
+      - "03 · Load Balancing Basics": level-2/03-load-balancing-basics.md
+      - "04 · Environment-Based Deployment (staging vs. prod)": level-2/04-environment-based-deployment.md
+      - "05 · Zero-Downtime Deploy Patterns": level-2/05-zero-downtime-deploy.md
+      - "06 · Secrets & Configuration Management": level-2/06-secrets-config-management.md
+      - "07 · CI/CD Pipeline Basics": level-2/07-cicd-pipeline-basics.md
+      - "08 · Basic Monitoring (uptime checks, resource metrics)": level-2/08-basic-monitoring.md
+      - "09 · Centralized Logging Basics": level-2/09-centralized-logging-basics.md
+      - "10 · Capstone — Blue-Green Deploy Pipeline": level-2/10-capstone-blue-green-deploy.md
+  - "Level 3 · Advanced":
+      - Overview: level-3/index.md
+      - "01 · High Availability Concepts (redundancy, failover, health checks)": level-3/01-ha-concepts.md
+      - "02 · DNS & Load Balancer HA Patterns": level-3/02-dns-lb-ha-patterns.md
+      - "03 · Backup & Disaster Recovery Strategy": level-3/03-backup-disaster-recovery.md
+      - "04 · Containerization Basics (Docker) as a Deployment Pattern": level-3/04-containerization-basics-docker.md
+      - "05 · Infrastructure as Code Overview": level-3/05-infrastructure-as-code-overview.md
+      - "06 · Configuration Drift & Idempotency": level-3/06-configuration-drift-idempotency.md
+      - "07 · Service Mesh & Internal Networking Concepts": level-3/07-service-mesh-internal-networking.md
+      - "08 · Chaos Engineering Basics": level-3/08-chaos-engineering-basics.md
+      - "09 · Observability at Scale (metrics, logs, traces)": level-3/09-observability-at-scale.md
+      - "10 · Capstone — Highly Available Web Service Design": level-3/10-capstone-ha-web-service-design.md
+  - "Level 4 · Master":
+      - Overview: level-4/index.md
+      - "01 · Multi-Region / Multi-AZ Architecture Concepts": level-4/01-multi-region-multi-az-concepts.md
+      - "02 · Capacity Planning": level-4/02-capacity-planning.md
+      - "03 · Incident Response & Runbooks": level-4/03-incident-response-runbooks.md
+      - "04 · Security Patching Strategy at Scale": level-4/04-security-patching-at-scale.md
+      - "05 · Choosing the Right HA Architecture for a Given SLA": level-4/05-choosing-ha-architecture-for-sla.md
+      - "06 · Cost-Aware Infrastructure Design": level-4/06-cost-aware-infrastructure-design.md
+      - "07 · Compliance & Audit Considerations for Ops": level-4/07-compliance-audit-considerations.md
+      - "08 · On-Call Culture & Escalation Design": level-4/08-oncall-culture-escalation-design.md
+      - "09 · Platform Engineering & Internal Developer Experience": level-4/09-platform-engineering-devex.md
+      - "10 · Capstone — Designing a Resilient Global Platform": level-4/10-capstone-resilient-global-platform.md
