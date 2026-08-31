@@ -1411,6 +1411,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Basic Monitoring (uptime checks, resource metrics)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1427,6 +1445,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#layer-1-an-external-uptime-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 1: an external uptime check
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layer-2-resource-metrics-on-the-box-itself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 2: resource metrics on the box itself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layer-3-watch-the-process-itself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 3: watch the process itself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-a-basic-alert-when-a-threshold-is-crossed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting up a basic alert when a threshold is crossed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#avoiding-alert-fatigue-from-the-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Avoiding alert fatigue from the start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-full-loop-one-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: full loop, one host
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2378,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#layer-1-an-external-uptime-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 1: an external uptime check
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layer-2-resource-metrics-on-the-box-itself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 2: resource metrics on the box itself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layer-3-watch-the-process-itself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layer 3: watch the process itself
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-a-basic-alert-when-a-threshold-is-crossed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting up a basic alert when a threshold is crossed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#avoiding-alert-fatigue-from-the-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Avoiding alert fatigue from the start
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-full-loop-one-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: full loop, one host
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2482,115 @@
 
 
 <h1 id="08-basic-monitoring-uptime-checks-resource-metrics">08 · Basic Monitoring (uptime checks, resource metrics)<a class="headerlink" href="#08-basic-monitoring-uptime-checks-resource-metrics" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 2 · Intermediate.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>You cannot fix what you don't know is broken. This module is the minimum
+viable monitoring setup: is the service up, and is the box running out of
+a critical resource — before either becomes a page from an angry user.</p>
+<h2 id="layer-1-an-external-uptime-check">Layer 1: an external uptime check<a class="headerlink" href="#layer-1-an-external-uptime-check" title="Permanent link">&para;</a></h2>
+<p>An uptime check must run <strong>outside</strong> the server it's checking — if the
+whole box is down, a monitor running on that same box can't tell you
+anything. A cheap, real setup: a free-tier third-party uptime service
+(UptimeRobot, Better Uptime, healthchecks.io) hitting your health endpoint
+every 1-5 minutes, or a tiny script on a <em>different</em> machine.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># from a separate monitoring host/cron machine</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>curl<span class="w"> </span>-sf<span class="w"> </span>-o<span class="w"> </span>/dev/null<span class="w"> </span>-w<span class="w"> </span><span class="s2">"%{http_code} %{time_total}s\n"</span><span class="w"> </span>https://example.com/health
+</code></pre></div>
+<p>A good <code>/health</code> endpoint checks that the app can actually do its job, not
+just that the process is alive:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Flask example</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">"/health"</span><span class="p">)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">health</span><span class="p">():</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT 1"</span><span class="p">)</span>   <span class="c1"># confirm DB connectivity, not just "process exists"</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        <span class="k">return</span> <span class="p">{</span><span class="s2">"status"</span><span class="p">:</span> <span class="s2">"unhealthy"</span><span class="p">},</span> <span class="mi">503</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="k">return</span> <span class="p">{</span><span class="s2">"status"</span><span class="p">:</span> <span class="s2">"healthy"</span><span class="p">},</span> <span class="mi">200</span>
+</code></pre></div>
+<p>A process that's running but can't reach its database should report
+unhealthy — "the process exists" and "the service works" are different
+facts, and only the second one matters to users.</p>
+<h2 id="layer-2-resource-metrics-on-the-box-itself">Layer 2: resource metrics on the box itself<a class="headerlink" href="#layer-2-resource-metrics-on-the-box-itself" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># CPU, memory, disk — the classic three to watch</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>top<span class="w"> </span>-bn1<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-15
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>free<span class="w"> </span>-h
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>df<span class="w"> </span>-h
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># disk fill-rate is the one that silently kills servers (full disk = logs stop, DB writes fail)</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>df<span class="w"> </span>-h<span class="w"> </span>--output<span class="o">=</span>pcent,target<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-n<span class="w"> </span>+2
+</code></pre></div>
+<p>A simple cron-based disk-space alert with no extra tooling:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="ch">#!/usr/bin/env bash</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># /usr/local/bin/check-disk.sh</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nv">THRESHOLD</span><span class="o">=</span><span class="m">85</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nv">usage</span><span class="o">=</span><span class="k">$(</span>df<span class="w"> </span>/<span class="w"> </span>--output<span class="o">=</span>pcent<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-1<span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span>-dc<span class="w"> </span><span class="s1">'0-9'</span><span class="k">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$usage</span><span class="s2">"</span><span class="w"> </span>-ge<span class="w"> </span><span class="s2">"</span><span class="nv">$THRESHOLD</span><span class="s2">"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Disk usage at </span><span class="si">${</span><span class="nv">usage</span><span class="si">}</span><span class="s2">% on </span><span class="k">$(</span>hostname<span class="k">)</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>mail<span class="w"> </span>-s<span class="w"> </span><span class="s2">"DISK ALERT </span><span class="k">$(</span>hostname<span class="k">)</span><span class="s2">"</span><span class="w"> </span>ops@example.com
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="k">fi</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>*/15 * * * * /usr/local/bin/check-disk.sh
+</code></pre></div>
+<p>This is deliberately low-tech — a <code>mail</code> command and a cron job — because
+it works with zero new infrastructure, and "does the alert actually fire"
+is easy to test end to end (module 9 covers a real metrics stack when you
+outgrow this).</p>
+<h2 id="layer-3-watch-the-process-itself">Layer 3: watch the process itself<a class="headerlink" href="#layer-3-watch-the-process-itself" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>systemctl<span class="w"> </span>status<span class="w"> </span>myapp<span class="w"> </span>--no-pager<span class="w">    </span><span class="c1"># is systemd's view of the service healthy?</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>journalctl<span class="w"> </span>-u<span class="w"> </span>myapp<span class="w"> </span>-p<span class="w"> </span>err<span class="w"> </span>--since<span class="w"> </span><span class="s2">"1 hour ago"</span><span class="w">   </span><span class="c1"># any errors logged recently?</span>
+</code></pre></div>
+<p>Pair systemd's own <code>Restart=on-failure</code> (module 1, level 1) with an
+alert-on-restart check, since a service that keeps crash-looping is
+"technically up" between crashes but clearly unhealthy:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>systemctl<span class="w"> </span>show<span class="w"> </span>myapp<span class="w"> </span>-p<span class="w"> </span>NRestarts<span class="w">    </span><span class="c1"># count of restarts since last reset — a rising number is a red flag</span>
+</code></pre></div>
+<h2 id="setting-up-a-basic-alert-when-a-threshold-is-crossed">Setting up a basic alert when a threshold is crossed<a class="headerlink" href="#setting-up-a-basic-alert-when-a-threshold-is-crossed" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="ch">#!/usr/bin/env bash</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># /usr/local/bin/check-health.sh — run from cron every minute on a SEPARATE monitoring host</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nv">URL</span><span class="o">=</span><span class="s2">"https://example.com/health"</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="nv">code</span><span class="o">=</span><span class="k">$(</span>curl<span class="w"> </span>-sf<span class="w"> </span>-o<span class="w"> </span>/dev/null<span class="w"> </span>-w<span class="w"> </span><span class="s2">"%{http_code}"</span><span class="w"> </span>--max-time<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="s2">"</span><span class="nv">$URL</span><span class="s2">"</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"000"</span><span class="k">)</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$code</span><span class="s2">"</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">"200"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="k">$(</span>date<span class="w"> </span>-Iseconds<span class="k">)</span><span class="s2"> health check returned </span><span class="nv">$code</span><span class="s2">"</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/var/log/health-alerts.log
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Content-type: application/json'</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span>--data<span class="w"> </span><span class="s2">"{\"text\":\"ALERT: </span><span class="nv">$URL</span><span class="s2"> returned </span><span class="nv">$code</span><span class="s2">\"}"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="s2">"</span><span class="nv">$SLACK_WEBHOOK_URL</span><span class="s2">"</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="k">fi</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>* * * * * SLACK_WEBHOOK_URL=https://hooks.slack.com/services/xxx /usr/local/bin/check-health.sh
+</code></pre></div>
+<p>This one script covers the two things that matter most at this level:
+detect the failure, and get a human notified somewhere they'll actually see
+it (a log file alone is not an alert — nobody's <code>tail -f</code>ing it at 2am).</p>
+<h2 id="avoiding-alert-fatigue-from-the-start">Avoiding alert fatigue from the start<a class="headerlink" href="#avoiding-alert-fatigue-from-the-start" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Alert on <strong>symptoms users feel</strong> (health check failing, high error rate,
+  disk full) not every possible internal metric — a flood of low-value
+  alerts trains people to ignore all of them, including the real ones.</li>
+<li>Require a threshold to be crossed for a sustained period (e.g. "health
+  check failed 3 times in a row") rather than firing on a single blip,
+  which is often just a transient network hiccup.</li>
+</ul>
+<h2 id="worked-example-full-loop-one-host">Worked example: full loop, one host<a class="headerlink" href="#worked-example-full-loop-one-host" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># on the app host — health endpoint already returns 200/503</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/usr/local/bin
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>sudo<span class="w"> </span>tee<span class="w"> </span>/usr/local/bin/check-health.sh<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="s">#!/usr/bin/env bash</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="s">code=$(curl -sf -o /dev/null -w "%{http_code}" --max-time 5 http://127.0.0.1:3000/health || echo "000")</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="s">[ "$code" != "200" ] &amp;&amp; logger -t health-check "ALERT: health check returned $code"</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="s">EOF</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>sudo<span class="w"> </span>chmod<span class="w"> </span>+x<span class="w"> </span>/usr/local/bin/check-health.sh
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="o">(</span>crontab<span class="w"> </span>-l<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="p">;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"* * * * * /usr/local/bin/check-health.sh"</span><span class="o">)</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>crontab<span class="w"> </span>-
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="c1"># simulate failure by stopping the app, then check the log</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>myapp
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>sleep<span class="w"> </span><span class="m">65</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>journalctl<span class="w"> </span>-t<span class="w"> </span>health-check<span class="w"> </span>--since<span class="w"> </span><span class="s2">"2 min ago"</span>
+</code></pre></div>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Write a <code>/health</code> endpoint for a toy app that fails (503) if a
+   simulated dependency (e.g. a flag file <code>/tmp/db-down</code>) exists.</li>
+<li>Write a cron-driven bash script that curls it every minute and logs a
+   line via <code>logger</code> on failure.</li>
+<li>Trigger the failure condition, confirm the alert fires within a minute
+   via <code>journalctl</code>, then clear it and confirm alerting stops.</li>
+</ol>
 
 
 

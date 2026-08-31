@@ -2131,6 +2131,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Compliance & Audit Considerations for Ops
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2147,6 +2165,91 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#compliance-is-mostly-prove-you-do-what-you-already-claim-to-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compliance is mostly "prove you do what you already claim to do"
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#least-privilege-access-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Least-privilege access control
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audit-logging-who-did-what-when-immutably" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audit logging: who did what, when, immutably
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence-collection-build-it-into-the-pipeline-dont-scramble-at-audit-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evidence collection: build it into the pipeline, don't scramble at audit time
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-classification-and-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data classification and handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2367,80 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#compliance-is-mostly-prove-you-do-what-you-already-claim-to-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compliance is mostly "prove you do what you already claim to do"
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#least-privilege-access-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Least-privilege access control
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audit-logging-who-did-what-when-immutably" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audit logging: who did what, when, immutably
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidence-collection-build-it-into-the-pipeline-dont-scramble-at-audit-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evidence collection: build it into the pipeline, don't scramble at audit time
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-classification-and-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data classification and handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2460,201 @@
 
 
 <h1 id="07-compliance-audit-considerations-for-ops">07 · Compliance &amp; Audit Considerations for Ops<a class="headerlink" href="#07-compliance-audit-considerations-for-ops" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 4 · Master.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Everything built so far — IaC, backups, patching, incident response — turns
+out to also be most of what auditors ask for when a system needs to meet a
+compliance framework (SOC 2, ISO 27001, PCI-DSS, HIPAA, or an internal
+security review). This module reframes those existing practices through a
+compliance/audit lens, and covers the parts that are genuinely new: access
+control, audit logging, and evidence collection.</p>
+<h2 id="compliance-is-mostly-prove-you-do-what-you-already-claim-to-do">Compliance is mostly "prove you do what you already claim to do"<a class="headerlink" href="#compliance-is-mostly-prove-you-do-what-you-already-claim-to-do" title="Permanent link">&para;</a></h2>
+<p>The biggest misconception about compliance work: it's not usually about
+adopting brand-new practices, it's about <strong>evidencing</strong> practices that
+should already exist for good operational reasons. Most frameworks map
+cleanly onto earlier modules:</p>
+<table>
+<thead>
+<tr>
+<th>Control area</th>
+<th>Framework asks (paraphrased)</th>
+<th>Where this is already covered</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Change management</td>
+<td>Changes are reviewed and tracked</td>
+<td>IaC + PR review (Level 3 module 05)</td>
+</tr>
+<tr>
+<td>Backup &amp; recovery</td>
+<td>Backups exist, are tested, are recoverable within a stated time</td>
+<td>Level 3 module 03</td>
+</tr>
+<tr>
+<td>Access control</td>
+<td>Access is least-privilege, reviewed, and revocable</td>
+<td>This module, below</td>
+</tr>
+<tr>
+<td>Vulnerability management</td>
+<td>Known vulnerabilities are tracked and remediated on a schedule</td>
+<td>Level 4 module 04</td>
+</tr>
+<tr>
+<td>Incident response</td>
+<td>A documented process exists and incidents are logged</td>
+<td>Level 4 module 03</td>
+</tr>
+<tr>
+<td>Monitoring</td>
+<td>Systems are monitored, and alerts reach a responsible party</td>
+<td>Level 3 module 09</td>
+</tr>
+<tr>
+<td>Audit logging</td>
+<td>Who did what, when, is recorded and tamper-resistant</td>
+<td>This module, below</td>
+</tr>
+</tbody>
+</table>
+<p>If a team already runs the earlier modules' practices well, most of a
+compliance audit becomes "collect the evidence that's already being
+generated," rather than building new capability under deadline pressure.</p>
+<h2 id="least-privilege-access-control">Least-privilege access control<a class="headerlink" href="#least-privilege-access-control" title="Permanent link">&para;</a></h2>
+<p><strong>Principle of least privilege</strong>: every identity (human or service) gets
+only the permissions it needs to do its job, no more, and access is
+reviewed and revoked when no longer needed.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Terraform IAM policy: scoped to exactly what the deploy role needs,</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># not a blanket AdministratorAccess grant</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kr">resource</span><span class="w"> </span><span class="nc">"aws_iam_policy"</span><span class="w"> </span><span class="nv">"deploy_role_policy"</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"deploy-role-policy"</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="na">policy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">jsonencode</span><span class="p">({</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="na">Version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"2012-10-17"</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="na">Statement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[{</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">      </span><span class="na">Effect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Allow"</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">      </span><span class="na">Action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">        </span><span class="s2">"ecs:UpdateService"</span><span class="p">,</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">        </span><span class="s2">"ecs:DescribeServices"</span><span class="p">,</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">        </span><span class="s2">"ecr:GetDownloadUrlForLayer"</span><span class="p">,</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">        </span><span class="s2">"ecr:BatchGetImage"</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">      </span><span class="p">]</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">      </span><span class="na">Resource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"arn:aws:ecs:*:123456789012:service/production/orders"</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="p">}]</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">  </span><span class="p">})</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Kubernetes RBAC: an on-call engineer can read logs/describe pods,</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># but cannot delete resources or read secrets, in production</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rbac.authorization.k8s.io/v1</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Role</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nt">metadata</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> namespace</span><span class="p">:</span><span class="w"> </span><span class="nv">production</span><span class="p p-Indicator">,</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="nv">oncall-readonly</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nt">rules</span><span class="p">:</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">apiGroups</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">""</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="nt">resources</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"pods"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"pods/log"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"events"</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="nt">verbs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"get"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"list"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"watch"</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">  </span><span class="c1"># deliberately no "secrets" resource, no "delete"/"create"/"update" verbs</span>
+</code></pre></div>
+<p><strong>Access reviews</strong> — a recurring (usually quarterly) process where access
+grants are checked against "does this person/service still need this,"
+and revoked if not:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># quarterly access review: list everyone with production database access,</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># cross-reference against current team roster and role</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>psql<span class="w"> </span>-c<span class="w"> </span><span class="s2">"SELECT rolname FROM pg_roles WHERE rolcanlogin AND rolname LIKE 'prod_%';"</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># → manually or via script, confirm each against HR/team data; revoke stale grants</span>
+</code></pre></div>
+<p>Access that was correctly granted (an engineer needed prod DB access for a
+migration) becomes a compliance gap the moment it's no longer needed and
+nobody revokes it — this is exactly the kind of drift Level 3 module 06
+covers, applied to permissions instead of infrastructure config.</p>
+<h2 id="audit-logging-who-did-what-when-immutably">Audit logging: who did what, when, immutably<a class="headerlink" href="#audit-logging-who-did-what-when-immutably" title="Permanent link">&para;</a></h2>
+<p>An audit log records security-relevant actions — logins, permission
+changes, data access, infrastructure changes — in a way that's tamper-
+resistant (a compromised account, or even a malicious insider, shouldn't be
+able to quietly edit their own trail).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># CloudTrail (AWS): logs every API call, shipped to a separate account's</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># S3 bucket with write-once semantics so the source account can't delete it</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>aws<span class="w"> </span>cloudtrail<span class="w"> </span>create-trail<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span>--name<span class="w"> </span>org-audit-trail<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span>--s3-bucket-name<span class="w"> </span>company-audit-logs-locked-account<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span>--is-multi-region-trail<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span>--enable-log-file-validation
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">-- Database audit logging: who read/modified sensitive tables, not just</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1">-- application-level logs (which a compromised app can't be trusted to log honestly)</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1">-- (Postgres pgaudit extension)</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">CREATE</span><span class="w"> </span><span class="n">EXTENSION</span><span class="w"> </span><span class="n">pgaudit</span><span class="p">;</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">SYSTEM</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">pgaudit</span><span class="p">.</span><span class="n">log</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'read, write, role'</span><span class="p">;</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">SYSTEM</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">pgaudit</span><span class="p">.</span><span class="n">log_relation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">on</span><span class="p">;</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1">-- then filter to sensitive tables via pgaudit.role settings</span>
+</code></pre></div>
+<p>The <strong>separate account/bucket with write-once/immutable storage</strong> detail
+matters: audit logs stored in the same account/system they're auditing can
+be altered or deleted by whoever compromises that system, defeating the
+purpose. Shipping them to an isolated, restricted-access destination (and
+enabling log file integrity validation) is what makes the trail trustworthy
+as <em>evidence</em>, not just a debugging convenience.</p>
+<h2 id="evidence-collection-build-it-into-the-pipeline-dont-scramble-at-audit-time">Evidence collection: build it into the pipeline, don't scramble at audit time<a class="headerlink" href="#evidence-collection-build-it-into-the-pipeline-dont-scramble-at-audit-time" title="Permanent link">&para;</a></h2>
+<p>The single highest-leverage compliance habit: generate audit evidence as a
+byproduct of normal operations, continuously, rather than manually
+assembling it under deadline when an auditor asks.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># CI: every production deploy automatically produces an evidence artifact —</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># who approved it, what changed, when, linked to the PR</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">record deploy evidence</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="no">cat &lt;&lt;EOF &gt;&gt; deploy-evidence.log</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="no">timestamp: $(date -Iseconds)</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="no">deployed_by: ${{ github.actor }}</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="no">approved_by: $(gh pr view ${{ github.event.pull_request.number }} --json reviews -q '.reviews[0].author.login')</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="no">commit: ${{ github.sha }}</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="no">service: orders</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span><span class="no">EOF</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="no">aws s3 cp deploy-evidence.log s3://company-audit-logs/deploys/$(date +%s).log</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># quarterly automated evidence pull, instead of manual screenshots the week of the audit</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>./scripts/collect-evidence.sh<span class="w"> </span>--quarter<span class="w"> </span><span class="m">2026</span>-Q3
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1"># → pulls: backup test results (Level 3 module 03), patch compliance %</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1">#   (Level 4 module 04), access review sign-offs, incident postmortems</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1">#   (Level 4 module 03), all into one dated evidence package</span>
+</code></pre></div>
+<p>An organization that can run <code>collect-evidence.sh</code> and produce a complete,
+already-true evidence package at any time is in a fundamentally different
+(and far less stressful) position than one that starts building evidence
+from scratch when the auditor's request lands.</p>
+<h2 id="data-classification-and-handling">Data classification and handling<a class="headerlink" href="#data-classification-and-handling" title="Permanent link">&para;</a></h2>
+<p>Not all data needs the same controls — classify it, and apply controls
+proportional to sensitivity:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Public:        marketing content — no special controls
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Internal:      internal docs, non-sensitive logs — access limited to employees
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>Confidential:  customer PII, financial data — encryption at rest + in
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>               transit, access logged (pgaudit above), least-privilege
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>Restricted:    payment card data (PCI scope), health records (HIPAA) —
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>               additional controls per the specific framework (e.g. PCI's
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>               network segmentation requirements, tokenization instead of
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>               storing raw card numbers at all where possible)
+</code></pre></div>
+<p>Getting this classification wrong in the "under-classify" direction
+(treating confidential data as merely internal) is the more common and more
+dangerous mistake — it means weaker controls are applied to data that
+needed stronger ones, discovered only during an incident or an audit
+finding.</p>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Pick one compliance framework relevant to a system you know (or SOC 2
+   as a generic default) and map three of its control areas to practices
+   from earlier modules, identifying what evidence each practice already
+   produces (or would need to start producing).</li>
+<li>Write an IAM policy or RBAC role scoped to the minimum permissions a
+   specific role (on-call engineer, CI deploy pipeline) actually needs, and
+   list what a broader "just give them admin" grant would have exposed
+   unnecessarily.</li>
+<li>Design an audit logging setup for one sensitive action in your system
+   (e.g. reading a customer PII table, or changing a production
+   permission) — specify what's logged, where it's stored, and why that
+   storage location is resistant to tampering by whoever's being audited.</li>
+<li>Write a <code>collect-evidence.sh</code> outline (pseudocode is fine) that would
+   assemble, on demand, evidence for backup testing, patch compliance, and
+   access reviews from the practices in earlier modules.</li>
+</ol>
 
 
 

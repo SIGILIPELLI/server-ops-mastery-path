@@ -1355,6 +1355,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Secrets & Configuration Management
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1371,6 +1389,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rule-1-secrets-never-go-in-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rule 1: secrets never go in git
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rule-2-separate-config-from-secret-operationally" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rule 2: separate "config" from "secret" operationally
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rotating-a-leaked-or-routinely-rotated-secret" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rotating a leaked or routinely-rotated secret
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-a-dedicated-secrets-manager-when-file-based-isnt-enough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using a dedicated secrets manager (when file-based isn't enough)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auditing-whats-currently-exposed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auditing what's currently exposed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-locking-down-a-secrets-file-end-to-end" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: locking down a secrets file end to end
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2378,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rule-1-secrets-never-go-in-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rule 1: secrets never go in git
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rule-2-separate-config-from-secret-operationally" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rule 2: separate "config" from "secret" operationally
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rotating-a-leaked-or-routinely-rotated-secret" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rotating a leaked or routinely-rotated secret
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-a-dedicated-secrets-manager-when-file-based-isnt-enough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using a dedicated secrets manager (when file-based isn't enough)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auditing-whats-currently-exposed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auditing what's currently exposed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-locking-down-a-secrets-file-end-to-end" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: locking down a secrets file end to end
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2482,109 @@
 
 
 <h1 id="06-secrets-configuration-management">06 · Secrets &amp; Configuration Management<a class="headerlink" href="#06-secrets-configuration-management" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 2 · Intermediate.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Level 1 covered environment variables for basic config. This module is
+about the harder half: secrets — database passwords, API keys, TLS private
+keys — which need everything regular config needs (per-environment values,
+easy rotation) plus protection from being read by the wrong person or
+committed to git by accident.</p>
+<h2 id="rule-1-secrets-never-go-in-git">Rule 1: secrets never go in git<a class="headerlink" href="#rule-1-secrets-never-go-in-git" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># .gitignore</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>*.env
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>secrets/
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>*.pem
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>*.key
+</code></pre></div>
+<p>If a secret was ever committed, rotating it is mandatory — removing the
+file in a later commit does <strong>not</strong> remove it from git history. Anyone
+with clone access can still retrieve it from an old commit:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>log<span class="w"> </span>--all<span class="w"> </span>--full-history<span class="w"> </span>--<span class="w"> </span>secrets.env<span class="w">    </span><span class="c1"># find when it was added</span>
+</code></pre></div>
+<p>Rewriting history (<code>git filter-repo</code>, BFG) to strip it out is a real
+option but treat it as cleanup <em>after</em> rotating the leaked secret — the
+history rewrite alone doesn't un-leak something that may already be cloned
+elsewhere or cached by a CI system.</p>
+<h2 id="rule-2-separate-config-from-secret-operationally">Rule 2: separate "config" from "secret" operationally<a class="headerlink" href="#rule-2-separate-config-from-secret-operationally" title="Permanent link">&para;</a></h2>
+<p>Non-secret config (log level, feature flags, timeouts) can reasonably live
+in a checked-in file per environment. Secrets need a different delivery
+path with tighter access control. A simple, effective baseline with no
+extra infrastructure:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/etc/myapp
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>touch<span class="w"> </span>/etc/myapp/secrets.env
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>sudo<span class="w"> </span>chown<span class="w"> </span>deploy:deploy<span class="w"> </span>/etc/myapp/secrets.env
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>/etc/myapp/secrets.env<span class="w">    </span><span class="c1"># only the deploy user can read it, not group/other</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># /etc/myapp/secrets.env — never in git, deployed out-of-band (scp over SSH, config management)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="na">DATABASE_PASSWORD</span><span class="o">=</span><span class="s">s3cr3t-value</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="na">STRIPE_API_KEY</span><span class="o">=</span><span class="s">sk_live_xxx</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">[Service]</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="na">User</span><span class="o">=</span><span class="s">deploy</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="na">EnvironmentFile</span><span class="o">=</span><span class="s">/etc/myapp/config.env</span><span class="w">      </span><span class="c1"># checked into git, non-secret</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="na">EnvironmentFile</span><span class="o">=</span><span class="s">/etc/myapp/secrets.env</span><span class="w">     </span><span class="c1"># not in git, mode 600, deploy-owned</span>
+</code></pre></div>
+<p><code>chmod 600</code> plus running the service as the same non-root user that owns
+the file means even other unprivileged users on the box can't read it —
+and if the app itself is compromised, the blast radius is "this app's
+secrets," not "everything on the machine" (assuming other apps run as
+different users with their own 600 files).</p>
+<h2 id="rotating-a-leaked-or-routinely-rotated-secret">Rotating a leaked or routinely-rotated secret<a class="headerlink" href="#rotating-a-leaked-or-routinely-rotated-secret" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># 1. Generate/obtain the new secret from the provider (DB, Stripe, etc.)</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># 2. Update the secrets file</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>sudo<span class="w"> </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">'s/^DATABASE_PASSWORD=.*/DATABASE_PASSWORD=new-value-here/'</span><span class="w"> </span>/etc/myapp/secrets.env
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># 3. Restart the service to pick up the new value (env vars are read at process start)</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>myapp
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1"># 4. Confirm the app is healthy, THEN revoke/expire the old secret at the source</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>curl<span class="w"> </span>-sf<span class="w"> </span>http://127.0.0.1:3000/health
+</code></pre></div>
+<p>Order matters: update-and-restart-and-verify <em>before</em> revoking the old
+value at the source, so a mistake in step 2/3 doesn't lock you out of a
+now-broken app with no working credential to fall back to during rollback.</p>
+<h2 id="using-a-dedicated-secrets-manager-when-file-based-isnt-enough">Using a dedicated secrets manager (when file-based isn't enough)<a class="headerlink" href="#using-a-dedicated-secrets-manager-when-file-based-isnt-enough" title="Permanent link">&para;</a></h2>
+<p>File-based secrets (above) are a fine starting point for a small fleet, but
+don't scale to: auditing who accessed which secret when, automatic
+rotation, or dynamically-generated short-lived credentials. Once you need
+those, tools like <strong>HashiCorp Vault</strong> or a cloud provider's secret manager
+(AWS Secrets Manager, GCP Secret Manager) become worth the operational
+overhead. The pattern doesn't change conceptually — the app still gets
+secrets injected at startup or fetched at runtime — but the source of
+truth moves from a file on disk to an API call, gated by a short-lived
+auth token instead of filesystem permissions.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># conceptual shape of a Vault-backed fetch in a startup wrapper script</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">DATABASE_PASSWORD</span><span class="o">=</span><span class="k">$(</span>vault<span class="w"> </span>kv<span class="w"> </span>get<span class="w"> </span>-field<span class="o">=</span>password<span class="w"> </span>secret/myapp/database<span class="k">)</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nb">exec</span><span class="w"> </span>/opt/myapp/bin/server
+</code></pre></div>
+<h2 id="auditing-whats-currently-exposed">Auditing what's currently exposed<a class="headerlink" href="#auditing-whats-currently-exposed" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># check for accidentally-world-readable secret files across the system</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sudo<span class="w"> </span>find<span class="w"> </span>/etc<span class="w"> </span>/opt<span class="w"> </span>-name<span class="w"> </span><span class="s2">"*.env"</span><span class="w"> </span>-o<span class="w"> </span>-name<span class="w"> </span><span class="s2">"secrets*"</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-I<span class="o">{}</span><span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'ls -la {}'</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># check process environment isn't leaking secrets into logs</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>show<span class="w"> </span>myapp<span class="w"> </span>-p<span class="w"> </span>Environment<span class="w">    </span><span class="c1"># shows literal values — treat this output itself as sensitive</span>
+</code></pre></div>
+<p>Never <code>echo</code> or log full environment variables from application code —
+"debug logging" that includes <code>process.env</code> or <code>os.environ</code> is one of the
+most common accidental-leak vectors, especially once logs are shipped to a
+third-party aggregator (module 9).</p>
+<h2 id="worked-example-locking-down-a-secrets-file-end-to-end">Worked example: locking down a secrets file end to end<a class="headerlink" href="#worked-example-locking-down-a-secrets-file-end-to-end" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudo<span class="w"> </span>useradd<span class="w"> </span>-r<span class="w"> </span>-s<span class="w"> </span>/usr/sbin/nologin<span class="w"> </span>deploy<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/etc/myapp
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="nb">printf</span><span class="w"> </span><span class="s1">'DATABASE_PASSWORD=changeme123\n'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/myapp/secrets.env<span class="w"> </span>&gt;<span class="w"> </span>/dev/null
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>sudo<span class="w"> </span>chown<span class="w"> </span>deploy:deploy<span class="w"> </span>/etc/myapp/secrets.env
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>/etc/myapp/secrets.env
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>sudo<span class="w"> </span>-u<span class="w"> </span>deploy<span class="w"> </span>cat<span class="w"> </span>/etc/myapp/secrets.env<span class="w">    </span><span class="c1"># works — same user</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>sudo<span class="w"> </span>-u<span class="w"> </span>nobody<span class="w"> </span>cat<span class="w"> </span>/etc/myapp/secrets.env<span class="w">    </span><span class="c1"># Permission denied — confirms isolation</span>
+</code></pre></div>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Create a <code>secrets.env</code> file with mode <code>600</code> owned by a dedicated
+   non-root user, and confirm another unprivileged user on the same box
+   cannot read it.</li>
+<li>Wire it into a systemd unit via <code>EnvironmentFile=</code> alongside a separate,
+   git-tracked <code>config.env</code> for non-secret settings.</li>
+<li>Simulate a rotation: change the value, restart the service, confirm via
+   a health/debug endpoint that the new value is in effect, and only then
+   "revoke" the old one (e.g. rename it) to prove the app no longer needs
+   it.</li>
+</ol>
 
 
 

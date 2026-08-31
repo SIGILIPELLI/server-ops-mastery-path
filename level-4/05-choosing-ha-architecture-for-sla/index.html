@@ -2075,6 +2075,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Choosing the Right HA Architecture for a Given SLA
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2091,6 +2109,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#start-from-the-sla-not-the-technology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start from the SLA, not the technology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-error-budget-slos-give-you-permission-to-take-risks-on-purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The error budget: SLOs give you permission to take risks, on purpose
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mapping-sla-tiers-to-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mapping SLA tiers to architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-is-not-linear-its-roughly-exponential-per-nine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost is not linear — it's roughly exponential per nine
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-worked-decision-three-example-systems-three-different-answers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A worked decision: three example systems, three different answers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-decision-framework-to-apply" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A decision framework to apply
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2378,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#start-from-the-sla-not-the-technology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start from the SLA, not the technology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-error-budget-slos-give-you-permission-to-take-risks-on-purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The error budget: SLOs give you permission to take risks, on purpose
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mapping-sla-tiers-to-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mapping SLA tiers to architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-is-not-linear-its-roughly-exponential-per-nine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost is not linear — it's roughly exponential per nine
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-worked-decision-three-example-systems-three-different-answers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A worked decision: three example systems, three different answers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-decision-framework-to-apply" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A decision framework to apply
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2482,162 @@
 
 
 <h1 id="05-choosing-the-right-ha-architecture-for-a-given-sla">05 · Choosing the Right HA Architecture for a Given SLA<a class="headerlink" href="#05-choosing-the-right-ha-architecture-for-a-given-sla" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 4 · Master.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Levels 3 and 4 have built a full toolbox — multi-AZ, multi-region, warm
+standby, active-active, chaos testing. The skill this module teaches is
+choosing the <em>right subset</em> for a given system, because every one of these
+tools costs money and operational complexity, and over-engineering is a
+real failure mode, not just under-engineering.</p>
+<h2 id="start-from-the-sla-not-the-technology">Start from the SLA, not the technology<a class="headerlink" href="#start-from-the-sla-not-the-technology" title="Permanent link">&para;</a></h2>
+<p>An SLA (Service Level Agreement) — or, internally, an SLO (Service Level
+Objective) if there's no external contract — states the target in business
+terms: "99.9% monthly uptime," "checkout API responds in &lt;500ms p99." The
+architecture is derived <em>from</em> that target, not chosen first and justified
+after.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>SLA: 99.9% monthly uptime  →  ~43 min downtime/month budget (Level 3 module 01's table)
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>SLA: 99.99% monthly uptime →  ~4.4 min downtime/month budget
+</code></pre></div>
+<p>The gap between these two numbers is roughly 10x — and the infrastructure
+needed to close that gap is not 10% more expensive, it's usually a
+qualitatively different architecture (multi-AZ isn't enough for 99.99% if
+your provider's regional control plane itself has historically had more
+downtime than your budget allows).</p>
+<h2 id="the-error-budget-slos-give-you-permission-to-take-risks-on-purpose">The error budget: SLOs give you permission to take risks, on purpose<a class="headerlink" href="#the-error-budget-slos-give-you-permission-to-take-risks-on-purpose" title="Permanent link">&para;</a></h2>
+<p>An <strong>error budget</strong> is the flip side of an SLO: if the SLO is 99.9%
+uptime, the error budget is the 0.1% of time you're <em>allowed</em> to be down or
+degraded — and that budget is meant to be spent, not hoarded.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Monthly error budget at 99.9% SLO = 43.2 minutes
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Spent this month:
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  - 12 min: planned maintenance window (announced, low-traffic time)
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>  - 8 min: incident (payments provider outage, Level 4 module 03)
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  - Remaining budget: 23.2 minutes
+</code></pre></div>
+<p>The practical use of an error budget: if it's healthy (mostly unspent),
+the team can justify shipping faster and taking more risk (a bigger
+migration, a less-tested feature flag rollout) — if it's exhausted,
+that's the trigger to freeze risky changes and invest in reliability work
+instead, a decision rule instead of a political argument. This ties
+directly to whether more HA investment (multi-region, active-active) is
+even justified: an SLO that's comfortably met month after month with
+budget to spare doesn't need a more expensive architecture; a chronically
+overspent budget does.</p>
+<h2 id="mapping-sla-tiers-to-architecture">Mapping SLA tiers to architecture<a class="headerlink" href="#mapping-sla-tiers-to-architecture" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>SLA target</th>
+<th>Downtime/month</th>
+<th>Reasonable architecture</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>99%</td>
+<td>~7.3 hrs</td>
+<td>Single server + backups (Level 1-2)</td>
+<td>Fine for internal tools, low-traffic side projects</td>
+</tr>
+<tr>
+<td>99.9%</td>
+<td>~43 min</td>
+<td>Multi-AZ, redundant instances, LB health checks (Level 3 module 01)</td>
+<td>Typical "production web app" baseline</td>
+</tr>
+<tr>
+<td>99.95%</td>
+<td>~22 min</td>
+<td>Multi-AZ + automated failover (DB replica promotion, module 01)</td>
+<td>Needs tested runbooks (module 03), not just architecture</td>
+</tr>
+<tr>
+<td>99.99%</td>
+<td>~4.4 min</td>
+<td>Multi-region warm standby or active-active (Level 4 module 01)</td>
+<td>Needs automated (not manual) regional failover to hit the RTO</td>
+</tr>
+<tr>
+<td>99.999%</td>
+<td>~26 sec</td>
+<td>Active-active multi-region, no single dependency (including your DNS/cert provider) can exceed the budget alone</td>
+<td>Extremely expensive; justify hard before committing</td>
+</tr>
+</tbody>
+</table>
+<p>Two things to check before committing to a row: <strong>can any single
+dependency alone blow the budget</strong> (if your DNS provider's own historical
+uptime is 99.95%, your system cannot exceed 99.95% no matter what you build
+on top of it — audit every dependency's own SLA against your target), and
+<strong>is the target actually driven by a real business/contractual need</strong>, not
+aspiration.</p>
+<h2 id="cost-is-not-linear-its-roughly-exponential-per-nine">Cost is not linear — it's roughly exponential per nine<a class="headerlink" href="#cost-is-not-linear-its-roughly-exponential-per-nine" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>99.9%  → 99.95%:  ~2x downtime reduction, roughly +20-40% infra/ops cost
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>                   (add automated failover, more redundancy)
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>99.95% → 99.99%:  ~5x downtime reduction, roughly +80-150% infra/ops cost
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>                   (multi-region, likely doubling steady-state compute)
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>99.99% → 99.999%: ~10x downtime reduction, often 3x+ cost and a dedicated
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>                   reliability engineering investment
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>                   (active-active, chasing every dependency's own SLA)
+</code></pre></div>
+<p>These multipliers are illustrative, not universal constants — but the
+<em>shape</em> (accelerating cost per nine) holds broadly, and is the concrete
+argument against defaulting to the most resilient architecture available:
+each additional nine must be justified against what it actually buys the
+business, not assumed to be free because "more reliable is always better."</p>
+<h2 id="a-worked-decision-three-example-systems-three-different-answers">A worked decision: three example systems, three different answers<a class="headerlink" href="#a-worked-decision-three-example-systems-three-different-answers" title="Permanent link">&para;</a></h2>
+<p><strong>Internal admin dashboard, used by 20 employees during business hours.</strong>
+SLA: 99% is generous — a few hours of downtime a month is a minor
+inconvenience, not a business risk. Architecture: single instance with
+automated restarts (systemd, Level 1) and nightly backups. Multi-AZ would
+be pure overhead here.</p>
+<p><strong>Customer-facing checkout API, revenue-generating, global customers.</strong>
+SLA: 99.95%, justified by revenue-per-minute of downtime exceeding the cost
+of the redundancy. Architecture: multi-AZ (Level 3 capstone), automated DB
+failover, tested runbooks, chaos-tested. Multi-region active-active would
+be over-engineering unless the revenue-per-minute number is large enough to
+justify roughly doubling infra cost — model that number explicitly before
+deciding.</p>
+<p><strong>Payment processing core for a fintech, regulated, contractual 99.99%
+SLA with financial penalties for breach.</strong> Architecture: multi-region
+active-active, or at minimum automated warm standby with a proven
+sub-5-minute RTO (Level 4 module 01), because the SLA is contractual and
+the cost of the penalty plus reputational damage clearly exceeds the
+doubled infrastructure cost.</p>
+<p>The same engineering toolbox, three different correct answers — the
+determining factor is the actual cost of downtime for that specific system,
+not which architecture is "best practice" in the abstract.</p>
+<h2 id="a-decision-framework-to-apply">A decision framework to apply<a class="headerlink" href="#a-decision-framework-to-apply" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>1. State the SLA/SLO explicitly (get it from the business, don't invent it)
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>2. Compute the downtime budget it implies (Level 3 module 01's table)
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>3. List every dependency in the request path and its own historical/stated
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>   uptime — the system's ceiling is the worst of these, not your own design
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>4. Estimate the cost of downtime (revenue, reputation, contractual penalty)
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>   per minute/hour, even roughly — this is what justifies the next line
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>5. Pick the cheapest architecture tier (from the mapping table) that meets
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>   the budget from step 2, using the dependency ceiling from step 3 as a
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>   sanity check
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>6. Validate with chaos testing (Level 3 module 08) — does the chosen
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>   architecture actually deliver the numbers, measured, not assumed
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>7. Track the error budget over time and revisit the decision when it's
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>   chronically over or comfortably under spent
+</code></pre></div>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>For three systems you know (or invent three realistic ones spanning
+   internal tool / customer-facing / regulated), state an SLA for each and
+   compute its monthly downtime budget.</li>
+<li>For one of them, list every dependency in its request path (DNS
+   provider, cloud provider, third-party APIs) and find or estimate each
+   one's own uptime track record — identify whether any of them alone
+   would already blow the target SLA.</li>
+<li>Using the decision framework's steps 4-5, pick and justify an
+   architecture tier for that system, including an explicit (even if rough)
+   cost-of-downtime estimate that justifies the choice over a cheaper or
+   more expensive alternative.</li>
+<li>Define an error budget for that system's SLO and describe, in concrete
+   terms, what policy change would kick in if the budget were exhausted two
+   months in a row.</li>
+</ol>
 
 
 

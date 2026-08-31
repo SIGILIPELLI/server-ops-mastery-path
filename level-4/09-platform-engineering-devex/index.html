@@ -2187,6 +2187,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Platform Engineering & Internal Developer Experience
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2203,6 +2221,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-problem-platform-engineering-solves" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The problem platform engineering solves
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-golden-path-paved-not-mandated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The "golden path": paved, not mandated
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-service-with-guardrails" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-service, with guardrails
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#internal-developer-platform-idp-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Internal developer platform (IDP) components
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#measuring-developer-experience-not-just-infrastructure-health" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Measuring developer experience, not just infrastructure health
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#escape-hatches-golden-paths-must-not-become-golden-cages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Escape hatches: golden paths must not become golden cages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2378,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-problem-platform-engineering-solves" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The problem platform engineering solves
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-golden-path-paved-not-mandated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The "golden path": paved, not mandated
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-service-with-guardrails" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-service, with guardrails
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#internal-developer-platform-idp-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Internal developer platform (IDP) components
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#measuring-developer-experience-not-just-infrastructure-health" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Measuring developer experience, not just infrastructure health
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#escape-hatches-golden-paths-must-not-become-golden-cages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Escape hatches: golden paths must not become golden cages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2482,154 @@
 
 
 <h1 id="09-platform-engineering-internal-developer-experience">09 · Platform Engineering &amp; Internal Developer Experience<a class="headerlink" href="#09-platform-engineering-internal-developer-experience" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 4 · Master.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Everything in this program so far has been "how does an ops person build
+and operate reliable systems." Platform engineering flips the lens: how
+does an ops/platform team build <strong>tools and paved paths</strong> so that other
+engineers can safely do parts of that work themselves, without needing to
+re-learn every module in this program from scratch for every new service.</p>
+<h2 id="the-problem-platform-engineering-solves">The problem platform engineering solves<a class="headerlink" href="#the-problem-platform-engineering-solves" title="Permanent link">&para;</a></h2>
+<p>Without a platform, every team reinvents deployment, monitoring, and
+provisioning independently — inconsistently, with varying quality, and
+with the platform/ops team as a manual bottleneck for anything
+infrastructure-related ("file a ticket to get a new service deployed").
+This doesn't scale past a handful of teams, and it produces exactly the
+kind of configuration drift (Level 3 module 06) and inconsistent security
+posture (Level 4 module 04) that centralizing on a shared, well-built
+platform is meant to prevent.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Without a platform:                  With a platform:
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Team A hand-rolls their deploy      All teams use the same "golden path"
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  script and monitoring              template, get monitoring/logging/
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>Team B copies Team A's script,       alerting for free, and provisioning
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  slightly different, drifts         is self-service, not a ticket queue
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>Team C does something else
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  entirely, nobody remembers why
+</code></pre></div>
+<h2 id="the-golden-path-paved-not-mandated">The "golden path": paved, not mandated<a class="headerlink" href="#the-golden-path-paved-not-mandated" title="Permanent link">&para;</a></h2>
+<p>A golden path is a supported, pre-built way of doing something common
+(deploying a new service, provisioning a database, setting up CI) that's
+deliberately made the <em>easiest</em> option — teams choose it because it's less
+work than doing it themselves, not because they're forced to.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Example: a service scaffolding template (cookiecutter/Backstage software template)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># `platform new-service orders-v2` generates:</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="l l-Scalar l-Scalar-Plain">orders-v2/</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="l l-Scalar l-Scalar-Plain">├── Dockerfile</span><span class="w">                 </span><span class="c1"># already follows Level 3 module 4's best practices</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="l l-Scalar l-Scalar-Plain">├── .github/workflows/ci.yml</span><span class="w">   </span><span class="c1"># test, build, scan (Level 4 module 4's Trivy gate), deploy</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="l l-Scalar l-Scalar-Plain">├── terraform/</span><span class="w">                 </span><span class="c1"># provisions the service's infra, follows org tagging (module 6)</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="l l-Scalar l-Scalar-Plain">├── k8s/deployment.yaml</span><span class="w">        </span><span class="c1"># includes readiness/liveness probes (Level 3 module 1) by default</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="l l-Scalar l-Scalar-Plain">└── docs/README.md</span><span class="w">             </span><span class="c1"># runbook template pre-filled (Level 4 module 3)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$<span class="w"> </span>platform<span class="w"> </span>new-service<span class="w"> </span>orders-v2
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>✓<span class="w"> </span>Repository<span class="w"> </span>created:<span class="w"> </span>github.com/company/orders-v2
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>✓<span class="w"> </span>CI<span class="w"> </span>pipeline<span class="w"> </span>configured<span class="w"> </span><span class="o">(</span><span class="nb">test</span><span class="w"> </span>→<span class="w"> </span>build<span class="w"> </span>→<span class="w"> </span>scan<span class="w"> </span>→<span class="w"> </span>deploy<span class="o">)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>✓<span class="w"> </span>Terraform<span class="w"> </span>module<span class="w"> </span>scaffolded<span class="w"> </span><span class="o">(</span>VPC,<span class="w"> </span>LB,<span class="w"> </span>autoscaling<span class="w"> </span>group<span class="w"> </span>pre-wired<span class="o">)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>✓<span class="w"> </span>Dashboards<span class="w"> </span>created<span class="w"> </span><span class="o">(</span>RED<span class="w"> </span>metrics,<span class="w"> </span>pre-wired<span class="w"> </span>to<span class="w"> </span>your<span class="w"> </span>service<span class="w"> </span>name<span class="o">)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>✓<span class="w"> </span>On-call<span class="w"> </span>rotation<span class="w"> </span>template<span class="w"> </span>ready<span class="w"> </span>to<span class="w"> </span>configure<span class="w"> </span><span class="k">in</span><span class="w"> </span>PagerDuty
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>→<span class="w"> </span>Next:<span class="w"> </span>fill<span class="w"> </span><span class="k">in</span><span class="w"> </span>your<span class="w"> </span>business<span class="w"> </span>logic.<span class="w"> </span>Everything<span class="w"> </span><span class="k">else</span><span class="w"> </span>already<span class="w"> </span>works.
+</code></pre></div>
+<p>A team running <code>platform new-service</code> starts with correct health checks,
+CI/CD, monitoring, and security scanning already wired up — the golden
+path's value is that doing the <em>right</em> thing (from the perspective of every
+earlier module in this program) requires less effort than doing an ad-hoc
+thing, so it wins by default rather than by mandate.</p>
+<h2 id="self-service-with-guardrails">Self-service, with guardrails<a class="headerlink" href="#self-service-with-guardrails" title="Permanent link">&para;</a></h2>
+<p>The platform team's job shifts from "provision things on request" to
+"build the self-service tooling and the guardrails that make self-service
+safe":</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Terraform module exposed to application teams — they can provision their</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># own database, but only within the constraints the platform team has set</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kr">module</span><span class="w"> </span><span class="nv">"app_database"</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="na">source</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="s2">"git::https://github.com/company/platform-modules//postgres"</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="na">instance_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"db.t3.medium"</span><span class="c1">    # allowed values enforced by the module's variable validation</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="na">environment</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="s2">"production"</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1">  # backup retention, encryption, tagging, network placement are ALL fixed</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1">  # by the module itself — not exposed as options the calling team can get wrong</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kr">variable</span><span class="w"> </span><span class="nv">"instance_size"</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="na">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">string</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nb">validation</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="na">condition</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="nf">contains</span><span class="p">([</span><span class="s2">"db.t3.small", "db.t3.medium", "db.t3.large"</span><span class="p">],</span><span class="w"> </span><span class="nv">var.instance_size</span><span class="p">)</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="na">error_message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"instance_size must be one of the approved sizes."</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="p">}</span>
+</code></pre></div>
+<p>This is the platform-engineering expression of "least privilege meets
+convenience": an application team can provision a database in minutes
+without filing a ticket, but cannot accidentally provision it unencrypted,
+untagged, or outside the approved size range, because the module simply
+doesn't expose those failure modes as options.</p>
+<h2 id="internal-developer-platform-idp-components">Internal developer platform (IDP) components<a class="headerlink" href="#internal-developer-platform-idp-components" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>A typical IDP is built from several layers, each mapping to earlier modules:
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>1. Service catalog (e.g. Backstage) — a directory of every service, its
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>   owner, its docs, its on-call rotation, its dependencies
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>2. Golden-path templates — scaffolding, as above
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>3. Self-service infra provisioning — Terraform modules with guardrails, as above
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>4. CI/CD platform — shared pipeline definitions (Level 2 module 7) that
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>   every service inherits, rather than each team writing their own from scratch
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>5. Observability platform — a shared Prometheus/Grafana/tracing stack
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>   (Level 3 module 9) that every service is automatically onboarded onto
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>6. Golden signals dashboards, generated automatically per-service from
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>   the RED metrics every service exposes via the golden path template
+</code></pre></div>
+<h2 id="measuring-developer-experience-not-just-infrastructure-health">Measuring developer experience, not just infrastructure health<a class="headerlink" href="#measuring-developer-experience-not-just-infrastructure-health" title="Permanent link">&para;</a></h2>
+<p>A platform team's success metric isn't "the platform exists," it's
+"engineers on other teams can ship changes quickly and safely using it."
+Standard measures (the DORA metrics, widely used as a baseline):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Deployment frequency:      how often does a team ship to production
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Lead time for changes:     time from commit to running in production
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Change failure rate:       % of deploys that cause a rollback/incident
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>Time to restore service:   MTTR when something does go wrong (Level 4 module 3)
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a># Practical signal, gathered directly rather than assumed:
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Quarterly platform survey: "How easy was it to provision a new service /
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>                            deploy a change / debug a production issue
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>                            using the platform, on a 1-5 scale?"
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>Support ticket volume for platform-related requests, trending over time
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>  (rising volume for "how do I..." questions signals the golden path
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>   isn't self-explanatory enough, or documentation has gaps)
+</code></pre></div>
+<p>A platform that's technically excellent but that engineers route around
+(because it's confusing, slow to iterate with, or missing an escape hatch
+for legitimate edge cases) has failed its actual purpose — DevEx metrics
+and direct feedback are how you'd know that's happening before it shows up
+as teams quietly building their own parallel, undocumented infrastructure
+again.</p>
+<h2 id="escape-hatches-golden-paths-must-not-become-golden-cages">Escape hatches: golden paths must not become golden cages<a class="headerlink" href="#escape-hatches-golden-paths-must-not-become-golden-cages" title="Permanent link">&para;</a></h2>
+<p>A golden path that's mandatory with no way to deviate for a legitimate
+edge case pushes teams to either misuse the platform (bending a template
+to do something it wasn't designed for) or abandon it entirely. Good
+platform design includes an explicit, supported way to step outside the
+default when justified:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Golden path covers: 95% of services (standard web app shape)
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Escape hatch: a documented process to provision custom infrastructure
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>              directly via Terraform (not through the scaffolded module),
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>              with platform team review to ensure it still meets baseline
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>              requirements (tagging, security scanning, monitoring) even
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>              though it isn't using the template
+</code></pre></div>
+<p>The review step matters: an escape hatch that skips the golden path
+<em>and</em> skips the baseline requirements it was enforcing (tagging, security
+scanning) reintroduces exactly the inconsistency platform engineering was
+built to eliminate.</p>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Pick one recurring task engineers on your team do manually today
+   (provisioning a database, setting up CI for a new service, creating
+   monitoring dashboards) and design a golden-path template or self-service
+   module for it, listing what it fixes/enforces by default versus what it
+   leaves configurable.</li>
+<li>Add at least one guardrail (like the Terraform variable validation
+   above) that prevents a common misconfiguration, without requiring a
+   human reviewer to catch it manually every time.</li>
+<li>Define 3-4 developer-experience metrics you'd track for this platform
+   component (borrowing from DORA or the survey approach above), and state
+   what a "the platform is failing its users" result would look like for
+   each.</li>
+<li>Design an escape hatch for a legitimate case your golden path doesn't
+   cover, including what review or baseline requirements still apply even
+   when the golden path itself is bypassed.</li>
+</ol>
 
 
 

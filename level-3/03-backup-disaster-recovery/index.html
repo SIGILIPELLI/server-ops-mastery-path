@@ -1645,6 +1645,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Backup & Disaster Recovery Strategy
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1661,6 +1679,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rpo-and-rto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RPO and RTO
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-3-2-1-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The 3-2-1 rule
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backup-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backup types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-nightly-postgres-backup-with-retention-shipped-off-site" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: nightly Postgres backup with retention, shipped off-site
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-your-restores-the-rule-everyone-skips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test your restores — the rule everyone skips
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disaster-recovery-plan-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disaster recovery plan structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2378,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rpo-and-rto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RPO and RTO
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-3-2-1-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The 3-2-1 rule
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backup-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backup types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-nightly-postgres-backup-with-retention-shipped-off-site" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: nightly Postgres backup with retention, shipped off-site
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-your-restores-the-rule-everyone-skips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test your restores — the rule everyone skips
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disaster-recovery-plan-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disaster recovery plan structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2482,171 @@
 
 
 <h1 id="03-backup-disaster-recovery-strategy">03 · Backup &amp; Disaster Recovery Strategy<a class="headerlink" href="#03-backup-disaster-recovery-strategy" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 3 · Advanced.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>High availability (module 01) protects against a single component failing.
+It does not protect against data corruption, a bad deploy that silently
+deletes rows, ransomware, or an entire region disappearing — for those you
+need backups and a disaster recovery (DR) plan, which are a different
+discipline with different math.</p>
+<h2 id="rpo-and-rto">RPO and RTO<a class="headerlink" href="#rpo-and-rto" title="Permanent link">&para;</a></h2>
+<p>Two numbers drive every backup/DR decision:</p>
+<ul>
+<li><strong>RPO (Recovery Point Objective)</strong> — how much data you can afford to
+  lose, measured in time. "RPO = 1 hour" means: after a disaster, you may
+  lose up to the last hour of writes, but no more.</li>
+<li><strong>RTO (Recovery Time Objective)</strong> — how long you can afford to be down
+  while recovering. "RTO = 4 hours" means: from the moment disaster is
+  declared, the system must be back up within 4 hours.</li>
+</ul>
+<p>These are business decisions, not engineering ones — but engineering has to
+translate them into a concrete backup schedule and restore procedure, and
+prove the numbers are actually achievable (see "test your restores" below).</p>
+<table>
+<thead>
+<tr>
+<th>Target</th>
+<th>Implies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RPO = 24h</td>
+<td>Nightly backup is enough</td>
+</tr>
+<tr>
+<td>RPO = 15 min</td>
+<td>Continuous replication or frequent incremental backups + WAL/binlog shipping</td>
+</tr>
+<tr>
+<td>RTO = 4h</td>
+<td>Manual restore from backup onto fresh infrastructure is fine</td>
+</tr>
+<tr>
+<td>RTO = 5 min</td>
+<td>Needs a warm/hot standby already running, not "restore from backup"</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-3-2-1-rule">The 3-2-1 rule<a class="headerlink" href="#the-3-2-1-rule" title="Permanent link">&para;</a></h2>
+<p>A widely used baseline: keep <strong>3</strong> copies of data, on <strong>2</strong> different types
+of media/storage, with <strong>1</strong> copy off-site (a different physical location,
+ideally a different provider/region than production).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Copy 1: production database (the live data)
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Copy 2: nightly snapshot on the same cloud provider, different volume
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Copy 3: nightly dump shipped to a different region/provider's object storage
+</code></pre></div>
+<p>The point of "different media/location" is to survive failure modes that
+take out more than one copy at once — a bad disk, an accidental <code>rm -rf</code> on
+the wrong volume, a whole-region cloud outage, or a compromised admin
+account that has access to only one of the storage backends.</p>
+<h2 id="backup-types">Backup types<a class="headerlink" href="#backup-types" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Full backup</strong> — a complete copy every time. Simple to restore from (one
+  file), expensive in storage and time to produce.</li>
+<li><strong>Incremental backup</strong> — only what changed since the <em>last</em> backup (full
+  or incremental). Cheapest to produce, but restoring means replaying the
+  full backup plus every incremental since, in order — more moving parts,
+  more ways to have a broken chain.</li>
+<li><strong>Differential backup</strong> — everything changed since the last <em>full</em>
+  backup. Restoring needs only the last full + the last differential — a
+  middle ground between the other two.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Full pg_dump (logical backup, portable across postgres versions/OS)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>pg_dump<span class="w"> </span>-Fc<span class="w"> </span>-f<span class="w"> </span>/backups/app_full_2026-08-31.dump<span class="w"> </span>app_db
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Restore</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>pg_restore<span class="w"> </span>-d<span class="w"> </span>app_db_restored<span class="w"> </span>/backups/app_full_2026-08-31.dump
+</code></pre></div>
+<p>For databases specifically, <strong>point-in-time recovery (PITR)</strong> — continuous
+shipping of write-ahead logs (WAL in Postgres, binlogs in MySQL) alongside
+periodic full backups — is what gets you a low RPO (minutes, not a full
+day) without full backups running constantly.</p>
+<h2 id="worked-example-nightly-postgres-backup-with-retention-shipped-off-site">Worked example: nightly Postgres backup with retention, shipped off-site<a class="headerlink" href="#worked-example-nightly-postgres-backup-with-retention-shipped-off-site" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="ch">#!/usr/bin/env bash</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># /usr/local/bin/backup-db.sh — nightly full dump + off-site copy + retention</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nv">DB</span><span class="o">=</span>app_db
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="nv">BACKUP_DIR</span><span class="o">=</span>/var/backups/postgres
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="nv">REMOTE</span><span class="o">=</span>s3://company-backups-offsite/app_db/
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="nv">RETAIN_DAYS</span><span class="o">=</span><span class="m">14</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="nv">STAMP</span><span class="o">=</span><span class="k">$(</span>date<span class="w"> </span>+%F<span class="k">)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="nv">FILE</span><span class="o">=</span><span class="s2">"</span><span class="nv">$BACKUP_DIR</span><span class="s2">/</span><span class="si">${</span><span class="nv">DB</span><span class="si">}</span><span class="s2">_</span><span class="si">${</span><span class="nv">STAMP</span><span class="si">}</span><span class="s2">.dump"</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="s2">"</span><span class="nv">$BACKUP_DIR</span><span class="s2">"</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>pg_dump<span class="w"> </span>-Fc<span class="w"> </span>-f<span class="w"> </span><span class="s2">"</span><span class="nv">$FILE</span><span class="s2">"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$DB</span><span class="s2">"</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="c1"># verify the dump is restorable-shaped before trusting it (catches truncated/corrupt files)</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>pg_restore<span class="w"> </span>--list<span class="w"> </span><span class="s2">"</span><span class="nv">$FILE</span><span class="s2">"</span><span class="w"> </span>&gt;<span class="w"> </span>/dev/null
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="c1"># ship off-site</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>aws<span class="w"> </span>s3<span class="w"> </span>cp<span class="w"> </span><span class="s2">"</span><span class="nv">$FILE</span><span class="s2">"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$REMOTE</span><span class="s2">"</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="c1"># prune local copies older than retention window (remote bucket has its own lifecycle policy)</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>find<span class="w"> </span><span class="s2">"</span><span class="nv">$BACKUP_DIR</span><span class="s2">"</span><span class="w"> </span>-name<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">DB</span><span class="si">}</span><span class="s2">_*.dump"</span><span class="w"> </span>-mtime<span class="w"> </span>+<span class="s2">"</span><span class="nv">$RETAIN_DAYS</span><span class="s2">"</span><span class="w"> </span>-delete
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>logger<span class="w"> </span>-t<span class="w"> </span>backup-db<span class="w"> </span><span class="s2">"backup of </span><span class="nv">$DB</span><span class="s2"> completed: </span><span class="nv">$FILE</span><span class="s2">"</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a># /etc/cron.d/backup-db
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>0 2 * * * postgres /usr/local/bin/backup-db.sh &gt;&gt; /var/log/backup-db.log 2&gt;&amp;1
+</code></pre></div>
+<p>The <code>pg_restore --list</code> line matters more than it looks: a backup job that
+"succeeds" (exit 0) while silently writing a truncated or empty file is
+worse than no backup, because it creates false confidence. Verify the
+artifact, not just the exit code.</p>
+<h2 id="test-your-restores-the-rule-everyone-skips">Test your restores — the rule everyone skips<a class="headerlink" href="#test-your-restores-the-rule-everyone-skips" title="Permanent link">&para;</a></h2>
+<p><strong>An untested backup is a hypothesis, not a backup.</strong> The only way to know
+your RTO is achievable, and that the backup file actually contains
+restorable data, is to actually restore it — on a schedule, not "whenever
+there's time."</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="ch">#!/usr/bin/env bash</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># /usr/local/bin/test-restore.sh — run monthly against a scratch DB, alert on failure</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="nv">LATEST</span><span class="o">=</span><span class="k">$(</span>ls<span class="w"> </span>-t<span class="w"> </span>/var/backups/postgres/app_db_*.dump<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="k">)</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nv">TEST_DB</span><span class="o">=</span>app_db_restore_test
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>dropdb<span class="w"> </span>--if-exists<span class="w"> </span><span class="s2">"</span><span class="nv">$TEST_DB</span><span class="s2">"</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>createdb<span class="w"> </span><span class="s2">"</span><span class="nv">$TEST_DB</span><span class="s2">"</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="k">if</span><span class="w"> </span>pg_restore<span class="w"> </span>-d<span class="w"> </span><span class="s2">"</span><span class="nv">$TEST_DB</span><span class="s2">"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$LATEST</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">  </span><span class="nv">ROWS</span><span class="o">=</span><span class="k">$(</span>psql<span class="w"> </span>-d<span class="w"> </span><span class="s2">"</span><span class="nv">$TEST_DB</span><span class="s2">"</span><span class="w"> </span>-tAc<span class="w"> </span><span class="s2">"SELECT count(*) FROM users;"</span><span class="k">)</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"restore ok, users table has </span><span class="nv">$ROWS</span><span class="s2"> rows"</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="k">else</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">  </span>logger<span class="w"> </span>-t<span class="w"> </span>test-restore<span class="w"> </span><span class="s2">"RESTORE FAILED for </span><span class="nv">$LATEST</span><span class="s2"> — page on-call"</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="k">fi</span>
+</code></pre></div>
+<p>Beyond "does it restore," periodically check that the <em>row counts and
+recency</em> look sane — a backup that restores cleanly but is silently three
+months stale (because the cron job quietly stopped running) passes a naive
+restore test while still failing the actual goal.</p>
+<h2 id="disaster-recovery-plan-structure">Disaster recovery plan structure<a class="headerlink" href="#disaster-recovery-plan-structure" title="Permanent link">&para;</a></h2>
+<p>A DR plan is a document (kept somewhere that survives the disaster it
+describes — not only on the server that might be the disaster) covering:</p>
+<ol>
+<li><strong>Scenarios covered</strong> — single-server loss, region loss, data
+   corruption/ransomware, accidental deletion. Each has a different
+   recovery path.</li>
+<li><strong>Roles</strong> — who declares a disaster, who executes the restore, who
+   communicates status to stakeholders.</li>
+<li><strong>Step-by-step recovery procedure</strong> per scenario, specific enough that
+   someone who didn't build the system could follow it under pressure —
+   this overlaps heavily with Level 4's "Incident Response &amp; Runbooks."</li>
+<li><strong>Verified RPO/RTO</strong> from the last DR drill, not the theoretical number
+   from the architecture diagram.</li>
+<li><strong>DR drill schedule</strong> — e.g. quarterly, restoring into an isolated
+   environment and timing the whole process end to end.</li>
+</ol>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Write <code>backup-db.sh</code> against a local Postgres or MySQL instance, verify
+   the dump with the appropriate list/check command, and schedule it via
+   cron.</li>
+<li>Intentionally corrupt or drop a table in a scratch copy of the database,
+   then use only your backup script's output to restore it — time the whole
+   process from "data is gone" to "data is back and verified."</li>
+<li>Write down what your actual measured RTO was from step 2, compare it to
+   a target RTO you pick for this exercise (e.g. 30 minutes), and list two
+   concrete changes you'd make to close the gap if it's not met.</li>
+</ol>
 
 
 

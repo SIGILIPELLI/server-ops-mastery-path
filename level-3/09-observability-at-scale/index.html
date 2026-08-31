@@ -1813,6 +1813,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Observability at Scale (metrics, logs, traces)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1829,6 +1847,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-three-pillars-and-what-each-is-and-isnt-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The three pillars, and what each is (and isn't) for
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structured-logging-and-correlation-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structured logging and correlation IDs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metrics-the-red-and-use-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metrics: the RED and USE methods
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#distributed-tracing-opentelemetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Distributed tracing: OpenTelemetry
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-control-sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost control: sampling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#correlating-dashboards-to-logs-to-traces-during-an-incident" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Correlating dashboards to logs to traces during an incident
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2378,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-three-pillars-and-what-each-is-and-isnt-for" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The three pillars, and what each is (and isn't) for
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structured-logging-and-correlation-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structured logging and correlation IDs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metrics-the-red-and-use-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metrics: the RED and USE methods
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#distributed-tracing-opentelemetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Distributed tracing: OpenTelemetry
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-control-sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost control: sampling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#correlating-dashboards-to-logs-to-traces-during-an-incident" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Correlating dashboards to logs to traces during an incident
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2482,166 @@
 
 
 <h1 id="09-observability-at-scale-metrics-logs-traces">09 · Observability at Scale (metrics, logs, traces)<a class="headerlink" href="#09-observability-at-scale-metrics-logs-traces" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 3 · Advanced.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Level 2 introduced basic monitoring and centralized logging — enough for a
+handful of services. Once you have dozens of services, multiple hosts, and
+requests that hop across several of them (module 07), you need the three
+pillars working together: <strong>metrics</strong> (is something wrong, in aggregate),
+<strong>logs</strong> (what exactly happened), and <strong>traces</strong> (where, across which
+services, did it happen) — plus a way to move between all three quickly
+during an incident.</p>
+<h2 id="the-three-pillars-and-what-each-is-and-isnt-for">The three pillars, and what each is (and isn't) for<a class="headerlink" href="#the-three-pillars-and-what-each-is-and-isnt-for" title="Permanent link">&para;</a></h2>
+<p><strong>Metrics</strong> — numeric time series, cheap to store and query at scale, ideal
+for dashboards, alerting thresholds, and long-term trend analysis. Bad for
+"what exactly happened to this one request" — metrics are aggregates by
+design.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>http_requests_total{service="orders", status="500"}  1204
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>http_request_duration_seconds{service="orders", quantile="0.99"}  0.87
+</code></pre></div>
+<p><strong>Logs</strong> — discrete events with full detail (a stack trace, a request
+body, a specific error message). Expensive to store and search at high
+volume; the right tool for root-causing one specific failure once metrics
+have told you <em>something</em> failed <em>somewhere</em>.</p>
+<p><strong>Traces</strong> — the path a single request took across multiple services, with
+timing for each hop (a "span" per service call). The only one of the three
+that directly answers "which of these six services in the call chain is
+actually slow" — metrics per-service can't show you the <em>relationship</em>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>trace_id: 7a3f9c...
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├─ span: web (12ms)
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>│  └─ span: orders (340ms)          ← the slow one
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>│     ├─ span: inventory (15ms)
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>│     └─ span: payments (310ms)     ← root cause: payments, not orders
+</code></pre></div>
+<p>Without tracing, "orders is slow" (visible in orders' own metrics) doesn't
+tell you the actual bottleneck is a downstream call to <code>payments</code> — you'd
+have to correlate timestamps across separate services' logs by hand.</p>
+<h2 id="structured-logging-and-correlation-ids">Structured logging and correlation IDs<a class="headerlink" href="#structured-logging-and-correlation-ids" title="Permanent link">&para;</a></h2>
+<p>The connective tissue between all three pillars is a <strong>correlation ID</strong>
+(often called a trace ID) generated at the edge and propagated through
+every hop:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span><span class="o">,</span><span class="w"> </span><span class="nn">uuid</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">log_event</span><span class="p">(</span><span class="n">request_id</span><span class="p">,</span> <span class="n">service</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="o">**</span><span class="n">fields</span><span class="p">):</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>        <span class="s2">"timestamp"</span><span class="p">:</span> <span class="s2">"2026-08-31T10:00:00Z"</span><span class="p">,</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>        <span class="s2">"request_id"</span><span class="p">:</span> <span class="n">request_id</span><span class="p">,</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>        <span class="s2">"service"</span><span class="p">:</span> <span class="n">service</span><span class="p">,</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>        <span class="s2">"message"</span><span class="p">:</span> <span class="n">message</span><span class="p">,</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>        <span class="o">**</span><span class="n">fields</span><span class="p">,</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="p">}))</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="c1"># at the edge, generate once per incoming request</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="n">request_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="n">log_event</span><span class="p">(</span><span class="n">request_id</span><span class="p">,</span> <span class="s2">"web"</span><span class="p">,</span> <span class="s2">"request received"</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">"/checkout"</span><span class="p">)</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="c1"># ... pass request_id through every downstream call (HTTP header, message queue attribute) ...</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a># downstream service receives and reuses the same request_id
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>X-Request-Id: 7a3f9c12-88e1-4b0a-9c2e-1f0a6d3b9e77
+</code></pre></div>
+<p>With every log line JSON-structured and carrying the same <code>request_id</code>,
+you can pull the full story of one failed checkout across every service it
+touched with a single query — <code>request_id = "7a3f9c..."</code> — instead of
+grepping five services' logs by approximate timestamp.</p>
+<h2 id="metrics-the-red-and-use-methods">Metrics: the RED and USE methods<a class="headerlink" href="#metrics-the-red-and-use-methods" title="Permanent link">&para;</a></h2>
+<p>Two widely used checklists for "what should every service expose":</p>
+<p><strong>RED</strong> (for request-driven services):
+- <strong>Rate</strong> — requests per second
+- <strong>Errors</strong> — failed requests per second
+- <strong>Duration</strong> — latency distribution (not just average — track p50/p95/p99)</p>
+<p><strong>USE</strong> (for resources — CPU, disk, memory, connection pools):
+- <strong>Utilization</strong> — % time the resource was busy
+- <strong>Saturation</strong> — how much queued work is waiting for it
+- <strong>Errors</strong> — count of resource-level errors (disk I/O errors, OOM kills)</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Prometheus scrape config: every service exposes /metrics in Prometheus format</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nt">scrape_configs</span><span class="p">:</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">orders</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="nt">static_configs</span><span class="p">:</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">targets</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"orders-01:9100"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"orders-02:9100"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"orders-03:9100"</span><span class="p p-Indicator">]</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a># Example PromQL: error rate over the last 5 minutes, per service
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>sum(rate(http_requests_total{status=~"5.."}[5m])) by (service)
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>/
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>sum(rate(http_requests_total[5m])) by (service)
+</code></pre></div>
+<h2 id="distributed-tracing-opentelemetry">Distributed tracing: OpenTelemetry<a class="headerlink" href="#distributed-tracing-opentelemetry" title="Permanent link">&para;</a></h2>
+<p>OpenTelemetry (OTel) is the vendor-neutral standard for producing traces,
+metrics, and logs from application code, sent to whatever backend you
+choose (Jaeger, Tempo, a vendor's SaaS product) — write instrumentation
+once, swap backends without touching application code.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">opentelemetry</span><span class="w"> </span><span class="kn">import</span> <span class="n">trace</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">opentelemetry.sdk.trace</span><span class="w"> </span><span class="kn">import</span> <span class="n">TracerProvider</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">opentelemetry.sdk.trace.export</span><span class="w"> </span><span class="kn">import</span> <span class="n">BatchSpanProcessor</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">opentelemetry.exporter.otlp.proto.grpc.trace_exporter</span><span class="w"> </span><span class="kn">import</span> <span class="n">OTLPSpanExporter</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="n">trace</span><span class="o">.</span><span class="n">set_tracer_provider</span><span class="p">(</span><span class="n">TracerProvider</span><span class="p">())</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">trace</span><span class="o">.</span><span class="n">get_tracer_provider</span><span class="p">()</span><span class="o">.</span><span class="n">add_span_processor</span><span class="p">(</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    <span class="n">BatchSpanProcessor</span><span class="p">(</span><span class="n">OTLPSpanExporter</span><span class="p">(</span><span class="n">endpoint</span><span class="o">=</span><span class="s2">"otel-collector:4317"</span><span class="p">))</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="p">)</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="n">tracer</span> <span class="o">=</span> <span class="n">trace</span><span class="o">.</span><span class="n">get_tracer</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="k">def</span><span class="w"> </span><span class="nf">handle_checkout</span><span class="p">(</span><span class="n">order_id</span><span class="p">):</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>    <span class="k">with</span> <span class="n">tracer</span><span class="o">.</span><span class="n">start_as_current_span</span><span class="p">(</span><span class="s2">"handle_checkout"</span><span class="p">)</span> <span class="k">as</span> <span class="n">span</span><span class="p">:</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>        <span class="n">span</span><span class="o">.</span><span class="n">set_attribute</span><span class="p">(</span><span class="s2">"order.id"</span><span class="p">,</span> <span class="n">order_id</span><span class="p">)</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>        <span class="k">with</span> <span class="n">tracer</span><span class="o">.</span><span class="n">start_as_current_span</span><span class="p">(</span><span class="s2">"call_payments"</span><span class="p">):</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>            <span class="n">charge_payment</span><span class="p">(</span><span class="n">order_id</span><span class="p">)</span>   <span class="c1"># this span becomes a child, nested under handle_checkout</span>
+</code></pre></div>
+<p>The <code>otel-collector</code> sits between instrumented services and the storage
+backend, buffering and batching so applications don't take a direct
+dependency (or added latency) on the tracing backend's availability.</p>
+<h2 id="cost-control-sampling">Cost control: sampling<a class="headerlink" href="#cost-control-sampling" title="Permanent link">&para;</a></h2>
+<p>At scale, tracing (and to a lesser extent, verbose logging) every single
+request is expensive to store and often unnecessary — most requests are
+boring. <strong>Sampling</strong> keeps observability useful without the cost exploding:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Conceptual OTel Collector config: sample 10% of traces, but ALWAYS keep errors</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nt">processors</span><span class="p">:</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">probabilistic_sampler</span><span class="p">:</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="nt">sampling_percentage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="nt">tail_sampling</span><span class="p">:</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span><span class="nt">policies</span><span class="p">:</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">keep-all-errors</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">status_code</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">        </span><span class="nt">status_code</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> status_codes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">ERROR</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sample-the-rest</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">probabilistic</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">        </span><span class="nt">probabilistic</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> sampling_percentage</span><span class="p">:</span><span class="w"> </span><span class="nv">10</span><span class="w"> </span><span class="p p-Indicator">}</span>
+</code></pre></div>
+<p><strong>Tail-based sampling</strong> (deciding whether to keep a trace <em>after</em> seeing
+how it turned out) is what lets you keep 100% of error/slow traces while
+discarding most of the routine ones — head-based sampling (deciding before
+the request completes) can't make that distinction and either keeps too
+much or discards traces you'd have wanted.</p>
+<h2 id="correlating-dashboards-to-logs-to-traces-during-an-incident">Correlating dashboards to logs to traces during an incident<a class="headerlink" href="#correlating-dashboards-to-logs-to-traces-during-an-incident" title="Permanent link">&para;</a></h2>
+<p>The practical payoff of building all three: during an incident, the flow
+is usually</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Alert fires on a metric (error rate for `orders` &gt; threshold)
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>   → dashboard shows WHEN it started and roughly HOW BAD
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>   → click through to traces for that time window, filtered to errors
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>   → find the specific slow/failing span (e.g. payments call timing out)
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>   → jump from that trace's request_id to the full structured logs for
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>     that request, across every service it touched
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>   → root cause found in minutes, not by grepping five hosts' logs by hand
+</code></pre></div>
+<p>This chain only works if the tools are wired together (dashboards link to
+trace search, traces carry the same <code>request_id</code> logs use) — building the
+three pillars in isolation, without the cross-links, leaves you back to
+manual correlation under pressure.</p>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Add a <code>request_id</code> (generated at the edge, propagated via an HTTP
+   header) to a small multi-service toy app (2-3 services calling each
+   other), and make every service log JSON lines including that ID.</li>
+<li>Instrument the same app with OpenTelemetry tracing and run a local
+   Jaeger instance (<code>docker run -p 16686:16686 -p 4317:4317
+   jaegertracing/all-in-one</code>) as the backend; confirm you can see the full
+   trace for one request across all services in the Jaeger UI.</li>
+<li>Expose Prometheus-format RED metrics (<code>http_requests_total</code>,
+   <code>http_request_duration_seconds</code>) from each service and scrape them with
+   a local Prometheus instance.</li>
+<li>Deliberately introduce a slow downstream call in one service, then walk
+   the full path above: notice it in a metric, find the trace, find the
+   specific slow span, and pull the matching structured logs by
+   <code>request_id</code>.</li>
+</ol>
 
 
 

@@ -1963,6 +1963,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Multi-Region / Multi-AZ Architecture Concepts
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1979,6 +1997,91 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#az-vs-region-whats-actually-different" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AZ vs. region: what's actually different
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-cost-multi-region-adds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The cost multi-region adds
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-multi-region-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common multi-region patterns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-based-on-rtorpo-not-fashion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing based on RTO/RPO, not fashion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-dns-async-replication-topology-for-warm-standby" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: DNS + async replication topology for warm standby
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2367,80 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#az-vs-region-whats-actually-different" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AZ vs. region: what's actually different
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-cost-multi-region-adds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The cost multi-region adds
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-multi-region-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common multi-region patterns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-based-on-rtorpo-not-fashion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing based on RTO/RPO, not fashion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-dns-async-replication-topology-for-warm-standby" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: DNS + async replication topology for warm standby
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2460,158 @@
 
 
 <h1 id="01-multi-region-multi-az-architecture-concepts">01 · Multi-Region / Multi-AZ Architecture Concepts<a class="headerlink" href="#01-multi-region-multi-az-architecture-concepts" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 4 · Master.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Level 3's capstone spread a service across two availability zones (AZs)
+within one region. This module goes one level up: what changes — and what
+gets much harder — when you spread across entire <em>regions</em>, and how to
+decide whether you actually need to.</p>
+<h2 id="az-vs-region-whats-actually-different">AZ vs. region: what's actually different<a class="headerlink" href="#az-vs-region-whats-actually-different" title="Permanent link">&para;</a></h2>
+<p>An <strong>availability zone</strong> is one or more physically separate data centers
+within a region, with independent power, cooling, and networking, but
+low-latency (typically sub-millisecond to a few ms) links to other AZs in
+the same region. A <strong>region</strong> is a fully independent geographic location
+with its own set of AZs — cross-region latency is tens to hundreds of
+milliseconds, and regions can fail independently of each other (a regional
+control-plane outage, a natural disaster, a submarine cable cut).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Region: us-east-1
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── AZ us-east-1a  (data center cluster 1)
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── AZ us-east-1b  (data center cluster 2)  ← ~1-2ms from 1a
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>└── AZ us-east-1c  (data center cluster 3)
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>Region: eu-west-1  ← ~80-100ms from us-east-1
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>├── AZ eu-west-1a
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>└── AZ eu-west-1b
+</code></pre></div>
+<p>Multi-AZ protects against a data-center-level failure (power, cooling, a
+single building's network gear). Multi-region protects against a
+region-level failure (control plane outage, natural disaster, a
+misconfiguration that takes an entire region's networking down) — a much
+rarer event, but one multi-AZ alone does nothing for.</p>
+<h2 id="the-cost-multi-region-adds">The cost multi-region adds<a class="headerlink" href="#the-cost-multi-region-adds" title="Permanent link">&para;</a></h2>
+<p>Multi-region is not "multi-AZ but bigger" — the higher cross-region latency
+changes what's even possible:</p>
+<ul>
+<li><strong>Synchronous replication becomes impractical.</strong> A database write that
+  must be acknowledged by a replica 80ms away adds 80ms+ to every write,
+  which is usually unacceptable. Cross-region database replication is
+  almost always <strong>asynchronous</strong>, which reintroduces the RPO discussion
+  from Level 3 module 03 — some data loss window exists on region failover
+  by design, not by mistake.</li>
+<li><strong>Data residency and consistency get harder.</strong> If both regions can accept
+  writes ("active-active"), you need a strategy for conflicting concurrent
+  writes to the same record (last-write-wins, CRDTs, or routing all writes
+  for a given entity to one "home" region).</li>
+<li><strong>Operational complexity roughly doubles per region added</strong> — deploys,
+  monitoring, on-call runbooks, and IaC all need to account for N regions
+  instead of 1, and testing failover between regions (Level 3 module 08) is
+  itself a bigger exercise than testing AZ failover.</li>
+</ul>
+<h2 id="common-multi-region-patterns">Common multi-region patterns<a class="headerlink" href="#common-multi-region-patterns" title="Permanent link">&para;</a></h2>
+<p><strong>Active-passive (warm standby)</strong> — one region serves all traffic; a second
+region runs a smaller/idle copy of the stack, kept in sync via async
+replication, and is promoted only on a regional failure.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Region A (active): full traffic, full capacity
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Region B (passive): minimal capacity, receiving replicated data,
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>                     scaled up and promoted only during failover
+</code></pre></div>
+<p>Cheaper (Region B can run at reduced capacity most of the time) but slower
+to fail over — Region B needs to scale up before it can absorb full
+traffic, which is exactly the RTO number you must measure and rehearse
+(Level 3 module 03).</p>
+<p><strong>Active-active</strong> — both regions serve live traffic simultaneously,
+typically split by geography via GeoDNS/latency routing (Level 3 module
+02). Faster failover (the surviving region is already warm and serving
+traffic) but requires solving the write-conflict problem above, and costs
+roughly 2x steady-state capacity since each region alone should be able to
+absorb the other's traffic if it fails.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>GeoDNS: EU clients → eu-west-1 (active)
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>        US clients → us-east-1 (active)
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>On eu-west-1 failure: GeoDNS reroutes EU clients to us-east-1,
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>                      which must have headroom to absorb that traffic
+</code></pre></div>
+<p><strong>Pilot light</strong> — the cheapest pattern: only the data layer is kept
+continuously replicated in the second region; compute is provisioned
+on-demand only during a real failover (via IaC, Level 3 module 05). Lowest
+steady-state cost, longest RTO (you're standing up infrastructure from
+scratch during the incident, even if scripted).</p>
+<h2 id="choosing-based-on-rtorpo-not-fashion">Choosing based on RTO/RPO, not fashion<a class="headerlink" href="#choosing-based-on-rtorpo-not-fashion" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Relative cost</th>
+<th>Typical RTO</th>
+<th>Typical RPO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Single region, multi-AZ only</td>
+<td>1x</td>
+<td>N/A (no regional failover)</td>
+<td>near 0 (sync replication)</td>
+</tr>
+<tr>
+<td>Pilot light</td>
+<td>~1.1x</td>
+<td>hours</td>
+<td>minutes (data replicated, compute is not)</td>
+</tr>
+<tr>
+<td>Active-passive (warm standby)</td>
+<td>~1.3-1.5x</td>
+<td>minutes</td>
+<td>seconds-minutes</td>
+</tr>
+<tr>
+<td>Active-active</td>
+<td>~2x</td>
+<td>seconds (already serving)</td>
+<td>depends on conflict strategy</td>
+</tr>
+</tbody>
+</table>
+<p>This table exists to be used, not admired: pick the row matching a
+business-stated RTO/RPO (Level 4 module 05, "Choosing the Right HA
+Architecture for a Given SLA," goes deeper on this decision), and don't pay
+for active-active's 2x cost if the business need is "we can be down for an
+hour once a year" — that's a pilot-light or warm-standby problem.</p>
+<h2 id="worked-example-dns-async-replication-topology-for-warm-standby">Worked example: DNS + async replication topology for warm standby<a class="headerlink" href="#worked-example-dns-async-replication-topology-for-warm-standby" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a># Route 53-style failover DNS (Level 3 module 02) between two regions
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>app.example.com → failover routing
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  primary:   us-east-1 ALB   (health check every 30s)
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>  secondary: eu-west-1 ALB   (only served if primary fails)
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">-- Postgres logical replication (async) from primary region to standby region</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1">-- On the primary (us-east-1):</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">CREATE</span><span class="w"> </span><span class="n">PUBLICATION</span><span class="w"> </span><span class="n">app_pub</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="n">TABLES</span><span class="p">;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1">-- On the standby (eu-west-1), pointing back at the primary over a VPN/peering link:</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="k">CREATE</span><span class="w"> </span><span class="n">SUBSCRIPTION</span><span class="w"> </span><span class="n">app_sub</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">  </span><span class="k">CONNECTION</span><span class="w"> </span><span class="s1">'host=primary.us-east-1.internal dbname=app user=replicator'</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span><span class="n">PUBLICATION</span><span class="w"> </span><span class="n">app_pub</span><span class="p">;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Monitor replication lag — this number IS your effective RPO, continuously</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>psql<span class="w"> </span>-h<span class="w"> </span>eu-west-1-standby<span class="w"> </span>-c<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="s2">"SELECT now() - pg_last_xact_replay_timestamp() AS replication_lag;"</span>
+</code></pre></div>
+<p>If <code>replication_lag</code> regularly sits at 45 seconds under normal load, the
+system's real RPO is ~45 seconds (plus whatever additional lag a failure
+scenario introduces), regardless of what a design document claims — measure
+it, don't assume it.</p>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>For a system you know (real or from an earlier module's capstone), write
+   down its current failure domain: single-server, multi-AZ, or
+   multi-region. Identify one specific event that would take the whole
+   thing down given its current domain.</li>
+<li>Pick a target pattern (pilot light, warm standby, or active-active) for
+   that system, justified by a stated RTO/RPO, and sketch the DNS +
+   replication topology needed to support it.</li>
+<li>If you have access to two regions/locations (even two VMs standing in
+   for regions), set up async replication between them and measure actual
+   replication lag under a realistic write load — compare it to the RPO you
+   claimed in step 2.</li>
+</ol>
 
 
 

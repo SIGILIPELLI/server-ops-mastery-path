@@ -1589,6 +1589,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · High Availability Concepts (redundancy, failover, health checks)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1605,6 +1623,91 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#availability-as-a-number" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Availability as a number
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#redundancy-eliminate-single-points-of-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Redundancy: eliminate single points of failure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#health-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Health checks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#failover-automatic-vs-manual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failover: automatic vs. manual
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-keepalived-vrrp-failover-between-two-nginx-boxes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: keepalived VRRP failover between two nginx boxes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2367,80 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#availability-as-a-number" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Availability as a number
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#redundancy-eliminate-single-points-of-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Redundancy: eliminate single points of failure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#health-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Health checks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#failover-automatic-vs-manual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failover: automatic vs. manual
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-keepalived-vrrp-failover-between-two-nginx-boxes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: keepalived VRRP failover between two nginx boxes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2460,197 @@
 
 
 <h1 id="01-high-availability-concepts-redundancy-failover-health-checks">01 · High Availability Concepts (redundancy, failover, health checks)<a class="headerlink" href="#01-high-availability-concepts-redundancy-failover-health-checks" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 3 · Advanced.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>High availability (HA) is not a product you install — it's a design property
+that comes from removing single points of failure (SPOFs) and giving the
+system a way to detect and route around failures automatically. Everything
+else in Level 3 (DNS/LB patterns, backups, IaC, chaos engineering) is a tool
+in service of this one goal.</p>
+<h2 id="availability-as-a-number">Availability as a number<a class="headerlink" href="#availability-as-a-number" title="Permanent link">&para;</a></h2>
+<p>Availability is usually expressed as a percentage of uptime over a year,
+often called "the nines":</p>
+<table>
+<thead>
+<tr>
+<th>Availability</th>
+<th>Downtime / year</th>
+<th>Downtime / month</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>99% ("two nines")</td>
+<td>~3.65 days</td>
+<td>~7.3 hours</td>
+</tr>
+<tr>
+<td>99.9% ("three nines")</td>
+<td>~8.76 hours</td>
+<td>~43.8 minutes</td>
+</tr>
+<tr>
+<td>99.95%</td>
+<td>~4.38 hours</td>
+<td>~21.9 minutes</td>
+</tr>
+<tr>
+<td>99.99% ("four nines")</td>
+<td>~52.6 minutes</td>
+<td>~4.4 minutes</td>
+</tr>
+<tr>
+<td>99.999% ("five nines")</td>
+<td>~5.26 minutes</td>
+<td>~26 seconds</td>
+</tr>
+</tbody>
+</table>
+<p>Each additional nine is disproportionately more expensive — it usually means
+another layer of redundancy, more automation, and less tolerance for manual
+intervention during an incident. Before designing for five nines, know what
+the business actually needs (see Level 4, "Choosing the Right HA Architecture
+for a Given SLA") — over-engineering has a real cost too.</p>
+<h2 id="redundancy-eliminate-single-points-of-failure">Redundancy: eliminate single points of failure<a class="headerlink" href="#redundancy-eliminate-single-points-of-failure" title="Permanent link">&para;</a></h2>
+<p>A SPOF is any single component whose failure takes down the whole system.
+Walk the request path end to end and ask "if this dies, what happens?":</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>client → DNS → load balancer → app servers → database → shared storage
+</code></pre></div>
+<ul>
+<li><strong>One app server</strong> → SPOF. Fix: run N ≥ 2 identical instances behind a
+  load balancer.</li>
+<li><strong>One load balancer</strong> → SPOF. Fix: run a pair with a floating/virtual IP
+  (keepalived + VRRP, or a managed LB) — see module 02.</li>
+<li><strong>One database primary</strong> → SPOF for writes. Fix: replication + failover
+  (a full topic on its own, out of scope here, but the failover <em>pattern</em>
+  is the same one covered below).</li>
+<li><strong>One availability zone / one physical rack / one power feed</strong> → SPOF for
+  everything above. Fix: spread redundant copies across zones (Level 4,
+  "Multi-Region / Multi-AZ Architecture Concepts").</li>
+</ul>
+<p>Redundancy alone isn't enough — you also need something watching the
+redundant copies and rerouting traffic away from a failed one. That's a
+health check.</p>
+<h2 id="health-checks">Health checks<a class="headerlink" href="#health-checks" title="Permanent link">&para;</a></h2>
+<p>A health check is a cheap, frequent probe that answers one question: "can
+this instance currently serve traffic correctly?" There are two common
+shapes:</p>
+<p><strong>Liveness check</strong> — is the process even running/responding at all?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">location</span><span class="w"> </span><span class="s">/healthz</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="kn">return</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="s">"ok\n"</span><span class="p">;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="p">}</span>
+</code></pre></div>
+<p><strong>Readiness check</strong> — is the process running <em>and</em> actually able to do its
+job (DB connection open, cache warm, disk not full)?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Flask example</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">jsonify</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">psycopg2</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">"/readyz"</span><span class="p">)</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="k">def</span><span class="w"> </span><span class="nf">readyz</span><span class="p">():</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>        <span class="n">conn</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dbname</span><span class="o">=</span><span class="s2">"app"</span><span class="p">,</span> <span class="n">connect_timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="s2">"ready"</span><span class="p">),</span> <span class="mi">200</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="s2">"not ready"</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)),</span> <span class="mi">503</span>
+</code></pre></div>
+<p>A load balancer or orchestrator polls <code>/readyz</code> every few seconds; a few
+consecutive failures mark the instance "down" and traffic stops flowing to
+it. This is exactly the <code>max_fails</code>/<code>fail_timeout</code> mechanism from Level 2's
+load balancing module, generalized: readiness checks are what make failover
+<em>automatic</em> instead of requiring a human to notice and act.</p>
+<p>Two failure modes to design against:</p>
+<ul>
+<li><strong>False positive (marked healthy when it isn't)</strong> — traffic keeps flowing
+  to a broken instance. Guard against this by making the readiness check
+  actually exercise the dependency (DB ping), not just "process is up."</li>
+<li><strong>False negative (marked unhealthy when it's fine)</strong> — a slow but working
+  instance gets pulled from rotation unnecessarily, reducing capacity right
+  when it's needed. Guard against this with a sensible timeout and a
+  "needs N consecutive failures" threshold instead of failing on one blip.</li>
+</ul>
+<h2 id="failover-automatic-vs-manual">Failover: automatic vs. manual<a class="headerlink" href="#failover-automatic-vs-manual" title="Permanent link">&para;</a></h2>
+<p><strong>Automatic failover</strong> — the system detects the failure and reroutes without
+a human in the loop. Examples: LB stops sending traffic to a failed health
+check; a database replica is promoted by a cluster manager (Patroni,
+Galera). Fast (seconds), but must be trustworthy — a bad automatic failover
+(e.g. split-brain, promoting a replica that's behind) can turn a small
+outage into data loss.</p>
+<p><strong>Manual failover</strong> — a human runs a documented, tested procedure. Slower
+(minutes, depends on who's paged), but a human can apply judgment a
+health-check script can't ("the primary's CPU is at 100% but it's still
+correct — don't fail over yet, just add capacity").</p>
+<p>A common middle ground: automatic failover for known-safe cases (single
+instance behind an LB), manual (but scripted and rehearsed) failover for
+higher-stakes cases (database primary) until you've built enough confidence
+and tooling to automate it. Runbooks for the manual case are covered in
+Level 4, "Incident Response &amp; Runbooks."</p>
+<h2 id="worked-example-keepalived-vrrp-failover-between-two-nginx-boxes">Worked example: keepalived VRRP failover between two nginx boxes<a class="headerlink" href="#worked-example-keepalived-vrrp-failover-between-two-nginx-boxes" title="Permanent link">&para;</a></h2>
+<p>Two nginx hosts, <code>10.0.0.11</code> and <code>10.0.0.12</code>, share a virtual IP
+<code>10.0.0.100</code> that clients actually connect to. <code>keepalived</code> uses VRRP to
+have exactly one host "own" the VIP at a time, and moves it automatically if
+the owner goes down.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>keepalived
+</code></pre></div>
+<p><code>/etc/keepalived/keepalived.conf</code> on the primary (<code>10.0.0.11</code>):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>vrrp_script chk_nginx {
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    script "/usr/bin/pgrep nginx"
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    interval 2
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    weight 2
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>}
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>vrrp_instance VI_1 {
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    state MASTER
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    interface eth0
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    virtual_router_id 51
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    priority 150
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    advert_int 1
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    authentication {
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>        auth_type PASS
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>        auth_pass changeme_shared_secret
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>    }
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>    virtual_ipaddress {
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>        10.0.0.100/24
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>    }
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>    track_script {
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>        chk_nginx
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>    }
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>}
+</code></pre></div>
+<p>Same file on the backup (<code>10.0.0.12</code>), with <code>state BACKUP</code> and a lower
+<code>priority 100</code>. Both hosts run this identically otherwise; whichever has the
+higher effective priority (adjusted down by <code>weight</code> if <code>chk_nginx</code> fails)
+holds the VIP.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>keepalived
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>ip<span class="w"> </span>addr<span class="w"> </span>show<span class="w"> </span>eth0<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="m">10</span>.0.0.100<span class="w">   </span><span class="c1"># shows the VIP only on the current master</span>
+</code></pre></div>
+<p>Test the failover:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># on the master</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>nginx
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1"># within ~2-3 seconds (interval * a few missed adverts), the VIP moves to .12</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>ip<span class="w"> </span>addr<span class="w"> </span>show<span class="w"> </span>eth0<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="m">10</span>.0.0.100<span class="w">   </span><span class="c1"># now empty on .11</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># on .12:</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>ip<span class="w"> </span>addr<span class="w"> </span>show<span class="w"> </span>eth0<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="m">10</span>.0.0.100<span class="w">   </span><span class="c1"># now present</span>
+</code></pre></div>
+<p>Clients connecting to <code>10.0.0.100</code> see, at worst, a couple of failed
+connections during the ~2-3 second handover — this is the mechanics behind
+"the load balancer is highly available too," not just the backends behind
+it.</p>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Stand up two small VMs (or containers) running nginx and configure
+   <code>keepalived</code> as above so they share a virtual IP.</li>
+<li>Write a script that curls the VIP once per second and logs the response
+   and which backend's <code>Server</code> header (add one via
+   <code>add_header X-Served-By $hostname;</code> in nginx) answered.</li>
+<li>Kill nginx on the current VRRP master mid-run and confirm from the log:
+   how many requests failed (if any), and how long the VIP took to move.</li>
+<li>Repeat with the <code>chk_nginx</code> health check removed from the config, and
+   observe why "keepalived is running" alone doesn't guarantee "nginx is
+   serving traffic" — this is the liveness-vs-readiness distinction from
+   above, applied at the VIP level.</li>
+</ol>
 
 
 

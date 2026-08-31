@@ -1467,6 +1467,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Capstone — Blue-Green Deploy Pipeline
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1483,6 +1501,80 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Topology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-deploy-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The deploy script
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instant-rollback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instant rollback
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trade-offs-to-know" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trade-offs to know
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2356,69 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Topology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-deploy-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The deploy script
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instant-rollback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instant rollback
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trade-offs-to-know" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trade-offs to know
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2438,136 @@
 
 
 <h1 id="10-capstone-blue-green-deploy-pipeline">10 · Capstone — Blue-Green Deploy Pipeline<a class="headerlink" href="#10-capstone-blue-green-deploy-pipeline" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 2 · Intermediate.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Blue-green deployment runs two complete, identical production environments
+("blue" and "green"). At any time, one is live (serving all traffic) and
+the other is idle. You deploy the new version to the idle one, test it for
+real, then switch traffic over atomically. If anything's wrong, switching
+back is instant. This capstone wires together modules 1-9 into one
+end-to-end pipeline.</p>
+<h2 id="topology">Topology<a class="headerlink" href="#topology" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>                    ┌─────────────┐
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  clients ────────▶ │ nginx (LB)  │
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                    └──────┬──────┘
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                    active pool ──▶ blue  (v1, currently live)
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                    idle pool   ──▶ green (v2, being deployed/tested)
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># /etc/nginx/sites-available/app.conf</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">upstream</span><span class="w"> </span><span class="s">blue</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">127.0.0.1</span><span class="p">:</span><span class="mi">3001</span><span class="p">;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="p">}</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="k">upstream</span><span class="w"> </span><span class="s">green</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">127.0.0.1</span><span class="p">:</span><span class="mi">3002</span><span class="p">;</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">}</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">upstream</span><span class="w"> </span><span class="s">active</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">127.0.0.1</span><span class="p">:</span><span class="mi">3001</span><span class="p">;</span><span class="w">   </span><span class="c1"># this line is what we flip: points at blue OR green</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="p">}</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">app.example.com</span><span class="p">;</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://active</span><span class="p">;</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-For</span><span class="w"> </span><span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="p">}</span>
+</code></pre></div>
+<h2 id="the-deploy-script">The deploy script<a class="headerlink" href="#the-deploy-script" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="ch">#!/usr/bin/env bash</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># blue-green-deploy.sh — deploys $1 (a release tarball) to the currently-idle color</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nv">ARTIFACT</span><span class="o">=</span><span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="nv">ACTIVE_CONF</span><span class="o">=</span><span class="s2">"/etc/nginx/sites-available/app.conf"</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1"># 1. figure out which color is currently live by reading the nginx config</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="k">if</span><span class="w"> </span>grep<span class="w"> </span>-q<span class="w"> </span><span class="s2">"server 127.0.0.1:3001;"</span><span class="w"> </span>&lt;<span class="o">(</span>sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">'/upstream active/,/}/p'</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ACTIVE_CONF</span><span class="s2">"</span><span class="o">)</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">  </span><span class="nv">LIVE_COLOR</span><span class="o">=</span>blue<span class="p">;</span><span class="w"> </span><span class="nv">LIVE_PORT</span><span class="o">=</span><span class="m">3001</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">  </span><span class="nv">IDLE_COLOR</span><span class="o">=</span>green<span class="p">;</span><span class="w"> </span><span class="nv">IDLE_PORT</span><span class="o">=</span><span class="m">3002</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="k">else</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">  </span><span class="nv">LIVE_COLOR</span><span class="o">=</span>green<span class="p">;</span><span class="w"> </span><span class="nv">LIVE_PORT</span><span class="o">=</span><span class="m">3002</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">  </span><span class="nv">IDLE_COLOR</span><span class="o">=</span>blue<span class="p">;</span><span class="w"> </span><span class="nv">IDLE_PORT</span><span class="o">=</span><span class="m">3001</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="k">fi</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"Live: </span><span class="nv">$LIVE_COLOR</span><span class="s2"> (:</span><span class="nv">$LIVE_PORT</span><span class="s2">)  Idle target: </span><span class="nv">$IDLE_COLOR</span><span class="s2"> (:</span><span class="nv">$IDLE_PORT</span><span class="s2">)"</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="c1"># 2. deploy the new artifact to the idle color only — live traffic is untouched</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span><span class="s2">"myapp-</span><span class="si">${</span><span class="nv">IDLE_COLOR</span><span class="si">}</span><span class="s2">"</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>sudo<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span><span class="s2">"/opt/myapp-</span><span class="si">${</span><span class="nv">IDLE_COLOR</span><span class="si">}</span><span class="s2">/current"</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="s2">"/opt/myapp-</span><span class="si">${</span><span class="nv">IDLE_COLOR</span><span class="si">}</span><span class="s2">/current"</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>sudo<span class="w"> </span>tar<span class="w"> </span>xzf<span class="w"> </span><span class="s2">"</span><span class="nv">$ARTIFACT</span><span class="s2">"</span><span class="w"> </span>-C<span class="w"> </span><span class="s2">"/opt/myapp-</span><span class="si">${</span><span class="nv">IDLE_COLOR</span><span class="si">}</span><span class="s2">/current"</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span><span class="s2">"myapp-</span><span class="si">${</span><span class="nv">IDLE_COLOR</span><span class="si">}</span><span class="s2">"</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="c1"># 3. health-check the idle color directly, BEFORE it gets any real traffic</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"Health-checking </span><span class="nv">$IDLE_COLOR</span><span class="s2">..."</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>seq<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">15</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span>curl<span class="w"> </span>-sf<span class="w"> </span><span class="s2">"http://127.0.0.1:</span><span class="si">${</span><span class="nv">IDLE_PORT</span><span class="si">}</span><span class="s2">/health"</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"OK"</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="w">    </span><span class="k">break</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a><span class="w">  </span><span class="k">fi</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a><span class="w">  </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$i</span><span class="s2">"</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"FAILED: </span><span class="nv">$IDLE_COLOR</span><span class="s2"> never became healthy, aborting"</span><span class="p">;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="w">  </span>sleep<span class="w"> </span><span class="m">2</span>
+<a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a><span class="k">done</span>
+<a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a>
+<a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a><span class="c1"># 4. run a real smoke test against it (not just /health — hit a couple of real endpoints)</span>
+<a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a>curl<span class="w"> </span>-sf<span class="w"> </span><span class="s2">"http://127.0.0.1:</span><span class="si">${</span><span class="nv">IDLE_PORT</span><span class="si">}</span><span class="s2">/api/version"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-q<span class="w"> </span><span class="s2">"</span><span class="k">$(</span>git<span class="w"> </span>rev-parse<span class="w"> </span>--short<span class="w"> </span>HEAD<span class="k">)</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a><span class="w">  </span><span class="o">||</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"FAILED: version mismatch on </span><span class="nv">$IDLE_COLOR</span><span class="s2">, aborting"</span><span class="p">;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+<a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a>
+<a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a><span class="c1"># 5. flip nginx's "active" upstream to the now-verified idle color</span>
+<a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a>sudo<span class="w"> </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">"/upstream active/,/}/ s/server 127.0.0.1:</span><span class="si">${</span><span class="nv">LIVE_PORT</span><span class="si">}</span><span class="s2">;/server 127.0.0.1:</span><span class="si">${</span><span class="nv">IDLE_PORT</span><span class="si">}</span><span class="s2">;/"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ACTIVE_CONF</span><span class="s2">"</span>
+<a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a>sudo<span class="w"> </span>nginx<span class="w"> </span>-t<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>reload<span class="w"> </span>nginx
+<a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"Switched live traffic to </span><span class="nv">$IDLE_COLOR</span><span class="s2">."</span>
+<a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a>
+<a id="__codelineno-2-45" name="__codelineno-2-45" href="#__codelineno-2-45"></a><span class="c1"># 6. give it a few seconds under real traffic, then confirm it's still healthy</span>
+<a id="__codelineno-2-46" name="__codelineno-2-46" href="#__codelineno-2-46"></a>sleep<span class="w"> </span><span class="m">10</span>
+<a id="__codelineno-2-47" name="__codelineno-2-47" href="#__codelineno-2-47"></a>curl<span class="w"> </span>-sf<span class="w"> </span><span class="s2">"http://127.0.0.1:</span><span class="si">${</span><span class="nv">IDLE_PORT</span><span class="si">}</span><span class="s2">/health"</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"UNHEALTHY under real traffic — rolling back"</span><span class="p">;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-48" name="__codelineno-2-48" href="#__codelineno-2-48"></a><span class="w">  </span>sudo<span class="w"> </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">"/upstream active/,/}/ s/server 127.0.0.1:</span><span class="si">${</span><span class="nv">IDLE_PORT</span><span class="si">}</span><span class="s2">;/server 127.0.0.1:</span><span class="si">${</span><span class="nv">LIVE_PORT</span><span class="si">}</span><span class="s2">;/"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ACTIVE_CONF</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-49" name="__codelineno-2-49" href="#__codelineno-2-49"></a><span class="w">  </span>sudo<span class="w"> </span>nginx<span class="w"> </span>-t<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>reload<span class="w"> </span>nginx<span class="p">;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+<a id="__codelineno-2-50" name="__codelineno-2-50" href="#__codelineno-2-50"></a>
+<a id="__codelineno-2-51" name="__codelineno-2-51" href="#__codelineno-2-51"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"Deploy complete. </span><span class="nv">$IDLE_COLOR</span><span class="s2"> is now live; </span><span class="nv">$LIVE_COLOR</span><span class="s2"> is idle and can be updated next time."</span>
+</code></pre></div>
+<p>Everything from earlier modules shows up here on purpose:</p>
+<ul>
+<li><strong>module 1</strong> — nginx upstream/reverse proxy is the switch mechanism.</li>
+<li><strong>module 3</strong> — <code>upstream</code> blocks, same primitive as load balancing.</li>
+<li><strong>module 4</strong> — one artifact promoted, never rebuilt per target.</li>
+<li><strong>module 5</strong> — zero traffic ever hits a half-restarted process; the old
+  color keeps serving until the new one is proven healthy.</li>
+<li><strong>module 6</strong> — secrets for both colors come from per-color env files, not
+  baked into the artifact.</li>
+<li><strong>module 7</strong> — this whole script is what a CI/CD "deploy" job calls.</li>
+<li><strong>module 8/9</strong> — the <code>/health</code> check and post-switch verification are the
+  monitoring hooks that make step 6's automatic rollback possible.</li>
+</ul>
+<h2 id="instant-rollback">Instant rollback<a class="headerlink" href="#instant-rollback" title="Permanent link">&para;</a></h2>
+<p>Because the previous color is still fully running (just idle, not
+destroyed) immediately after a switch, rollback is the same one-line
+<code>sed</code> + <code>nginx reload</code> used in step 6's automatic case — no redeploying
+old code, no waiting for a build:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">"/upstream active/,/}/ s/server 127.0.0.1:</span><span class="si">${</span><span class="nv">NEW_PORT</span><span class="si">}</span><span class="s2">;/server 127.0.0.1:</span><span class="si">${</span><span class="nv">OLD_PORT</span><span class="si">}</span><span class="s2">;/"</span><span class="w"> </span>/etc/nginx/sites-available/app.conf
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sudo<span class="w"> </span>nginx<span class="w"> </span>-t<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>reload<span class="w"> </span>nginx
+</code></pre></div>
+<h2 id="trade-offs-to-know">Trade-offs to know<a class="headerlink" href="#trade-offs-to-know" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Blue-green needs 2x the running capacity of a single environment (both
+  colors are fully provisioned, even though only one serves traffic at a
+  time) — costlier than the rolling-restart pattern from module 5, but
+  simpler to reason about and instantly reversible.</li>
+<li>Database migrations must still follow the backward-compatible,
+  multi-step pattern from module 5 — blue and green share one database, so
+  a breaking schema change affects both colors regardless of which is
+  "live."</li>
+</ul>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Set up two systemd services (<code>myapp-blue</code>, <code>myapp-green</code>) on different
+   ports, an nginx config with the <code>upstream active</code> indirection above, and
+   deploy a "v1" build to blue and switch active to it.</li>
+<li>Run the full script to deploy "v2" to green, watch it health-check,
+   flip, and verify.</li>
+<li>Force a failure in the post-switch health check (e.g. crash the new
+   process right after cutover) and confirm the script's automatic
+   rollback correctly repoints <code>active</code> back to the previous color.</li>
+</ol>
 
 
 

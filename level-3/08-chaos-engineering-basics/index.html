@@ -1785,6 +1785,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Chaos Engineering Basics
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1801,6 +1819,91 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-deliberately-break-things" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why deliberately break things
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-small-and-safe-game-days-before-automated-chaos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start small and safe: game days before automated chaos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#failure-injection-techniques-from-simple-to-advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failure injection techniques, from simple to advanced
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tooling-for-repeatable-chaos-experiments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tooling for repeatable chaos experiments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#blast-radius-discipline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Blast radius discipline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2367,80 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-deliberately-break-things" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why deliberately break things
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#start-small-and-safe-game-days-before-automated-chaos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start small and safe: game days before automated chaos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#failure-injection-techniques-from-simple-to-advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failure injection techniques, from simple to advanced
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tooling-for-repeatable-chaos-experiments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tooling for repeatable chaos experiments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#blast-radius-discipline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Blast radius discipline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2460,148 @@
 
 
 <h1 id="08-chaos-engineering-basics">08 · Chaos Engineering Basics<a class="headerlink" href="#08-chaos-engineering-basics" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 3 · Advanced.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Every module so far has <em>designed</em> for failure — redundancy, health checks,
+backups, retries. Chaos engineering is how you find out whether those
+designs actually work, by deliberately causing failures in a controlled way
+before an uncontrolled one happens on its own.</p>
+<h2 id="why-deliberately-break-things">Why deliberately break things<a class="headerlink" href="#why-deliberately-break-things" title="Permanent link">&para;</a></h2>
+<p>Untested failure-handling code is one of the most common sources of
+surprise outages: the failover logic that's never actually triggered, the
+backup that's never actually restored (module 03), the retry policy that
+turns out to retry non-idempotent writes and duplicates orders. Chaos
+engineering treats "does the failure-handling actually work" as a
+falsifiable, testable claim rather than an assumption baked into the
+architecture diagram.</p>
+<p>The core loop:</p>
+<ol>
+<li>Define a <strong>steady state</strong> — a measurable signal that the system is
+   working normally (e.g. error rate &lt; 1%, p99 latency &lt; 300ms, checkout
+   success rate stable).</li>
+<li>Form a <strong>hypothesis</strong> — "if we kill one app instance, the steady state
+   holds, because the load balancer's health checks reroute traffic within
+   N seconds."</li>
+<li><strong>Inject a real failure</strong>, in a controlled and reversible way.</li>
+<li><strong>Observe</strong> — did the steady state hold? If not, where exactly did the
+   assumption break?</li>
+<li><strong>Fix the gap</strong>, then re-run the same experiment to confirm the fix
+   actually closed it.</li>
+</ol>
+<h2 id="start-small-and-safe-game-days-before-automated-chaos">Start small and safe: game days before automated chaos<a class="headerlink" href="#start-small-and-safe-game-days-before-automated-chaos" title="Permanent link">&para;</a></h2>
+<p>Before running unattended chaos experiments in production, run a <strong>game
+day</strong>: a scheduled, announced exercise where the team deliberately breaks
+something in staging (or a controlled slice of prod) and watches what
+happens together. This builds the muscle — both the tooling and the team's
+confidence reading dashboards and reacting — before increasing the blast
+radius or removing the human from the loop.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Game day checklist:
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>[ ] Steady-state metric identified and dashboard open
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>[ ] Hypothesis written down before starting
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>[ ] Rollback/abort procedure known and tested
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>[ ] Stakeholders notified of the window
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>[ ] Blast radius scoped (one instance? one AZ? never "all of prod" on day one)
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>[ ] Someone assigned to watch alerts, someone assigned to inject the failure
+</code></pre></div>
+<h2 id="failure-injection-techniques-from-simple-to-advanced">Failure injection techniques, from simple to advanced<a class="headerlink" href="#failure-injection-techniques-from-simple-to-advanced" title="Permanent link">&para;</a></h2>
+<p><strong>Process/instance kill</strong> — the most basic experiment, directly testing
+module 01's redundancy and health checks:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># pick one backend instance out of the pool and kill its app process</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>ssh<span class="w"> </span>app-03<span class="w"> </span><span class="s1">'sudo systemctl stop app'</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># watch: does the LB stop routing to it within max_fails/fail_timeout?</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># does overall error rate stay near zero?</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>app<span class="w">   </span><span class="c1"># restore</span>
+</code></pre></div>
+<p><strong>Network partition / latency injection</strong> — simulate a slow or unreachable
+dependency, testing module 07's timeout/circuit-breaker configuration:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># add 500ms of latency to all outbound traffic on this host (Linux tc/netem)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>tc<span class="w"> </span>qdisc<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span>eth0<span class="w"> </span>root<span class="w"> </span>netem<span class="w"> </span>delay<span class="w"> </span>500ms
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># simulate total packet loss to one specific IP (e.g. the payments service)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>sudo<span class="w"> </span>tc<span class="w"> </span>qdisc<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span>eth0<span class="w"> </span>root<span class="w"> </span>netem<span class="w"> </span>loss<span class="w"> </span><span class="m">100</span>%
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># always remove the rule when done — this is real network impairment</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>sudo<span class="w"> </span>tc<span class="w"> </span>qdisc<span class="w"> </span>del<span class="w"> </span>dev<span class="w"> </span>eth0<span class="w"> </span>root
+</code></pre></div>
+<p><strong>Resource exhaustion</strong> — does the app degrade gracefully or crash the
+whole host when CPU/memory/disk are under pressure?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># stress-ng: consume CPU and memory for a bounded time, then stop automatically</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>stress-ng
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>stress-ng<span class="w"> </span>--cpu<span class="w"> </span><span class="m">4</span><span class="w"> </span>--vm<span class="w"> </span><span class="m">2</span><span class="w"> </span>--vm-bytes<span class="w"> </span>1G<span class="w"> </span>--timeout<span class="w"> </span>120s
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># fill disk to test "what happens when /var is full" (do this on a scratch/test host!)</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>fallocate<span class="w"> </span>-l<span class="w"> </span>9G<span class="w"> </span>/tmp/fill_disk.img
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># ... observe logging, app behavior, alerting ...</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>rm<span class="w"> </span>/tmp/fill_disk.img<span class="w">   </span><span class="c1"># release immediately after observing</span>
+</code></pre></div>
+<p><strong>Dependency failure</strong> — stop a database or cache the app depends on and
+watch how it degrades:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>stop<span class="w"> </span>redis-cache
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># does the app fail every request, or fall back to a slower path (DB query</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># instead of cache), as designed? Confirm against the actual design intent.</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>docker<span class="w"> </span>start<span class="w"> </span>redis-cache
+</code></pre></div>
+<h2 id="tooling-for-repeatable-chaos-experiments">Tooling for repeatable chaos experiments<a class="headerlink" href="#tooling-for-repeatable-chaos-experiments" title="Permanent link">&para;</a></h2>
+<p>Ad-hoc <code>tc</code>/<code>stress-ng</code>/<code>systemctl stop</code> commands work for a first game
+day; for repeatable, scheduled experiments with automatic abort conditions,
+purpose-built tools add safety rails:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Conceptual Chaos Mesh experiment (Kubernetes): kill one pod, auto-revert after 60s</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">chaos-mesh.org/v1alpha1</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PodChaos</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="nt">metadata</span><span class="p">:</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kill-one-app-pod</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nt">spec</span><span class="p">:</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pod-kill</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">one</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">    </span><span class="nt">namespaces</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">production</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">    </span><span class="nt">labelSelectors</span><span class="p">:</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">orders</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">  </span><span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="s">"60s"</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Conceptual AWS FIS (Fault Injection Simulator) experiment with a built-in stop condition</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">"Kill</span><span class="nv"> </span><span class="s">25%</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">app</span><span class="nv"> </span><span class="s">instances,</span><span class="nv"> </span><span class="s">abort</span><span class="nv"> </span><span class="s">if</span><span class="nv"> </span><span class="s">error</span><span class="nv"> </span><span class="s">rate</span><span class="nv"> </span><span class="s">exceeds</span><span class="nv"> </span><span class="s">5%"</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nt">targets</span><span class="p">:</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nt">instances</span><span class="p">:</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="nt">resourceTags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> app</span><span class="p">:</span><span class="w"> </span><span class="nv">orders</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="nt">selectionMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PERCENT(25)</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="nt">actions</span><span class="p">:</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">actionId</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws:ec2:stop-instances</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="nt">stopConditions</span><span class="p">:</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws:cloudwatch:alarm</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">high-error-rate-alarm</span>
+</code></pre></div>
+<p>The <code>stopConditions</code>/auto-revert pattern is the key safety feature that
+separates "chaos engineering" from "recklessly breaking production": the
+experiment monitors the same steady-state signal it's testing against, and
+aborts itself the moment things look genuinely bad, rather than relying on
+a human to notice and intervene in time.</p>
+<h2 id="blast-radius-discipline">Blast radius discipline<a class="headerlink" href="#blast-radius-discipline" title="Permanent link">&para;</a></h2>
+<p>Always experiment against the smallest scope that still tests the
+hypothesis, and expand only after confidence builds:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>1. One instance, in staging
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>2. One instance, in production, off-peak, with someone watching
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>3. One AZ/shard, in production, off-peak
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>4. Scheduled, unattended, small blast radius, automatic abort on steady-state breach
+</code></pre></div>
+<p>Never start at step 4. Chaos engineering earns broader scope over time by
+demonstrating the safety mechanisms (fast, correct auto-revert) actually
+work at a small scale first.</p>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Pick one HA mechanism you've built in an earlier module (e.g. the
+   keepalived VIP failover from module 01, or the nginx <code>max_fails</code>
+   passive health check from Level 2). Write a one-paragraph hypothesis
+   predicting exactly what will happen when you break it.</li>
+<li>Run a controlled game day: define the steady-state metric you'll watch,
+   inject the failure (kill the process/interface), and record what
+   actually happened versus your hypothesis.</li>
+<li>If reality didn't match the hypothesis, identify the specific gap (wrong
+   timeout value? health check too lenient? no health check at all?) and
+   fix it.</li>
+<li>Re-run the same experiment after the fix and confirm the steady state
+   now holds — this "fix, then re-verify with the same experiment" step is
+   what turns chaos engineering into an actual improvement loop rather than
+   a one-off finding.</li>
+</ol>
 
 
 

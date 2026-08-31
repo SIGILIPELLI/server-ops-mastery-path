@@ -1271,6 +1271,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Load Balancing Basics
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1287,6 +1305,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-upstream-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The upstream block
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#balancing-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Balancing algorithms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#weighting-and-marking-backends-down" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Weighting and marking backends down
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#passive-health-checks-open-source-nginx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Passive health checks (open source nginx)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-load-balancing-one-form-of-high-availability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why load balancing = one form of high availability
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-three-backends-one-balancer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: three backends, one balancer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2378,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-upstream-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The upstream block
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#balancing-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Balancing algorithms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#weighting-and-marking-backends-down" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Weighting and marking backends down
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#passive-health-checks-open-source-nginx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Passive health checks (open source nginx)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-load-balancing-one-form-of-high-availability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why load balancing = one form of high availability
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-three-backends-one-balancer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: three backends, one balancer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2482,134 @@
 
 
 <h1 id="03-load-balancing-basics">03 · Load Balancing Basics<a class="headerlink" href="#03-load-balancing-basics" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 2 · Intermediate.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Once one server can't (or shouldn't, for availability reasons) handle all
+your traffic alone, you put a load balancer in front of multiple identical
+backend instances. nginx can do this itself with its <code>upstream</code> block —
+no separate LB product needed for a basic setup.</p>
+<h2 id="the-upstream-block">The <code>upstream</code> block<a class="headerlink" href="#the-upstream-block" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">upstream</span><span class="w"> </span><span class="s">app_backend</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">10.0.0.11</span><span class="p">:</span><span class="mi">3000</span><span class="p">;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">10.0.0.12</span><span class="p">:</span><span class="mi">3000</span><span class="p">;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">10.0.0.13</span><span class="p">:</span><span class="mi">3000</span><span class="p">;</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">}</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">app.example.com</span><span class="p">;</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://app_backend</span><span class="p">;</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Real-IP</span><span class="w"> </span><span class="nv">$remote_addr</span><span class="p">;</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-For</span><span class="w"> </span><span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="p">}</span>
+</code></pre></div>
+<p>By default nginx uses <strong>round robin</strong>: request 1 to server A, request 2 to
+B, request 3 to C, request 4 back to A, and so on.</p>
+<h2 id="balancing-algorithms">Balancing algorithms<a class="headerlink" href="#balancing-algorithms" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">upstream</span><span class="w"> </span><span class="s">app_backend</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="kn">least_conn</span><span class="p">;</span><span class="w">                 </span><span class="c1"># send to the backend with fewest active connections</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">10.0.0.11</span><span class="p">:</span><span class="mi">3000</span><span class="p">;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">10.0.0.12</span><span class="p">:</span><span class="mi">3000</span><span class="p">;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><strong>round robin</strong> (default) — simplest, fine when requests are roughly
+  uniform in cost.</li>
+<li><strong>least_conn</strong> — better when request processing times vary a lot (e.g.
+  some requests are slow reports); avoids piling more work onto a backend
+  that's already busy.</li>
+<li><strong>ip_hash</strong> — routes the same client IP to the same backend every time.
+  Useful for session affinity ("sticky sessions") when the app keeps
+  in-memory session state instead of a shared store — but see the note
+  below on why this is a workaround, not a fix.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">upstream</span><span class="w"> </span><span class="s">app_backend</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="kn">ip_hash</span><span class="p">;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">10.0.0.11</span><span class="p">:</span><span class="mi">3000</span><span class="p">;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">10.0.0.12</span><span class="p">:</span><span class="mi">3000</span><span class="p">;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="p">}</span>
+</code></pre></div>
+<p><strong>Prefer stateless backends over sticky sessions.</strong> <code>ip_hash</code> breaks down
+behind carrier-grade NAT (many users share one IP) and doesn't rebalance
+well when a backend is added/removed. The durable fix is to keep session
+state in a shared store (Redis, a database) so <em>any</em> backend can serve
+<em>any</em> request — treat <code>ip_hash</code> as a stopgap, not the design goal.</p>
+<h2 id="weighting-and-marking-backends-down">Weighting and marking backends down<a class="headerlink" href="#weighting-and-marking-backends-down" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">upstream</span><span class="w"> </span><span class="s">app_backend</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">10.0.0.11</span><span class="p">:</span><span class="mi">3000</span><span class="w"> </span><span class="s">weight=3</span><span class="p">;</span><span class="w">   </span><span class="c1"># gets ~3x the traffic of a weight=1 server</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">10.0.0.12</span><span class="p">:</span><span class="mi">3000</span><span class="p">;</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">10.0.0.13</span><span class="p">:</span><span class="mi">3000</span><span class="w"> </span><span class="s">backup</span><span class="p">;</span><span class="w">      </span><span class="c1"># only used if all non-backup servers are down</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">10.0.0.14</span><span class="p">:</span><span class="mi">3000</span><span class="w"> </span><span class="s">down</span><span class="p">;</span><span class="w">        </span><span class="c1"># manually taken out of rotation (e.g. for maintenance)</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="p">}</span>
+</code></pre></div>
+<p><code>weight</code> is handy when backends have different capacity (e.g. one bigger
+instance during a migration); <code>down</code> is a manual, config-file way to drain
+a node before you do maintenance on it — reload nginx after adding it,
+finish the maintenance, remove it, reload again.</p>
+<h2 id="passive-health-checks-open-source-nginx">Passive health checks (open source nginx)<a class="headerlink" href="#passive-health-checks-open-source-nginx" title="Permanent link">&para;</a></h2>
+<p>Open-source nginx doesn't have active health checks (polling <code>/health</code> on a
+timer) built in — that's an nginx Plus feature. What it does have is
+<strong>passive</strong> health checking: if a backend fails to connect or times out,
+nginx marks it temporarily unavailable and stops sending it traffic for a
+cooldown period.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">upstream</span><span class="w"> </span><span class="s">app_backend</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">10.0.0.11</span><span class="p">:</span><span class="mi">3000</span><span class="w"> </span><span class="s">max_fails=3</span><span class="w"> </span><span class="s">fail_timeout=30s</span><span class="p">;</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="kn">server</span><span class="w"> </span><span class="n">10.0.0.12</span><span class="p">:</span><span class="mi">3000</span><span class="w"> </span><span class="s">max_fails=3</span><span class="w"> </span><span class="s">fail_timeout=30s</span><span class="p">;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="p">}</span>
+</code></pre></div>
+<p><code>max_fails=3 fail_timeout=30s</code> means: after 3 failed attempts within 30
+seconds, mark this backend down for 30 seconds, then try it again. For real
+active health checks (proactively probing <code>/health</code> even with zero live
+traffic) you'd reach for HAProxy, nginx Plus, or a dedicated LB/service
+mesh — know this is the boundary of what stock nginx gives you for free.</p>
+<h2 id="why-load-balancing-one-form-of-high-availability">Why load balancing = one form of high availability<a class="headerlink" href="#why-load-balancing-one-form-of-high-availability" title="Permanent link">&para;</a></h2>
+<p>If backend <code>10.0.0.11</code> crashes, requests keep flowing to <code>.12</code> and <code>.13</code>
+with (at worst) the in-flight requests to <code>.11</code> failing once, then
+<code>max_fails</code> kicking in to stop sending it new traffic. This is the same
+mechanism behind zero-downtime deploys (module 5) — you can take one
+backend out of the pool, deploy to it, health-check it, and put it back,
+one at a time, with no visible downtime.</p>
+<h2 id="worked-example-three-backends-one-balancer">Worked example: three backends, one balancer<a class="headerlink" href="#worked-example-three-backends-one-balancer" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># on the LB host, simulate three backends locally on different ports</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">for</span><span class="w"> </span>p<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">3001</span><span class="w"> </span><span class="m">3002</span><span class="w"> </span><span class="m">3003</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="o">(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">"server </span><span class="nv">$p</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>http.server<span class="w"> </span><span class="nv">$p</span><span class="w"> </span>--bind<span class="w"> </span><span class="m">127</span>.0.0.1<span class="o">)</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="k">done</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/nginx/sites-available/lbdemo.conf<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="s">upstream demo_backend {</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="s">    least_conn;</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="s">    server 127.0.0.1:3001;</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="s">    server 127.0.0.1:3002;</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="s">    server 127.0.0.1:3003;</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="s">}</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="s">server {</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="s">    listen 8080;</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="s">    location / {</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="s">        proxy_pass http://demo_backend;</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="s">        proxy_set_header Host $host;</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="s">    }</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="s">}</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="s">EOF</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>sudo<span class="w"> </span>ln<span class="w"> </span>-sf<span class="w"> </span>/etc/nginx/sites-available/lbdemo.conf<span class="w"> </span>/etc/nginx/sites-enabled/
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>sudo<span class="w"> </span>nginx<span class="w"> </span>-t<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>reload<span class="w"> </span>nginx
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>seq<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">6</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:8080/<span class="w"> </span>-o<span class="w"> </span>/dev/null<span class="w"> </span>-w<span class="w"> </span><span class="s2">"%{http_code}\n"</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="nb">kill</span><span class="w"> </span>%1<span class="w"> </span>%2<span class="w"> </span>%3<span class="w">   </span><span class="c1"># stop the background python servers when done</span>
+</code></pre></div>
+<p>Watching nginx's access log (<code>sudo tail -f /var/log/nginx/access.log</code>) while
+curling repeatedly shows requests distributed across backends.</p>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Run three instances of a toy HTTP server on different local ports and
+   put an nginx <code>upstream</code> in front with <code>least_conn</code>.</li>
+<li>Kill one backend process mid-test and confirm (via repeated <code>curl</code>) that
+   nginx stops sending it traffic after <code>max_fails</code>/<code>fail_timeout</code>, and that
+   overall requests keep succeeding.</li>
+<li>Switch the upstream to <code>ip_hash</code> and confirm from a single client that
+   all requests land on the same backend every time.</li>
+</ol>
 
 
 

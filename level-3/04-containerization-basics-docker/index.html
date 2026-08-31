@@ -1673,6 +1673,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Containerization Basics (Docker) as a Deployment Pattern
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1689,6 +1707,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-containers-from-an-ops-angle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why containers, from an ops angle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anatomy-of-a-dockerfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anatomy of a Dockerfile
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-tagging-and-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building, tagging, and running
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-compose-for-multi-container-apps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker-compose for multi-container apps
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#persisting-data-and-avoiding-the-classic-mistake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Persisting data and avoiding the classic mistake
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logs-and-systemd-style-operational-habits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logs and systemd-style operational habits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2378,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-containers-from-an-ops-angle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why containers, from an ops angle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anatomy-of-a-dockerfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anatomy of a Dockerfile
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-tagging-and-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building, tagging, and running
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-compose-for-multi-container-apps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        docker-compose for multi-container apps
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#persisting-data-and-avoiding-the-classic-mistake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Persisting data and avoiding the classic mistake
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logs-and-systemd-style-operational-habits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logs and systemd-style operational habits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2482,172 @@
 
 
 <h1 id="04-containerization-basics-docker-as-a-deployment-pattern">04 · Containerization Basics (Docker) as a Deployment Pattern<a class="headerlink" href="#04-containerization-basics-docker-as-a-deployment-pattern" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 3 · Advanced.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Everything up to this point deployed an app directly onto a server's OS —
+install a runtime, copy code, run it under systemd. Containers package the
+app <em>and</em> its runtime/dependencies into one portable image, so "works on my
+machine" becomes "works in this exact environment, everywhere." This module
+treats Docker as a deployment pattern, not a general Docker course.</p>
+<h2 id="why-containers-from-an-ops-angle">Why containers, from an ops angle<a class="headerlink" href="#why-containers-from-an-ops-angle" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Reproducible environment</strong> — the container image pins the OS packages,
+  language runtime version, and dependencies. No more "prod has a different
+  libssl than staging."</li>
+<li><strong>Immutable artifact</strong> — you build an image once, tag it, and run the
+  <em>same</em> bytes in staging and production (this is the "environment-based
+  deployment" idea from Level 2, taken further — the artifact itself is
+  now identical, not just the config pointed at it).</li>
+<li><strong>Density and isolation</strong> — multiple containers share one kernel but get
+  their own filesystem/process namespace, so you can pack more workloads
+  per host than full VMs, with lighter-weight isolation than "just run
+  everything directly on the host."</li>
+<li><strong>Portability</strong> — the same image runs on a laptop, a bare-metal server,
+  or any cloud, as long as a container runtime is present.</li>
+</ul>
+<p>Trade-off to be honest about: containers add a layer (the runtime, image
+registry, orchestration) — for a single app on a single server, plain
+systemd (Level 1, module 4) is often simpler and has less to operate. Reach
+for containers when you need portability across environments or multiple
+apps/services per host with clean isolation.</p>
+<h2 id="anatomy-of-a-dockerfile">Anatomy of a Dockerfile<a class="headerlink" href="#anatomy-of-a-dockerfile" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">node:20-slim</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c"># copy dependency manifests first so this layer caches independently of source changes</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">COPY</span><span class="w"> </span>package.json<span class="w"> </span>package-lock.json<span class="w"> </span>./
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">RUN</span><span class="w"> </span>npm<span class="w"> </span>ci<span class="w"> </span>--omit<span class="o">=</span>dev
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c"># run as non-root — never run production containers as root</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="k">RUN</span><span class="w"> </span>useradd<span class="w"> </span>--uid<span class="w"> </span><span class="m">1000</span><span class="w"> </span>--create-home<span class="w"> </span>appuser
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="k">USER</span><span class="w"> </span><span class="s">appuser</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="k">EXPOSE</span><span class="w"> </span><span class="s">3000</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="k">HEALTHCHECK</span><span class="w"> </span>--interval<span class="o">=</span>30s<span class="w"> </span>--timeout<span class="o">=</span>3s<span class="w"> </span><span class="k">CMD</span><span class="w"> </span>wget<span class="w"> </span>-qO-<span class="w"> </span>http://localhost:3000/healthz<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">"node"</span><span class="p">,</span><span class="w"> </span><span class="s2">"server.js"</span><span class="p">]</span>
+</code></pre></div>
+<p>Key ops-relevant choices baked into this file:</p>
+<ul>
+<li><strong>Layer ordering</strong> — dependency install before source copy means
+  changing application code doesn't invalidate (and re-run) the <code>npm ci</code>
+  layer, keeping rebuilds fast.</li>
+<li><strong>Slim base image</strong> — smaller attack surface and faster pulls than a full
+  <code>node:20</code> image with a whole Debian userland.</li>
+<li><strong>Non-root user</strong> — if the app is compromised, the attacker doesn't
+  automatically have root inside the container (and, depending on
+  configuration, on the host).</li>
+<li><strong><code>HEALTHCHECK</code></strong> — the same liveness/readiness idea from module 01,
+  expressed at the container level so <code>docker ps</code> and orchestrators can see
+  container health directly.</li>
+</ul>
+<h2 id="building-tagging-and-running">Building, tagging, and running<a class="headerlink" href="#building-tagging-and-running" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>registry.example.com/app:1.4.2<span class="w"> </span>.
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker<span class="w"> </span>push<span class="w"> </span>registry.example.com/app:1.4.2
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span>--name<span class="w"> </span>app<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span>--restart<span class="w"> </span>unless-stopped<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span>-p<span class="w"> </span><span class="m">3000</span>:3000<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">DATABASE_URL</span><span class="o">=</span><span class="s2">"postgres://app:secret@db.internal:5432/app"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span>--memory<span class="o">=</span>512m<span class="w"> </span>--cpus<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">  </span>registry.example.com/app:1.4.2
+</code></pre></div>
+<p>Notes that matter operationally:</p>
+<ul>
+<li><strong>Tag by immutable version, never just <code>latest</code></strong> — <code>latest</code> makes
+  rollbacks and "what's actually running in prod" impossible to answer
+  reliably. Use a semantic version or the git commit SHA as the tag.</li>
+<li><code>--restart unless-stopped</code> gives you the systemd-equivalent of
+  auto-restart on crash/reboot, without systemd itself.</li>
+<li><code>--memory</code>/<code>--cpus</code> set resource limits — without them, one runaway
+  container can starve every other container on the host, the container
+  equivalent of one process filling up a whole VM.</li>
+</ul>
+<h2 id="docker-compose-for-multi-container-apps">docker-compose for multi-container apps<a class="headerlink" href="#docker-compose-for-multi-container-apps" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># docker-compose.yml</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nt">services</span><span class="p">:</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">app</span><span class="p">:</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry.example.com/app:1.4.2</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unless-stopped</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"3000:3000"</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">      </span><span class="nt">DATABASE_URL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres://app:secret@db:5432/app</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">      </span><span class="nt">db</span><span class="p">:</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">        </span><span class="nt">condition</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">service_healthy</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">    </span><span class="nt">deploy</span><span class="p">:</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">512M</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">          </span><span class="nt">cpus</span><span class="p">:</span><span class="w"> </span><span class="s">"1.0"</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">  </span><span class="nt">db</span><span class="p">:</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgres:16</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unless-stopped</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="w">      </span><span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">secret</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="w">      </span><span class="nt">POSTGRES_DB</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">app</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">db_data:/var/lib/postgresql/data</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="w">    </span><span class="nt">healthcheck</span><span class="p">:</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="w">      </span><span class="nt">test</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"CMD-SHELL"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"pg_isready</span><span class="nv"> </span><span class="s">-U</span><span class="nv"> </span><span class="s">postgres"</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="w">      </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5s</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="w">      </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3s</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a><span class="w">      </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>
+<a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="nt">volumes</span><span class="p">:</span>
+<a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a><span class="w">  </span><span class="nt">db_data</span><span class="p">:</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>ps
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>app
+</code></pre></div>
+<p><code>depends_on: condition: service_healthy</code> ties back directly to the
+<code>HEALTHCHECK</code> mechanism — <code>app</code> won't start until <code>db</code>'s healthcheck passes,
+avoiding the classic "app crash-loops because the database wasn't ready
+yet" race.</p>
+<h2 id="persisting-data-and-avoiding-the-classic-mistake">Persisting data and avoiding the classic mistake<a class="headerlink" href="#persisting-data-and-avoiding-the-classic-mistake" title="Permanent link">&para;</a></h2>
+<p>Containers are meant to be disposable — anything written inside the
+container's own filesystem is lost when the container is removed. Data that
+must survive belongs in a <strong>named volume</strong> (as <code>db_data</code> above) or a
+bind-mounted host path, never in the container's writable layer.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># WRONG: data lives only inside the container, gone on `docker rm`</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>postgres:16
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># RIGHT: data lives in a named volume, survives container replacement</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-v<span class="w"> </span>db_data:/var/lib/postgresql/data<span class="w"> </span>postgres:16
+</code></pre></div>
+<p>This is the container-world version of "don't put your database on the same
+disk you'll wipe during a redeploy" — the container itself is the
+disposable unit; durable state has to be explicitly placed outside it.</p>
+<h2 id="logs-and-systemd-style-operational-habits">Logs and systemd-style operational habits<a class="headerlink" href="#logs-and-systemd-style-operational-habits" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>--tail<span class="w"> </span><span class="m">100</span><span class="w"> </span>app<span class="w">          </span><span class="c1"># equivalent to journalctl -u app -f</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>docker<span class="w"> </span>inspect<span class="w"> </span>app<span class="w"> </span>--format<span class="w"> </span><span class="s1">'{{.State.Health.Status}}'</span><span class="w">   </span><span class="c1"># healthy / unhealthy / starting</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>docker<span class="w"> </span>stats<span class="w"> </span>--no-stream<span class="w">               </span><span class="c1"># equivalent to a quick top for containers</span>
+</code></pre></div>
+<p>In production, container logs are typically shipped off-host (Level 2's
+centralized logging module) rather than read locally — a container that's
+rescheduled onto a different host takes its logs with it unless they're
+already centralized.</p>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Write a <code>Dockerfile</code> for a small app (any language) that follows the
+   pattern above: cached dependency layer, non-root user, <code>HEALTHCHECK</code>.</li>
+<li>Write a <code>docker-compose.yml</code> running the app plus a database it depends
+   on, using <code>depends_on: condition: service_healthy</code> and a named volume
+   for the database's data directory.</li>
+<li><code>docker compose up -d</code>, then kill the database container (<code>docker kill
+   &lt;db-container&gt;</code>) and observe: does the app container crash-loop, retry,
+   or hang? Decide whether that's the behavior you'd want in production and
+   what you'd change (e.g. retry logic in the app, or <code>restart:
+   unless-stopped</code> on the db) if not.</li>
+<li>Tag and rebuild the image with a code change, and demonstrate a rollback
+   by re-running the previous version's tag — confirm the previous tag
+   still exists and works, which is why "never overwrite <code>latest</code>" matters.</li>
+</ol>
 
 
 

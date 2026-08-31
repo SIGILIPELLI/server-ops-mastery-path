@@ -1439,6 +1439,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Centralized Logging Basics
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1455,6 +1473,113 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-centralize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why centralize
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shipping-journald-logs-with-vector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shipping journald logs with Vector
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#querying-centralized-logs-logql-lokis-query-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Querying centralized logs (LogQL, Loki's query language)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structured-logging-log-json-not-free-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structured logging: log JSON, not free text
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-retention-and-cost-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Log retention and cost control
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#correlating-a-request-across-services-with-a-request-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Correlating a request across services with a request ID
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2389,102 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-centralize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why centralize
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shipping-journald-logs-with-vector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shipping journald logs with Vector
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#querying-centralized-logs-logql-lokis-query-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Querying centralized logs (LogQL, Loki's query language)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#structured-logging-log-json-not-free-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structured logging: log JSON, not free text
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-retention-and-cost-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Log retention and cost control
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#correlating-a-request-across-services-with-a-request-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Correlating a request across services with a request ID
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2504,129 @@
 
 
 <h1 id="09-centralized-logging-basics">09 · Centralized Logging Basics<a class="headerlink" href="#09-centralized-logging-basics" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 2 · Intermediate.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Level 1 covered reading logs on a single box (<code>journalctl</code>, <code>/var/log</code>).
+Once you have more than one server, "SSH into each box and grep" stops
+scaling — you need logs shipped somewhere central where you can search
+across every host at once. This module builds that pipeline with the free,
+widely-used combination of <strong>Vector</strong> (or Filebeat) shipping into a
+central store.</p>
+<h2 id="why-centralize">Why centralize<a class="headerlink" href="#why-centralize" title="Permanent link">&para;</a></h2>
+<ul>
+<li>An incident spans multiple backends (module 3) — you need one place to
+  correlate what happened on all of them at the same timestamp.</li>
+<li>Logs on a crashed/terminated box are gone with it — shipping them off-box
+  in near-real-time is your only record if the host itself doesn't survive.</li>
+<li>Grepping 10 files by hand doesn't scale; a search index does.</li>
+</ul>
+<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>app (stdout/stderr → journald)
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>     │
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>     ▼
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>log shipper (Vector/Filebeat) reads journald, forwards over the network
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>     │
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>     ▼
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>central log store (Loki / Elasticsearch / a hosted service)
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>     │
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>     ▼
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>you, searching/dashboarding (Grafana / Kibana)
+</code></pre></div>
+<h2 id="shipping-journald-logs-with-vector">Shipping journald logs with Vector<a class="headerlink" href="#shipping-journald-logs-with-vector" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># /etc/vector/vector.toml</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">[sources.app_logs]</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"journald"</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">include_units</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"myapp.service"</span><span class="p">,</span><span class="w"> </span><span class="s2">"nginx.service"</span><span class="p">]</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="k">[transforms.add_host]</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"remap"</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">inputs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"app_logs"</span><span class="p">]</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'''</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="s1">.host = get_hostname!()</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="s1">.environment = "production"</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="s1">'''</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="k">[sinks.loki]</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"loki"</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="n">inputs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"add_host"</span><span class="p">]</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="n">endpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"http://loki.internal:3100"</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="n">encoding</span><span class="p">.</span><span class="n">codec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"json"</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="n">labels</span><span class="p">.</span><span class="n">job</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"myapp"</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="n">labels</span><span class="p">.</span><span class="n">host</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"{{ host }}"</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>vector
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>journalctl<span class="w"> </span>-u<span class="w"> </span>vector<span class="w"> </span>-f<span class="w">    </span><span class="c1"># confirm it's shipping without errors</span>
+</code></pre></div>
+<p>The <code>remap</code> transform adds fields (hostname, environment) to every log line
+before it's shipped — this is what lets you later filter "show me only
+production, only host web-3" in the central UI.</p>
+<h2 id="querying-centralized-logs-logql-lokis-query-language">Querying centralized logs (LogQL, Loki's query language)<a class="headerlink" href="#querying-centralized-logs-logql-lokis-query-language" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>{job="myapp"} |= "ERROR"
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>{job="myapp", host="web-2"} | json | status_code &gt;= 500
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>{job="myapp"} |= "ERROR" [5m]  # count errors in the last 5 minutes, e.g. for an alert
+</code></pre></div>
+<p>The equivalent single-host <code>journalctl</code> command you already know from
+level 1 (<code>journalctl -u myapp -p err</code>) only ever sees one machine —
+<code>{job="myapp"} |= "ERROR"</code> across a Loki index sees every machine shipping
+that label, which is the entire point of this module.</p>
+<h2 id="structured-logging-log-json-not-free-text">Structured logging: log JSON, not free text<a class="headerlink" href="#structured-logging-log-json-not-free-text" title="Permanent link">&para;</a></h2>
+<p>Free-text logs (<code>"user 42 logged in from 1.2.3.4"</code>) are hard to query
+precisely. Structured JSON logs are trivial to filter and aggregate on
+specific fields:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span><span class="o">,</span><span class="w"> </span><span class="nn">sys</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">class</span><span class="w"> </span><span class="nc">JsonFormatter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">):</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>            <span class="s2">"timestamp"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">formatTime</span><span class="p">(</span><span class="n">record</span><span class="p">),</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>            <span class="s2">"level"</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">levelname</span><span class="p">,</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>            <span class="s2">"message"</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">getMessage</span><span class="p">(),</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>            <span class="s2">"user_id"</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="s2">"user_id"</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>            <span class="s2">"request_id"</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="s2">"request_id"</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>        <span class="p">})</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="n">handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="n">handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">JsonFormatter</span><span class="p">())</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"user logged in"</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="p">{</span><span class="s2">"user_id"</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span> <span class="s2">"request_id"</span><span class="p">:</span> <span class="s2">"abc-123"</span><span class="p">})</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="c1"># -&gt; {"timestamp": "...", "level": "INFO", "message": "user logged in", "user_id": 42, "request_id": "abc-123"}</span>
+</code></pre></div>
+<p>With structured logs, <code>{job="myapp"} | json | user_id="42"</code> finds every
+event for that user across every host and every deploy — a query that's
+essentially impossible to do reliably against free-text logs at scale.</p>
+<h2 id="log-retention-and-cost-control">Log retention and cost control<a class="headerlink" href="#log-retention-and-cost-control" title="Permanent link">&para;</a></h2>
+<p>Centralized logging has a real storage cost that grows with volume — set a
+retention policy deliberately rather than by accident:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Loki config snippet</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nt">limits_config</span><span class="p">:</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">retention_period</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">720h</span><span class="w">   </span><span class="c1"># 30 days</span>
+</code></pre></div>
+<p>A common pattern: keep verbose (debug) logs for a short window (days), keep
+error/warn-level logs longer (weeks/months) for incident postmortems and
+compliance, and sample or drop extremely high-volume, low-value log lines
+(e.g. per-request access logs on a busy endpoint) rather than shipping
+100% of everything forever.</p>
+<h2 id="correlating-a-request-across-services-with-a-request-id">Correlating a request across services with a request ID<a class="headerlink" href="#correlating-a-request-across-services-with-a-request-id" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">request_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"X-Request-Id"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()))</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1"># pass it through: log it locally, AND forward it as a header to any downstream service call</span>
+</code></pre></div>
+<p>Generating (or propagating) one <code>request_id</code> per incoming request and
+including it in every log line that request produces — across every
+service it touches — is what turns "logs from five different backends"
+into "the complete story of one user's failed checkout," searchable with a
+single <code>request_id="..."</code> query.</p>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Install Vector (or Filebeat) on a test VM and configure it to ship
+   <code>journalctl</code> output for one unit to a local file or a free-tier Loki/
+   Grafana Cloud instance.</li>
+<li>Switch a toy app's logging to structured JSON with at least a
+   <code>request_id</code> field, and confirm you can query for a single request's
+   full log trail.</li>
+<li>Write a LogQL (or equivalent) query that counts ERROR-level lines in the
+   last 5 minutes — the kind of query you'd wire into an alert in the next
+   level's observability work.</li>
+</ol>
 
 
 

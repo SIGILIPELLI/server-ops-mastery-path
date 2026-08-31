@@ -2047,6 +2047,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Security Patching Strategy at Scale
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2063,6 +2081,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#classify-before-you-patch-not-every-cve-is-equally-urgent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classify before you patch: not every CVE is equally urgent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#patch-tiers-and-rollout-cadence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Patch tiers and rollout cadence
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rolling-patches-across-a-fleet-without-an-outage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rolling patches across a fleet without an outage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#staging-first-for-anything-above-tier-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Staging first, for anything above Tier 1
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proving-the-fleet-is-patched-dont-trust-verify" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Proving the fleet is patched: don't trust, verify
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tracking-patch-compliance-as-a-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tracking patch compliance as a metric
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2378,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#classify-before-you-patch-not-every-cve-is-equally-urgent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classify before you patch: not every CVE is equally urgent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#patch-tiers-and-rollout-cadence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Patch tiers and rollout cadence
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rolling-patches-across-a-fleet-without-an-outage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rolling patches across a fleet without an outage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#staging-first-for-anything-above-tier-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Staging first, for anything above Tier 1
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proving-the-fleet-is-patched-dont-trust-verify" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Proving the fleet is patched: don't trust, verify
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tracking-patch-compliance-as-a-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tracking patch compliance as a metric
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2482,170 @@
 
 
 <h1 id="04-security-patching-strategy-at-scale">04 · Security Patching Strategy at Scale<a class="headerlink" href="#04-security-patching-strategy-at-scale" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 4 · Master.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Level 1's hardening checklist covered <code>unattended-upgrades</code> on one server.
+At fleet scale — dozens or hundreds of hosts, multiple services, staged
+environments — patching needs a deliberate strategy: how urgently different
+classes of vulnerabilities get patched, how patches are rolled out without
+causing an outage, and how you prove the fleet is actually patched rather
+than assuming it.</p>
+<h2 id="classify-before-you-patch-not-every-cve-is-equally-urgent">Classify before you patch: not every CVE is equally urgent<a class="headerlink" href="#classify-before-you-patch-not-every-cve-is-equally-urgent" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>CVSS score + exploitability + exposure = actual urgency
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Critical (CVSS 9.0-10.0) + known exploited in the wild + internet-facing
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  → patch within hours, out-of-band, don't wait for the next scheduled window
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>High (CVSS 7.0-8.9) + internet-facing
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  → patch within days, next scheduled window if one is imminent
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>Medium/Low, or internal-only service with no public exposure
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>  → normal patch cadence (e.g. weekly/monthly maintenance window)
+</code></pre></div>
+<p>A CVE's raw CVSS score without context about <em>exposure</em> leads to both
+over-reaction (dropping everything for a critical bug in a library you
+don't even use in an exposed path) and under-reaction (treating a
+"medium" bug as low-priority when it's in your public-facing login
+endpoint). Maintain an actual inventory of what's exposed where (module
+"Compliance &amp; Audit Considerations" builds on this) so triage is based on
+real exposure, not just the headline score.</p>
+<h2 id="patch-tiers-and-rollout-cadence">Patch tiers and rollout cadence<a class="headerlink" href="#patch-tiers-and-rollout-cadence" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Tier 1 — OS/kernel security patches:      weekly automated (unattended-upgrades,
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>                                            Level 1 module 2), reboot via
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>                                            kured/maintenance window if kernel
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Tier 2 — Language runtime / framework:    monthly, tested in staging first
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>                                            (npm/pip/gem security advisories)
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>Tier 3 — Application dependencies:        continuous via automated PRs
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>                                            (Dependabot/Renovate) + CI
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>Tier 4 — Critical/actively-exploited:     out-of-band, immediate, any tier
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Renovate/Dependabot-style config: auto-PR security patches, group by risk</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># .github/dependabot.yml</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nt">updates</span><span class="p">:</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">package-ecosystem</span><span class="p">:</span><span class="w"> </span><span class="s">"npm"</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="nt">directory</span><span class="p">:</span><span class="w"> </span><span class="s">"/"</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="nt">schedule</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> interval</span><span class="p">:</span><span class="w"> </span><span class="s">"daily"</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="nt">open-pull-requests-limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="nt">groups</span><span class="p">:</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">      </span><span class="nt">security-patches</span><span class="p">:</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">        </span><span class="nt">applies-to</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">security-updates</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">        </span><span class="nt">update-types</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"patch"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"minor"</span><span class="p p-Indicator">]</span>
+</code></pre></div>
+<p>Automating the <em>proposal</em> of patches (a bot opens the PR) while keeping a
+human/CI gate on merging is the practical middle ground between "patch
+everything instantly, unreviewed" (risk of a bad patch breaking prod) and
+"patch manually when someone remembers" (the far more common actual
+failure mode).</p>
+<h2 id="rolling-patches-across-a-fleet-without-an-outage">Rolling patches across a fleet without an outage<a class="headerlink" href="#rolling-patches-across-a-fleet-without-an-outage" title="Permanent link">&para;</a></h2>
+<p>Patching N hosts by SSHing into each one by hand doesn't scale and risks
+patching them all simultaneously — if the patch itself breaks something,
+you've just taken down 100% of capacity at once. Use the same
+rolling/canary discipline as a deploy (Level 2 module 5):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Ansible playbook: patch and reboot one batch at a time, health-check between batches</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rolling OS patch</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">web</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">serial</span><span class="p">:</span><span class="w"> </span><span class="s">"25%"</span><span class="w">          </span><span class="c1"># patch a quarter of the fleet at a time</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="nt">max_fail_percentage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">  </span><span class="c1"># stop the whole rollout if any host in a batch fails</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="nt">tasks</span><span class="p">:</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apply security updates</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">      </span><span class="nt">apt</span><span class="p">:</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">        </span><span class="nt">upgrade</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">safe</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">        </span><span class="nt">update_cache</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">check if reboot required</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">      </span><span class="nt">stat</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> path</span><span class="p">:</span><span class="w"> </span><span class="nv">/var/run/reboot-required</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">      </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reboot_required</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">remove this host from the load balancer pool</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">      </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reboot_required.stat.exists</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">      </span><span class="nt">uri</span><span class="p">:</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">        </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">"http://lb-admin.internal/api/pool/{{</span><span class="nv"> </span><span class="s">inventory_hostname</span><span class="nv"> </span><span class="s">}}/drain"</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">        </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">POST</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reboot if needed</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="w">      </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reboot_required.stat.exists</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="w">      </span><span class="nt">reboot</span><span class="p">:</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="w">        </span><span class="nt">reboot_timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wait for health check to pass before re-adding to pool</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="w">      </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reboot_required.stat.exists</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="w">      </span><span class="nt">uri</span><span class="p">:</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="w">        </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">"http://{{</span><span class="nv"> </span><span class="s">inventory_hostname</span><span class="nv"> </span><span class="s">}}/healthz"</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="w">      </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">health</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="w">      </span><span class="nt">until</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">health.status == 200</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a><span class="w">      </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a><span class="w">      </span><span class="nt">delay</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a>
+<a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">re-add to the load balancer pool</span>
+<a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a><span class="w">      </span><span class="nt">when</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reboot_required.stat.exists</span>
+<a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a><span class="w">      </span><span class="nt">uri</span><span class="p">:</span>
+<a id="__codelineno-3-39" name="__codelineno-3-39" href="#__codelineno-3-39"></a><span class="w">        </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">"http://lb-admin.internal/api/pool/{{</span><span class="nv"> </span><span class="s">inventory_hostname</span><span class="nv"> </span><span class="s">}}/undrain"</span>
+<a id="__codelineno-3-40" name="__codelineno-3-40" href="#__codelineno-3-40"></a><span class="w">        </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">POST</span>
+</code></pre></div>
+<p><code>serial: "25%"</code> combined with <code>max_fail_percentage: 0</code> is the key
+safety property: if the patch itself causes a problem (a kernel update that
+breaks a driver, a library update with a breaking change), it surfaces on
+the first batch and the rollout halts automatically before it reaches the
+whole fleet — this is the patching equivalent of a canary deploy.</p>
+<h2 id="staging-first-for-anything-above-tier-1">Staging first, for anything above Tier 1<a class="headerlink" href="#staging-first-for-anything-above-tier-1" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>1. Apply the patch in staging (same OS/package versions as prod)
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>2. Run the full test suite / a smoke test against staging
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>3. Apply to a canary batch in prod (module "rolling" above), watch metrics
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>   for an agreed soak period (e.g. 30 min)
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>4. Roll out to the rest of the fleet in batches
+</code></pre></div>
+<p>Skipping staging is sometimes justified for a Tier 4 (actively exploited,
+critical) patch where the risk of <em>not</em> patching immediately outweighs the
+risk of an untested patch — but that's a deliberate, documented exception,
+not the default path.</p>
+<h2 id="proving-the-fleet-is-patched-dont-trust-verify">Proving the fleet is patched: don't trust, verify<a class="headerlink" href="#proving-the-fleet-is-patched-dont-trust-verify" title="Permanent link">&para;</a></h2>
+<p>A patching <em>process</em> existing doesn't mean it's actually keeping the fleet
+current — hosts get missed (new hosts added outside the automation's
+inventory, a host with <code>unattended-upgrades</code> silently broken, a host
+excluded during an incident and never re-included). Verify with an
+independent scan, not just by trusting the automation ran:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># osquery: ask every host what it actually has installed, fleet-wide</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># (via Fleet/osquery-manager, or ad-hoc via Ansible for a smaller fleet)</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>ansible<span class="w"> </span>web<span class="w"> </span>-i<span class="w"> </span>inventory.ini<span class="w"> </span>-m<span class="w"> </span>shell<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span>-a<span class="w"> </span><span class="s2">"dpkg-query -W -f='</span><span class="si">${</span><span class="nv">Package</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">Version</span><span class="si">}</span><span class="s2">\n' openssl"</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Trivy: scan a container image or filesystem for known CVEs directly</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>trivy<span class="w"> </span>image<span class="w"> </span>registry.example.com/app:1.4.2<span class="w"> </span>--severity<span class="w"> </span>HIGH,CRITICAL
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># CI gate: fail the build if the image has unpatched critical CVEs</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">scan image for critical vulnerabilities</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trivy image --exit-code 1 --severity CRITICAL registry.example.com/app:${{ github.sha }}</span>
+</code></pre></div>
+<p>Running a vulnerability scanner as a <strong>CI gate</strong> (fails the build/deploy on
+a critical finding) rather than only a periodic report is what turns
+"we scan for vulnerabilities" into "we can't ship a known-critical
+vulnerability" — a report nobody's required to act on tends to accumulate
+unread findings.</p>
+<h2 id="tracking-patch-compliance-as-a-metric">Tracking patch compliance as a metric<a class="headerlink" href="#tracking-patch-compliance-as-a-metric" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a># Fleet-wide dashboard metric, reviewed weekly (or as a compliance report, module 07)
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>% of fleet with all Tier-1 patches applied within SLA (e.g. 7 days of release)
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>% of fleet with any actively-exploited CVE present
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>mean time to patch, by tier, over the last quarter
+</code></pre></div>
+<p>Treating "patch compliance %" as a tracked, reviewed metric — the same way
+error rate or latency is tracked (Level 3 module 09) — is what keeps
+patching from silently regressing after the initial rollout of a patching
+process; without a metric, "we patch regularly" is unfalsifiable until an
+audit or an incident proves otherwise.</p>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Write a triage rule (like the classification block above) for your own
+   environment: what counts as Tier 1-4, and what's the target time-to-
+   patch for each.</li>
+<li>Write an Ansible playbook (or equivalent for your config-management
+   tool) that rolls out an OS patch to a fleet in batches, drains each host
+   from a load balancer pool before rebooting it, and confirms a health
+   check passes before re-adding it and moving to the next batch.</li>
+<li>Run Trivy (or an equivalent scanner) against a real container image you
+   use, and classify the findings using your Tier system from step 1.</li>
+<li>Design one dashboard panel or scheduled report that shows patch
+   compliance % across your fleet, and state what threshold would trigger
+   an alert or escalation.</li>
+</ol>
 
 
 

@@ -1757,6 +1757,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Service Mesh & Internal Networking Concepts
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1773,6 +1791,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-problem-service-meshes-solve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The problem service meshes solve
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#service-discovery-the-foundation-mesh-or-not" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service discovery: the foundation, mesh or not
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-sidecar-proxy-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The sidecar proxy pattern
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mutual-tls-mtls-between-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mutual TLS (mTLS) between services
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retries-timeouts-and-circuit-breaking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retries, timeouts, and circuit breaking
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#do-you-actually-need-a-service-mesh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Do you actually need a service mesh
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2378,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-problem-service-meshes-solve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The problem service meshes solve
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#service-discovery-the-foundation-mesh-or-not" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service discovery: the foundation, mesh or not
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-sidecar-proxy-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The sidecar proxy pattern
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mutual-tls-mtls-between-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mutual TLS (mTLS) between services
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retries-timeouts-and-circuit-breaking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retries, timeouts, and circuit breaking
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#do-you-actually-need-a-service-mesh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Do you actually need a service mesh
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2482,154 @@
 
 
 <h1 id="07-service-mesh-internal-networking-concepts">07 · Service Mesh &amp; Internal Networking Concepts<a class="headerlink" href="#07-service-mesh-internal-networking-concepts" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 3 · Advanced.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>As a deployment grows from "one app talking to one database" into a dozen
+services calling each other, the <em>internal</em> (service-to-service) network
+becomes as important to operate as the external one. This module covers the
+concepts — service discovery, mutual TLS, retries/circuit breaking — and
+where a service mesh fits, without requiring you to already run Kubernetes.</p>
+<h2 id="the-problem-service-meshes-solve">The problem service meshes solve<a class="headerlink" href="#the-problem-service-meshes-solve" title="Permanent link">&para;</a></h2>
+<p>With N services calling each other, every pair needs answers to the same
+set of questions, and answering them independently in each service's code
+doesn't scale:</p>
+<ul>
+<li><strong>Service discovery</strong> — how does the <code>orders</code> service find a current,
+  healthy address for the <code>payments</code> service, when instances come and go?</li>
+<li><strong>Encryption in transit</strong> — is traffic between services on the internal
+  network encrypted, or does anyone with access to that network segment see
+  plaintext?</li>
+<li><strong>Retries and timeouts</strong> — if <code>payments</code> is slow, does <code>orders</code> wait
+  forever, retry blindly and pile on load, or fail fast?</li>
+<li><strong>Observability</strong> — can you see the request graph (which service called
+  which, how long each hop took) across the whole mesh, not just inside one
+  service's logs?</li>
+</ul>
+<p>A service mesh's core idea: pull all of this out of application code and
+into a shared infrastructure layer, usually implemented as a small proxy
+("sidecar") deployed next to every service instance, handling all of that
+service's inbound and outbound traffic.</p>
+<h2 id="service-discovery-the-foundation-mesh-or-not">Service discovery: the foundation, mesh or not<a class="headerlink" href="#service-discovery-the-foundation-mesh-or-not" title="Permanent link">&para;</a></h2>
+<p>Even without a mesh, you need service discovery once you have more than a
+hardcoded IP:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a># DNS-based (simplest, works standalone): each service resolves a name
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>payments.internal.example.com  →  resolves to current healthy instances
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Consul-style service registration (an instance announces itself on startup)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nt">service</span><span class="p">:</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">payments</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.0.2.15</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8080</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="nt">check</span><span class="p">:</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="nt">http</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://10.0.2.15:8080/healthz</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10s</span>
+</code></pre></div>
+<p>Other services then query Consul (or <code>etcd</code>, or Kubernetes' built-in
+service objects) instead of a static config file, and the registry
+automatically drops instances that fail their health check — the same
+liveness/readiness idea from module 01, now used for internal routing
+decisions instead of just external LB decisions.</p>
+<h2 id="the-sidecar-proxy-pattern">The sidecar proxy pattern<a class="headerlink" href="#the-sidecar-proxy-pattern" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>┌─────────────────────────┐      ┌─────────────────────────┐
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>│  orders service          │      │  payments service        │
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>│  ┌────────┐  ┌────────┐ │      │ ┌────────┐  ┌────────┐  │
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>│  │  app   │──│ sidecar│─┼──────┼─│sidecar │──│  app   │  │
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>│  │ (code) │  │(Envoy) │ │ mTLS │ │(Envoy) │  │ (code) │  │
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>│  └────────┘  └────────┘ │      │ └────────┘  └────────┘  │
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>└─────────────────────────┘      └─────────────────────────┘
+</code></pre></div>
+<p>The application talks to <code>localhost</code> — its own sidecar — which handles
+finding the real destination, encrypting the connection, retrying on
+transient failure, and reporting metrics. The application code never needs
+a retry/TLS library for internal calls; it's centralized in the mesh's data
+plane (the sidecars) and configured from a control plane (e.g. Istio's
+<code>istiod</code>, Linkerd's control plane).</p>
+<h2 id="mutual-tls-mtls-between-services">Mutual TLS (mTLS) between services<a class="headerlink" href="#mutual-tls-mtls-between-services" title="Permanent link">&para;</a></h2>
+<p>Regular TLS (Level 2 module 2) proves the <em>server's</em> identity to the
+client. <strong>Mutual</strong> TLS proves both directions — the client also presents a
+certificate, so the server knows which service is calling, not just that
+the connection is encrypted.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Conceptual Istio PeerAuthentication: require mTLS for all traffic in a namespace</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">security.istio.io/v1beta1</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PeerAuthentication</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nt">metadata</span><span class="p">:</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">production</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="nt">spec</span><span class="p">:</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span><span class="nt">mtls</span><span class="p">:</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">STRICT</span>
+</code></pre></div>
+<p>Why this matters operationally: internal networks are often assumed
+"trusted" because they're not internet-facing, but that assumption fails
+the moment any single host or container on that network is compromised —
+mTLS means a compromised service can't silently impersonate another one or
+read traffic between two services it's not part of. This is the "zero
+trust" principle applied to the internal network, not just the perimeter.</p>
+<h2 id="retries-timeouts-and-circuit-breaking">Retries, timeouts, and circuit breaking<a class="headerlink" href="#retries-timeouts-and-circuit-breaking" title="Permanent link">&para;</a></h2>
+<p>Without care, a slow downstream service causes cascading failure: <code>orders</code>
+calls <code>payments</code>, <code>payments</code> is slow, <code>orders</code>' threads/connections pile up
+waiting, and <code>orders</code> itself becomes unresponsive to <em>its</em> callers — one
+slow service takes down the whole call chain.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Conceptual Envoy/Istio VirtualService: bound the blast radius of a slow downstream</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.istio.io/v1beta1</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">VirtualService</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="nt">metadata</span><span class="p">:</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">payments</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="nt">spec</span><span class="p">:</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">payments</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span><span class="nt">http</span><span class="p">:</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2s</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">      </span><span class="nt">retries</span><span class="p">:</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">        </span><span class="nt">attempts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">        </span><span class="nt">perTryTimeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500ms</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">        </span><span class="nt">retryOn</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5xx,reset,connect-failure</span>
+</code></pre></div>
+<ul>
+<li><strong>Timeout</strong> — never wait indefinitely; fail the call after a bound and
+  let the caller decide what to do (return a degraded response, queue for
+  later, surface an error).</li>
+<li><strong>Retries</strong> — only for safe-to-retry (idempotent) requests, with a small
+  attempt count and per-try timeout — see the idempotency discussion in
+  module 06; retrying a non-idempotent write can duplicate it.</li>
+<li><strong>Circuit breaking</strong> — after enough consecutive failures to a backend,
+  stop sending it traffic for a cooldown period (the internal-network
+  version of module 01's <code>max_fails</code>/<code>fail_timeout</code>), so a struggling
+  service gets a chance to recover instead of being hit harder by retries
+  from everyone calling it.</li>
+</ul>
+<h2 id="do-you-actually-need-a-service-mesh">Do you actually need a service mesh<a class="headerlink" href="#do-you-actually-need-a-service-mesh" title="Permanent link">&para;</a></h2>
+<p>A mesh (Istio, Linkerd, Consul Connect) is real operational overhead —
+another control plane to run, upgrade, and understand, and a real learning
+curve for anyone debugging why a request failed (was it the app, or the
+sidecar's retry/timeout policy?). Rules of thumb:</p>
+<ul>
+<li><strong>A handful of services, one team, one cluster</strong> — a service registry
+  (Consul, or Kubernetes' built-in DNS) plus TLS termination at each
+  service, and retry/timeout logic in a shared HTTP client library, gets
+  you most of the benefit with far less infrastructure.</li>
+<li><strong>Dozens of services, multiple teams, need for consistent mTLS/policy
+  enforcement across all of them without every team implementing it in
+  code</strong> — this is where a mesh's centralization starts paying for its
+  overhead.</li>
+<li>Don't adopt a mesh because it's the state of the art; adopt it when the
+  concrete pain (inconsistent retry behavior across teams, no visibility
+  into cross-service latency, can't enforce mTLS uniformly) is already
+  costing more than the mesh would.</li>
+</ul>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Sketch (on paper or in a diagram tool) a 4-service system (e.g. <code>web</code> →
+   <code>orders</code> → <code>payments</code>, and <code>orders</code> → <code>inventory</code>) and, for each edge,
+   write down: what happens today if the callee is slow? Unavailable?
+   Returns a 5xx?</li>
+<li>Pick one edge and design a concrete timeout + retry policy for it
+   (values, and <em>why</em> those values), being explicit about whether the
+   request is safe to retry.</li>
+<li>Without installing a full mesh, add basic service discovery via DNS (or
+   a tool like Consul) between two toy services running locally, and
+   confirm that killing/restarting one instance doesn't require
+   hardcoding a new IP anywhere.</li>
+<li>Write one paragraph arguing for or against adopting a full service mesh
+   for this 4-service system, referencing the trade-off discussion above.</li>
+</ol>
 
 
 

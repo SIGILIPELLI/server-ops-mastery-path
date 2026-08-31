@@ -1243,6 +1243,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · TLS/SSL Certificates (Let's Encrypt / certbot)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1259,6 +1277,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installing-certbot-and-getting-a-cert-nginx-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installing certbot and getting a cert (nginx plugin)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auto-renewal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto-renewal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checking-a-cert-from-the-outside" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checking a cert from the outside
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#strong-tls-defaults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Strong TLS defaults
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-cert-issuance-and-renewal-dry-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: cert issuance and renewal dry run
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2378,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installing-certbot-and-getting-a-cert-nginx-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installing certbot and getting a cert (nginx plugin)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auto-renewal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto-renewal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checking-a-cert-from-the-outside" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checking a cert from the outside
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#strong-tls-defaults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Strong TLS defaults
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-cert-issuance-and-renewal-dry-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: cert issuance and renewal dry run
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2482,112 @@
 
 
 <h1 id="02-tlsssl-certificates-lets-encrypt-certbot">02 · TLS/SSL Certificates (Let's Encrypt / certbot)<a class="headerlink" href="#02-tlsssl-certificates-lets-encrypt-certbot" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 2 · Intermediate.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>TLS is what turns <code>http://</code> into <code>https://</code>: it encrypts traffic between
+client and server and proves (via a certificate signed by a trusted CA)
+that the server is who it claims to be. Let's Encrypt provides free,
+short-lived (90-day) certificates issued automatically via the ACME
+protocol, and <code>certbot</code> is the standard client for getting and renewing
+them.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<ul>
+<li>A domain name with an A/AAAA record pointing at the server's public IP.</li>
+<li>Port 80 (and ideally 443) reachable from the internet — Let's Encrypt's
+  HTTP-01 challenge fetches a token over plain HTTP to prove you control the
+  domain.</li>
+<li>nginx already serving that <code>server_name</code> (see module 1).</li>
+</ul>
+<h2 id="installing-certbot-and-getting-a-cert-nginx-plugin">Installing certbot and getting a cert (nginx plugin)<a class="headerlink" href="#installing-certbot-and-getting-a-cert-nginx-plugin" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>certbot<span class="w"> </span>python3-certbot-nginx
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>sudo<span class="w"> </span>certbot<span class="w"> </span>--nginx<span class="w"> </span>-d<span class="w"> </span>example.com<span class="w"> </span>-d<span class="w"> </span>www.example.com
+</code></pre></div>
+<p>The nginx plugin does three things for you: proves domain ownership by
+temporarily serving the ACME challenge through your existing nginx vhost,
+downloads the certificate to <code>/etc/letsencrypt/live/example.com/</code>, and
+<strong>edits your nginx config in place</strong> to add a <code>listen 443 ssl</code> block plus an
+HTTP→HTTPS redirect. Always run <code>sudo nginx -t</code> and read the diff of what it
+changed if you want to know exactly what happened:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>cat<span class="w"> </span>/etc/nginx/sites-available/example.com.conf
+</code></pre></div>
+<p>Resulting shape (roughly what certbot writes):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">443</span><span class="w"> </span><span class="s">ssl</span><span class="p">;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">example.com</span><span class="w"> </span><span class="s">www.example.com</span><span class="p">;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="kn">ssl_certificate</span><span class="w">     </span><span class="s">/etc/letsencrypt/live/example.com/fullchain.pem</span><span class="p">;</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="kn">ssl_certificate_key</span><span class="w"> </span><span class="s">/etc/letsencrypt/live/example.com/privkey.pem</span><span class="p">;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="kn">include</span><span class="w"> </span><span class="s">/etc/letsencrypt/options-ssl-nginx.conf</span><span class="p">;</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="kn">ssl_dhparam</span><span class="w"> </span><span class="s">/etc/letsencrypt/ssl-dhparams.pem</span><span class="p">;</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://127.0.0.1:3000</span><span class="p">;</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-Proto</span><span class="w"> </span><span class="nv">$scheme</span><span class="p">;</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="p">}</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">example.com</span><span class="w"> </span><span class="s">www.example.com</span><span class="p">;</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">    </span><span class="kn">return</span><span class="w"> </span><span class="mi">301</span><span class="w"> </span><span class="s">https://</span><span class="nv">$host$request_uri</span><span class="p">;</span><span class="w">   </span><span class="c1"># certbot adds this redirect</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="p">}</span>
+</code></pre></div>
+<p><code>fullchain.pem</code> contains your certificate plus the intermediate CA
+certificate (clients need the whole chain to verify trust); <code>privkey.pem</code> is
+the private key — never copy it off the box or commit it anywhere.</p>
+<h2 id="auto-renewal">Auto-renewal<a class="headerlink" href="#auto-renewal" title="Permanent link">&para;</a></h2>
+<p>Let's Encrypt certs expire every 90 days by design (to force automation and
+limit blast radius of a leaked key). The certbot package installs a
+systemd timer that handles this without you doing anything:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>systemctl<span class="w"> </span>list-timers<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>certbot
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sudo<span class="w"> </span>certbot<span class="w"> </span>renew<span class="w"> </span>--dry-run<span class="w">     </span><span class="c1"># simulate a renewal without changing anything</span>
+</code></pre></div>
+<p><code>renew</code> only actually replaces certs that are within 30 days of expiry, so
+running it manually anytime is safe — it's a no-op for certs that aren't
+close to expiring. If nginx's config changed after the cert was issued
+(e.g. you added a new <code>server</code> block), certbot's renewal hook reloads nginx
+automatically so the new cert is picked up without manual intervention.</p>
+<h2 id="checking-a-cert-from-the-outside">Checking a cert from the outside<a class="headerlink" href="#checking-a-cert-from-the-outside" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>curl<span class="w"> </span>-vI<span class="w"> </span>https://example.com<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A2<span class="w"> </span><span class="s2">"expire date\|subject:"</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">echo</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>example.com:443<span class="w"> </span>-servername<span class="w"> </span>example.com<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-noout<span class="w"> </span>-dates<span class="w"> </span>-subject<span class="w"> </span>-issuer
+</code></pre></div>
+<p><code>-servername</code> matters for SNI (Server Name Indication) — without it, a
+server hosting multiple TLS vhosts on one IP may return the wrong
+certificate (usually a default/self-signed one), and you'll be debugging
+the wrong problem.</p>
+<h2 id="strong-tls-defaults">Strong TLS defaults<a class="headerlink" href="#strong-tls-defaults" title="Permanent link">&para;</a></h2>
+<p>certbot's <code>options-ssl-nginx.conf</code> already sets sane modern defaults, but
+know what's in there:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">ssl_protocols</span><span class="w"> </span><span class="s">TLSv1.2</span><span class="w"> </span><span class="s">TLSv1.3</span><span class="p">;</span><span class="w">   </span><span class="c1"># never allow TLSv1.0/1.1 or SSLv3</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">ssl_prefer_server_ciphers</span><span class="w"> </span><span class="no">off</span><span class="p">;</span><span class="w">    </span><span class="c1"># let the (modern) client pick, per current best practice</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">ssl_session_cache</span><span class="w"> </span><span class="s">shared:le_nginx_SSL:10m</span><span class="p">;</span>
+</code></pre></div>
+<p>Add HSTS once you're confident every subdomain is served over HTTPS
+(it tells browsers to <em>never</em> attempt plain HTTP for this domain again, so
+adding it before HTTPS is fully working everywhere can lock you out):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">add_header</span><span class="w"> </span><span class="s">Strict-Transport-Security</span><span class="w"> </span><span class="s">"max-age=63072000</span><span class="p">;</span><span class="w"> </span><span class="k">includeSubDomains"</span><span class="w"> </span><span class="s">always</span><span class="p">;</span>
+</code></pre></div>
+<h2 id="worked-example-cert-issuance-and-renewal-dry-run">Worked example: cert issuance and renewal dry run<a class="headerlink" href="#worked-example-cert-issuance-and-renewal-dry-run" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>certbot<span class="w"> </span>--nginx<span class="w"> </span>-d<span class="w"> </span>demo.example.com<span class="w"> </span>--non-interactive<span class="w"> </span>--agree-tos<span class="w"> </span>-m<span class="w"> </span>ops@example.com
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sudo<span class="w"> </span>certbot<span class="w"> </span>certificates<span class="w">                 </span><span class="c1"># lists all managed certs + expiry</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>sudo<span class="w"> </span>certbot<span class="w"> </span>renew<span class="w"> </span>--dry-run<span class="w"> </span>--cert-name<span class="w"> </span>demo.example.com
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>sudo<span class="w"> </span>nginx<span class="w"> </span>-t<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>reload<span class="w"> </span>nginx
+</code></pre></div>
+<p><code>--non-interactive --agree-tos -m &lt;email&gt;</code> is the scripted/unattended form
+you'd use from a provisioning script rather than answering prompts by hand.</p>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Point a real (or test) domain's A record at a server you control, issue a
+   Let's Encrypt cert with <code>certbot --nginx</code>, and verify HTTPS works with
+   <code>curl -vI https://yourdomain</code>.</li>
+<li>Confirm the HTTP→HTTPS redirect certbot added actually returns <code>301</code>
+   (<code>curl -I http://yourdomain</code>).</li>
+<li>Run <code>certbot renew --dry-run</code> and read its output to confirm it identifies
+   your cert and simulates a successful renewal without changing the
+   on-disk cert files (<code>ls -la /etc/letsencrypt/live/yourdomain/</code> timestamps
+   unchanged).</li>
+</ol>
 
 
 

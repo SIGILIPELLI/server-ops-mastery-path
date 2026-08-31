@@ -1215,6 +1215,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Reverse Proxies (nginx basics)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1231,6 +1249,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installing-and-the-config-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installing and the config layout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-minimal-reverse-proxy-vhost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A minimal reverse proxy vhost
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#path-based-routing-to-multiple-backends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path-based routing to multiple backends
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#timeouts-and-buffering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timeouts and buffering
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serving-static-files-directly-skip-the-app-for-these" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Serving static files directly (skip the app for these)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-two-apps-behind-one-nginx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: two apps behind one nginx
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2378,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installing-and-the-config-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installing and the config layout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-minimal-reverse-proxy-vhost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A minimal reverse proxy vhost
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#path-based-routing-to-multiple-backends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Path-based routing to multiple backends
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#timeouts-and-buffering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timeouts and buffering
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serving-static-files-directly-skip-the-app-for-these" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Serving static files directly (skip the app for these)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-two-apps-behind-one-nginx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: two apps behind one nginx
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2482,150 @@
 
 
 <h1 id="01-reverse-proxies-nginx-basics">01 · Reverse Proxies (nginx basics)<a class="headerlink" href="#01-reverse-proxies-nginx-basics" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 2 · Intermediate.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>A reverse proxy sits in front of one or more backend applications and
+handles the stuff you don't want every app to reimplement: TLS termination,
+routing by hostname/path, buffering slow clients, compression, and a stable
+public port (80/443) in front of app processes that bind to internal ports.
+nginx is the default choice for this on most Linux fleets.</p>
+<h2 id="installing-and-the-config-layout">Installing and the config layout<a class="headerlink" href="#installing-and-the-config-layout" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>nginx
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>nginx
+</code></pre></div>
+<p>Debian/Ubuntu nginx layout:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>/etc/nginx/nginx.conf              # main config, includes the rest
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>/etc/nginx/sites-available/        # one file per virtual host, written here
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>/etc/nginx/sites-enabled/          # symlinks into sites-available — nginx only reads these
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>/etc/nginx/conf.d/                 # global snippets, auto-included by nginx.conf
+</code></pre></div>
+<p>A site is "off" if its symlink isn't in <code>sites-enabled</code>, even if the file
+exists in <code>sites-available</code>. That two-directory split exists so you can keep
+a config around without it being live.</p>
+<h2 id="a-minimal-reverse-proxy-vhost">A minimal reverse proxy vhost<a class="headerlink" href="#a-minimal-reverse-proxy-vhost" title="Permanent link">&para;</a></h2>
+<p>Say your app is a Node/Python/Go process listening on <code>127.0.0.1:3000</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># /etc/nginx/sites-available/myapp.conf</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">myapp.example.com</span><span class="p">;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://127.0.0.1:3000</span><span class="p">;</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Real-IP</span><span class="w"> </span><span class="nv">$remote_addr</span><span class="p">;</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-For</span><span class="w"> </span><span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-Proto</span><span class="w"> </span><span class="nv">$scheme</span><span class="p">;</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="p">}</span>
+</code></pre></div>
+<p>Why each header matters:</p>
+<ul>
+<li><code>Host $host</code> — without this, the backend sees <code>Host: 127.0.0.1</code> instead of
+  <code>myapp.example.com</code>, which breaks apps that generate absolute URLs or do
+  host-based routing/vhost logic themselves.</li>
+<li><code>X-Real-IP</code> / <code>X-Forwarded-For</code> — the backend's TCP connection is always
+  from nginx (127.0.0.1); these headers are how the real client IP survives
+  the hop. Never trust <code>X-Forwarded-For</code> from the public internet directly —
+  only trust it because <em>you</em> set it here, at the only entry point.</li>
+<li><code>X-Forwarded-Proto</code> — tells the backend whether the original request was
+  HTTP or HTTPS, since nginx may terminate TLS before it ever reaches the
+  app. Frameworks use this to decide whether to set <code>Secure</code> cookies or
+  redirect to HTTPS.</li>
+</ul>
+<p>Enable it and reload:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span>/etc/nginx/sites-available/myapp.conf<span class="w"> </span>/etc/nginx/sites-enabled/
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sudo<span class="w"> </span>nginx<span class="w"> </span>-t<span class="w">          </span><span class="c1"># ALWAYS test before reloading</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>reload<span class="w"> </span>nginx
+</code></pre></div>
+<p><code>nginx -t</code> validates syntax and referenced files without touching the
+running process — get in the habit of running it before every reload. A
+broken config caught by <code>-t</code> is an annoyance; one that gets reloaded live is
+an outage.</p>
+<h2 id="path-based-routing-to-multiple-backends">Path-based routing to multiple backends<a class="headerlink" href="#path-based-routing-to-multiple-backends" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">server</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">example.com</span><span class="p">;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/api/</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://127.0.0.1:4000/</span><span class="p">;</span><span class="w">   </span><span class="c1"># trailing slash rewrites the prefix away</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://127.0.0.1:3000</span><span class="p">;</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="p">}</span>
+</code></pre></div>
+<p>The trailing slash on <code>proxy_pass http://127.0.0.1:4000/;</code> matters: a
+request to <code>/api/users</code> is forwarded to the backend as <code>/users</code> (the
+<code>/api/</code> prefix is stripped). Omit the trailing slash and it forwards as
+<code>/api/users</code> unchanged. This is one of the most common nginx gotchas —
+always check which behavior you actually want.</p>
+<h2 id="timeouts-and-buffering">Timeouts and buffering<a class="headerlink" href="#timeouts-and-buffering" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://127.0.0.1:3000</span><span class="p">;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="kn">proxy_connect_timeout</span><span class="w"> </span><span class="s">5s</span><span class="p">;</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="kn">proxy_read_timeout</span><span class="w"> </span><span class="s">60s</span><span class="p">;</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="kn">proxy_send_timeout</span><span class="w"> </span><span class="s">60s</span><span class="p">;</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="kn">proxy_buffering</span><span class="w"> </span><span class="no">on</span><span class="p">;</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="kn">client_max_body_size</span><span class="w"> </span><span class="mi">10m</span><span class="p">;</span><span class="w">   </span><span class="c1"># reject large uploads before they hit the app</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="p">}</span>
+</code></pre></div>
+<p><code>proxy_read_timeout</code> is how long nginx waits for the backend to send data
+once connected — bump it for slow endpoints (report generation, large
+exports) rather than globally, using a dedicated <code>location</code> block for those
+paths.</p>
+<h2 id="serving-static-files-directly-skip-the-app-for-these">Serving static files directly (skip the app for these)<a class="headerlink" href="#serving-static-files-directly-skip-the-app-for-these" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">location</span><span class="w"> </span><span class="s">/static/</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="kn">alias</span><span class="w"> </span><span class="s">/opt/myapp/static/</span><span class="p">;</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="kn">expires</span><span class="w"> </span><span class="s">30d</span><span class="p">;</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="kn">add_header</span><span class="w"> </span><span class="s">Cache-Control</span><span class="w"> </span><span class="s">"public,</span><span class="w"> </span><span class="s">immutable"</span><span class="p">;</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="p">}</span>
+</code></pre></div>
+<p>Letting nginx serve static assets directly (instead of proxying them to the
+app) is both faster and takes load off the application process — nginx is
+built for exactly this.</p>
+<h2 id="worked-example-two-apps-behind-one-nginx">Worked example: two apps behind one nginx<a class="headerlink" href="#worked-example-two-apps-behind-one-nginx" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># app A on :3000, app B on :3001, both already running via systemd</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/nginx/sites-available/multiapp.conf<span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="s">server {</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="s">    listen 80;</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="s">    server_name a.example.com;</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="s">    location / {</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="s">        proxy_pass http://127.0.0.1:3000;</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="s">        proxy_set_header Host $host;</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="s">        proxy_set_header X-Real-IP $remote_addr;</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="s">    }</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="s">}</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="s">server {</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="s">    listen 80;</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="s">    server_name b.example.com;</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="s">    location / {</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="s">        proxy_pass http://127.0.0.1:3001;</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="s">        proxy_set_header Host $host;</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="s">        proxy_set_header X-Real-IP $remote_addr;</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="s">    }</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="s">}</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="s">EOF</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>sudo<span class="w"> </span>ln<span class="w"> </span>-sf<span class="w"> </span>/etc/nginx/sites-available/multiapp.conf<span class="w"> </span>/etc/nginx/sites-enabled/
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>sudo<span class="w"> </span>nginx<span class="w"> </span>-t<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>reload<span class="w"> </span>nginx
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: a.example.com"</span><span class="w"> </span>http://localhost/
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: b.example.com"</span><span class="w"> </span>http://localhost/
+</code></pre></div>
+<p>The <code>curl -H "Host: ..."</code> trick lets you test name-based virtual hosting
+from the server itself without needing real DNS yet — nginx picks the
+<code>server_name</code> block purely from the <code>Host</code> header.</p>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Run two toy backends on <code>:3000</code> and <code>:3001</code> (e.g. <code>python3 -m http.server</code>
+   twice with different ports, or two tiny Flask/Express apps).</li>
+<li>Write an nginx vhost that reverse-proxies <code>/a/</code> to the first and <code>/b/</code> to
+   the second on a single <code>server_name</code>, with correct trailing-slash prefix
+   stripping.</li>
+<li>Confirm with <code>curl -v</code> that <code>X-Forwarded-For</code> and <code>Host</code> arrive correctly
+   at each backend (log <code>request.headers</code> / <code>req.headers</code> in your toy app to
+   check), and that <code>nginx -t</code> catches a deliberately broken brace before
+   you reload.</li>
+</ol>
 
 
 

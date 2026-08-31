@@ -1729,6 +1729,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Configuration Drift & Idempotency
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1745,6 +1763,91 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is drift
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detecting-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detecting drift
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#idempotency-why-it-matters-more-than-it-sounds-like-it-should" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Idempotency: why it matters more than it sounds like it should
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#convergence-vs-one-shot-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Convergence vs. one-shot scripts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-turning-a-non-idempotent-script-into-an-idempotent-ansible-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: turning a non-idempotent script into an idempotent Ansible task
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2367,80 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is drift
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detecting-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detecting drift
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#idempotency-why-it-matters-more-than-it-sounds-like-it-should" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Idempotency: why it matters more than it sounds like it should
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#convergence-vs-one-shot-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Convergence vs. one-shot scripts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-turning-a-non-idempotent-script-into-an-idempotent-ansible-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: turning a non-idempotent script into an idempotent Ansible task
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2460,166 @@
 
 
 <h1 id="06-configuration-drift-idempotency">06 · Configuration Drift &amp; Idempotency<a class="headerlink" href="#06-configuration-drift-idempotency" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 3 · Advanced.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Module 05 introduced IaC's promise: describe desired state, apply it, done.
+That promise only holds if two properties are true — the tool's runs are
+<strong>idempotent</strong> (safe to repeat) and you actually detect when reality has
+<strong>drifted</strong> away from what's declared. This module is about both.</p>
+<h2 id="what-is-drift">What is drift<a class="headerlink" href="#what-is-drift" title="Permanent link">&para;</a></h2>
+<p>Drift is any difference between what your IaC/config-management code says
+should exist and what's actually running. It happens constantly, in
+ordinary operation:</p>
+<ul>
+<li>Someone SSHes in during an incident and hand-edits <code>nginx.conf</code> to stop
+  the bleeding, then forgets to port the fix back into the Ansible
+  playbook/Terraform file.</li>
+<li>A cloud console click (someone opens the AWS console and bumps an
+  instance's size) bypasses Terraform entirely.</li>
+<li>An auto-scaling event or a manually-run one-off script changes something
+  the IaC tool doesn't know about.</li>
+<li>A package gets security-patched by unattended-upgrades (Level 1 module
+  2) to a version different from what's pinned in the playbook.</li>
+</ul>
+<p>Left unnoticed, drift means your IaC code is no longer a truthful
+description of your infrastructure — the DR promise from module 03/05
+("rebuild from these files") quietly stops being true, and nobody finds out
+until the rebuild is attempted during an actual disaster.</p>
+<h2 id="detecting-drift">Detecting drift<a class="headerlink" href="#detecting-drift" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Terraform: compare real infrastructure against declared state, without changing anything</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>terraform<span class="w"> </span>plan
+</code></pre></div>
+<p>A clean <code>plan</code> with "No changes" means no drift. Any unexpected <code>~ update
+in-place</code> or <code>- destroy</code>/<code>+ create</code> line for something nobody touched via
+Terraform is drift — investigate before deciding whether to <code>apply</code> (pull
+reality back to match code) or update the code (accept the manual change
+as the new desired state).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Ansible: --check runs in dry-run mode, --diff shows what would change</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory.ini<span class="w"> </span>site.yml<span class="w"> </span>--check<span class="w"> </span>--diff
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># ad-hoc drift check on package versions across a fleet</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>ansible<span class="w"> </span>web<span class="w"> </span>-i<span class="w"> </span>inventory.ini<span class="w"> </span>-m<span class="w"> </span>shell<span class="w"> </span>-a<span class="w"> </span><span class="s2">"dpkg -l nginx | tail -1"</span>
+</code></pre></div>
+<p>Neither tool watches continuously by default — drift detection means
+<em>running the check regularly</em> (a scheduled CI job hitting <code>terraform plan</code>
+nightly, or <code>ansible-playbook --check</code> on a cron), not a one-time thing.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># .github/workflows/drift-check.yml (conceptual — CI job, not applied automatically)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nightly-drift-check</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nt">on</span><span class="p">:</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">schedule</span><span class="p">:</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">cron</span><span class="p">:</span><span class="w"> </span><span class="s">"0</span><span class="nv"> </span><span class="s">6</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*"</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="nt">jobs</span><span class="p">:</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span><span class="nt">plan</span><span class="p">:</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">terraform init</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">terraform plan -detailed-exitcode || echo "DRIFT DETECTED"</span><span class="w"> </span><span class="c1"># exit code 2 means changes pending</span>
+</code></pre></div>
+<h2 id="idempotency-why-it-matters-more-than-it-sounds-like-it-should">Idempotency: why it matters more than it sounds like it should<a class="headerlink" href="#idempotency-why-it-matters-more-than-it-sounds-like-it-should" title="Permanent link">&para;</a></h2>
+<p>An operation is <strong>idempotent</strong> if running it once has the same effect as
+running it many times. This is the property that makes "just re-run the
+playbook" a safe default action instead of a gamble.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># NOT idempotent: appends a line every single run</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"127.0.0.1 app.local"</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/hosts
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># Idempotent: only adds the line if it's not already there</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>grep<span class="w"> </span>-qxF<span class="w"> </span><span class="s2">"127.0.0.1 app.local"</span><span class="w"> </span>/etc/hosts<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"127.0.0.1 app.local"</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/hosts
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># NOT idempotent: fails the second time (directory already exists)</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>mkdir<span class="w"> </span>/opt/app/releases
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># Idempotent</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/opt/app/releases
+</code></pre></div>
+<p>Ansible modules are (mostly) idempotent by design — <code>apt: {name: nginx,
+state: present}</code> checks whether nginx is already installed before doing
+anything, and reports <code>changed: false</code> if it is. This is exactly what
+"convergent" means: no matter the starting state, applying the same
+playbook repeatedly converges on the same end state, and stops making
+changes once it's reached.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Idempotent Ansible task: only "changed" the first time it actually installs</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx present</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">apt</span><span class="p">:</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">present</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># NON-idempotent trap: a raw shell command that always reports "changed"</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># and may fail or duplicate work on re-run</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">add cron entry</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nt">shell</span><span class="p">:</span><span class="w"> </span><span class="s">"echo</span><span class="nv"> </span><span class="s">'0</span><span class="nv"> </span><span class="s">2</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">/usr/local/bin/backup.sh'</span><span class="nv"> </span><span class="s">&gt;&gt;</span><span class="nv"> </span><span class="s">/etc/crontab"</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="c1"># BAD — appends a new line every run</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1"># Fixed with the dedicated, idempotent module</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">add cron entry</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">  </span><span class="nt">cron</span><span class="p">:</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"nightly</span><span class="nv"> </span><span class="s">backup"</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">    </span><span class="nt">minute</span><span class="p">:</span><span class="w"> </span><span class="s">"0"</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">    </span><span class="nt">hour</span><span class="p">:</span><span class="w"> </span><span class="s">"2"</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">    </span><span class="nt">job</span><span class="p">:</span><span class="w"> </span><span class="s">"/usr/local/bin/backup.sh"</span>
+</code></pre></div>
+<p>The <code>cron</code> module tracks the entry by name and only touches it if the
+schedule/command actually changed — the <code>shell</code> version has no memory of
+what it did last time, so it just keeps acting.</p>
+<h2 id="convergence-vs-one-shot-scripts">Convergence vs. one-shot scripts<a class="headerlink" href="#convergence-vs-one-shot-scripts" title="Permanent link">&para;</a></h2>
+<p>A one-shot deployment script (Level 1 module 6) runs once per deploy and is
+fine to be somewhat imperative — its job is over quickly, and if it fails
+partway you re-run the whole deploy. Config-management code is different:
+it's meant to be run <em>repeatedly, forever</em>, against machines whose state
+you don't fully control between runs (manual fixes, drift, partial
+failures). That's why idempotency is a hard requirement there, not a nice
+extra — the tool must be safe to converge from any starting point, not just
+"empty machine."</p>
+<h2 id="worked-example-turning-a-non-idempotent-script-into-an-idempotent-ansible-task">Worked example: turning a non-idempotent script into an idempotent Ansible task<a class="headerlink" href="#worked-example-turning-a-non-idempotent-script-into-an-idempotent-ansible-task" title="Permanent link">&para;</a></h2>
+<p>Starting point — a shell script someone wrote to set up a deploy user:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="ch">#!/usr/bin/env bash</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>useradd<span class="w"> </span>deploy
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>mkdir<span class="w"> </span>/home/deploy/.ssh
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"ssh-ed25519 AAAA... deploy-key"</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/home/deploy/.ssh/authorized_keys
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>chown<span class="w"> </span>-R<span class="w"> </span>deploy:deploy<span class="w"> </span>/home/deploy/.ssh
+</code></pre></div>
+<p>Run this twice: <code>useradd</code> errors on the second run (user exists), the
+<code>authorized_keys</code> line gets duplicated, and the whole script aborts on the
+first error before <code>chown</code> even reruns. This is exactly the "not safe to
+re-run" problem.</p>
+<p>Idempotent Ansible equivalent:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">deploy user exists</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">user</span><span class="p">:</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">deploy</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="nt">shell</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/bin/bash</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="nt">create_home</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.ssh directory exists with correct permissions</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">  </span><span class="nt">file</span><span class="p">:</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/home/deploy/.ssh</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">directory</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">deploy</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">    </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">deploy</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">"0700"</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">deploy key present in authorized_keys</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">  </span><span class="nt">authorized_key</span><span class="p">:</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">    </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">deploy</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">    </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">"ssh-ed25519</span><span class="nv"> </span><span class="s">AAAA...</span><span class="nv"> </span><span class="s">deploy-key"</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">present</span>
+</code></pre></div>
+<p>Every one of these modules checks current state before acting and reports
+<code>changed: false</code> on a second run against an already-converged host —
+<code>ansible-playbook site.yml</code> becomes something you can run nightly via cron
+as a drift-correction job, not just a one-time setup script.</p>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Take a shell script you (or the examples above) wrote that isn't
+   idempotent, and rewrite it as an Ansible playbook using proper modules
+   (<code>user</code>, <code>file</code>, <code>authorized_key</code>, <code>cron</code>, <code>apt</code>, etc.) instead of <code>shell</code>
+   /<code>command</code> wherever a dedicated module exists.</li>
+<li>Run the playbook twice against a scratch VM and confirm <code>changed=0</code> on
+   the second run.</li>
+<li>Manually introduce drift on the VM (e.g. <code>sudo systemctl stop nginx</code>,
+   or hand-edit a config file the playbook manages) and run
+   <code>ansible-playbook --check --diff</code> to see the drift reported without
+   changing anything, then run it for real and confirm it's corrected.</li>
+<li>Set up a nightly cron job (or CI schedule) that runs the drift check and
+   emails/logs a warning when it reports pending changes.</li>
+</ol>
 
 
 

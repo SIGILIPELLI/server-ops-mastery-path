@@ -1991,6 +1991,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Capacity Planning
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2007,6 +2025,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-core-question-and-the-core-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The core question and the core metric
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#littles-law-the-formula-that-connects-load-latency-and-concurrency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Little's Law: the formula that connects load, latency, and concurrency
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#forecasting-growth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Forecasting growth
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#load-testing-to-find-the-real-ceiling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Load testing to find the real ceiling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#headroom-autoscaling-and-reserved-buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Headroom, autoscaling, and reserved buffer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capacity-planning-for-known-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capacity planning for known events
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2378,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-core-question-and-the-core-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The core question and the core metric
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#littles-law-the-formula-that-connects-load-latency-and-concurrency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Little's Law: the formula that connects load, latency, and concurrency
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#forecasting-growth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Forecasting growth
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#load-testing-to-find-the-real-ceiling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Load testing to find the real ceiling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#headroom-autoscaling-and-reserved-buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Headroom, autoscaling, and reserved buffer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capacity-planning-for-known-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capacity planning for known events
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2482,178 @@
 
 
 <h1 id="02-capacity-planning">02 · Capacity Planning<a class="headerlink" href="#02-capacity-planning" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 4 · Master.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Every HA/DR design in Level 3 assumed the surviving instances/region could
+actually absorb the traffic redirected to them. Capacity planning is the
+discipline of making that assumption true on purpose — knowing today's
+headroom, forecasting tomorrow's need, and provisioning ahead of demand
+instead of reacting to it.</p>
+<h2 id="the-core-question-and-the-core-metric">The core question and the core metric<a class="headerlink" href="#the-core-question-and-the-core-metric" title="Permanent link">&para;</a></h2>
+<p>The question capacity planning answers: <strong>"if load grows by X%, or we lose
+Y% of capacity, do we stay within acceptable performance?"</strong> The core
+metric it's built on is <strong>utilization</strong> — what fraction of a resource's
+maximum capacity is currently in use — tracked per resource (CPU, memory,
+disk I/O, network, connection pools, database connections) because
+different resources saturate at different growth rates.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># quick per-host utilization snapshot</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>top<span class="w"> </span>-bn1<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-5<span class="w">                  </span><span class="c1"># CPU</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>free<span class="w"> </span>-h<span class="w">                             </span><span class="c1"># memory</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>iostat<span class="w"> </span>-x<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">3</span><span class="w">                       </span><span class="c1"># disk I/O and %util</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>ss<span class="w"> </span>-s<span class="w">                                </span><span class="c1"># connection counts</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a># Prometheus: CPU utilization per instance, useful as a fleet-wide trend
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>avg(rate(node_cpu_seconds_total{mode!="idle"}[5m])) by (instance)
+</code></pre></div>
+<h2 id="littles-law-the-formula-that-connects-load-latency-and-concurrency">Little's Law: the formula that connects load, latency, and concurrency<a class="headerlink" href="#littles-law-the-formula-that-connects-load-latency-and-concurrency" title="Permanent link">&para;</a></h2>
+<p>Little's Law: <code>L = λ × W</code> — the average number of requests in the system
+(<strong>L</strong>, concurrency) equals the arrival rate (<strong>λ</strong>, requests/sec) times
+the average time each request spends in the system (<strong>W</strong>, latency).</p>
+<p>Rearranged, this is the formula behind "how many backend instances do I
+need":</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>required_concurrency = requests_per_second × avg_request_duration_seconds
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>required_instances    = required_concurrency / max_concurrent_requests_per_instance
+</code></pre></div>
+<p><strong>Worked numbers:</strong> a service handling 500 req/s, average request duration
+200ms (0.2s):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>required_concurrency = 500 × 0.2 = 100 concurrent requests in flight
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a># if each instance can safely handle 25 concurrent requests before latency degrades:
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>required_instances = 100 / 25 = 4 instances minimum
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a># add capacity for N-1 redundancy (Level 3 module 01) and headroom:
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>provisioned_instances = 4 instances × 1.5 (50% headroom) rounded up, spread
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>                         across AZs so losing one AZ still leaves enough = 6-8 instances
+</code></pre></div>
+<p>This is the actual arithmetic behind "how many servers do we need," derived
+from measured numbers, not a guess — and it immediately shows <em>why</em>
+latency and capacity are coupled: if <code>avg_request_duration</code> doubles (a
+downstream dependency gets slower), required concurrency doubles too, even
+at the same request rate.</p>
+<h2 id="forecasting-growth">Forecasting growth<a class="headerlink" href="#forecasting-growth" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># pull 90 days of request-rate history and fit a trend (conceptual — Prometheus + a script)</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>promtool<span class="w"> </span>query<span class="w"> </span>range<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span>--start<span class="o">=</span><span class="k">$(</span>date<span class="w"> </span>-d<span class="w"> </span><span class="s1">'90 days ago'</span><span class="w"> </span>-Iseconds<span class="k">)</span><span class="w"> </span>--end<span class="o">=</span><span class="k">$(</span>date<span class="w"> </span>-Iseconds<span class="k">)</span><span class="w"> </span>--step<span class="o">=</span>1d<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="s1">'sum(rate(http_requests_total[1h]))'</span><span class="w"> </span>http://prometheus:9090
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># simple linear/exponential trend fit to decide "when do we hit capacity"</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">days</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">req_per_sec</span> <span class="o">=</span> <span class="n">load_from_prometheus</span><span class="p">()</span>   <span class="c1"># 90 daily samples</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1"># fit exponential growth (common for a growing product) rather than linear</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">log_fit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">days</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">req_per_sec</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">daily_growth_rate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">log_fit</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"~</span><span class="si">{</span><span class="n">daily_growth_rate</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">% daily growth"</span><span class="p">)</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="n">current_capacity_rps</span> <span class="o">=</span> <span class="mi">800</span>   <span class="c1"># measured max sustained throughput at acceptable latency</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="n">current_rps</span> <span class="o">=</span> <span class="n">req_per_sec</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="n">days_until_saturation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">current_capacity_rps</span> <span class="o">/</span> <span class="n">current_rps</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">daily_growth_rate</span><span class="p">)</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"~</span><span class="si">{</span><span class="n">days_until_saturation</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> days until current capacity is saturated"</span><span class="p">)</span>
+</code></pre></div>
+<p>The output of this kind of forecast — "current capacity runs out in ~45
+days at current growth" — is what turns capacity planning into a scheduled
+task (order more capacity, run a load test to confirm the new number, add
+headroom) instead of a reactive scramble the week traffic actually hits the
+ceiling.</p>
+<h2 id="load-testing-to-find-the-real-ceiling">Load testing to find the real ceiling<a class="headerlink" href="#load-testing-to-find-the-real-ceiling" title="Permanent link">&para;</a></h2>
+<p>Forecasting from historical trend tells you <em>when</em> you'll need more
+capacity; load testing tells you <em>how much</em> one instance can actually
+handle before it degrades, which the Little's Law calculation above depends
+on.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># k6 load test: ramp up load and find the point where p99 latency degrades</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>cat<span class="w"> </span><span class="s">&lt;&lt;'EOF' &gt; loadtest.js</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="s">import http from 'k6/http';</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="s">import { check } from 'k6';</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="s">export const options = {</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="s">  stages: [</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="s">    { duration: '2m', target: 50 },</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="s">    { duration: '5m', target: 200 },</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="s">    { duration: '5m', target: 400 },</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="s">    { duration: '2m', target: 0 },</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="s">  ],</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="s">  thresholds: {</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="s">    http_req_duration: ['p(99)&lt;500'],   // fail the test if p99 exceeds 500ms</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="s">  },</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="s">};</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="s">export default function () {</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="s">  const res = http.get('https://staging.example.com/api/orders');</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="s">  check(res, { 'status is 200': (r) =&gt; r.status === 200 });</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="s">}</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="s">EOF</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>k6<span class="w"> </span>run<span class="w"> </span>loadtest.js
+</code></pre></div>
+<p>Run this against <strong>staging at production-equivalent instance sizing</strong>, not
+a scaled-down dev environment — a load test against undersized hardware
+tells you nothing about production's real ceiling. Watch the point where
+p99 latency starts climbing sharply (not just where the test "fails") —
+that inflection point is the practical per-instance capacity limit to plug
+into the Little's Law calculation above.</p>
+<h2 id="headroom-autoscaling-and-reserved-buffer">Headroom, autoscaling, and reserved buffer<a class="headerlink" href="#headroom-autoscaling-and-reserved-buffer" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Headroom</strong> — deliberately provisioning above the measured need (the 50%
+  in the worked example) to absorb traffic spikes, one instance's failure
+  (Level 3 module 01), and forecast error, without paging anyone.</li>
+<li><strong>Autoscaling</strong> — reactive capacity that adds instances as utilization
+  rises, reducing the need for large static headroom, but only helps if new
+  instances come up faster than the traffic spike develops (a spike
+  hitting in 30 seconds and instances taking 3 minutes to boot and warm up
+  still needs static headroom to survive that gap).</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Conceptual Kubernetes HPA: scale on CPU, with min replicas providing the static headroom floor</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">autoscaling/v2</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HorizontalPodAutoscaler</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="nt">metadata</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="nv">orders-hpa</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="nt">spec</span><span class="p">:</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="nt">scaleTargetRef</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> apiVersion</span><span class="p">:</span><span class="w"> </span><span class="nv">apps/v1</span><span class="p p-Indicator">,</span><span class="nt"> kind</span><span class="p">:</span><span class="w"> </span><span class="nv">Deployment</span><span class="p p-Indicator">,</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="nv">orders</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="nt">minReplicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6</span><span class="w">    </span><span class="c1"># the static headroom floor from the Little's Law calc above</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="nt">maxReplicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">  </span><span class="nt">metrics</span><span class="p">:</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Resource</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">      </span><span class="nt">resource</span><span class="p">:</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cpu</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">        </span><span class="nt">target</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> type</span><span class="p">:</span><span class="w"> </span><span class="nv">Utilization</span><span class="p p-Indicator">,</span><span class="nt"> averageUtilization</span><span class="p">:</span><span class="w"> </span><span class="nv">60</span><span class="w"> </span><span class="p p-Indicator">}</span>
+</code></pre></div>
+<p><code>minReplicas: 6</code> is not arbitrary — it's the <code>provisioned_instances</code> number
+from the worked example above, so the fleet never dips below the level
+already known to survive one AZ's worth of instances failing, even during
+a scale-down.</p>
+<h2 id="capacity-planning-for-known-events">Capacity planning for known events<a class="headerlink" href="#capacity-planning-for-known-events" title="Permanent link">&para;</a></h2>
+<p>Predictable spikes (a marketing launch, a seasonal sale, a scheduled
+migration) deserve explicit pre-event capacity planning, not reliance on
+autoscaling alone:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Pre-event capacity checklist:
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>[ ] Forecast expected peak (from marketing's traffic estimate, or last
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    year's comparable event scaled by measured growth)
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>[ ] Load test at that forecast peak, in staging, at production sizing
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>[ ] Pre-scale (raise minReplicas / provision ahead) rather than relying on
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    reactive autoscaling to keep up with a sudden step-change in traffic
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>[ ] Confirm downstream dependencies (database connection limits, third-
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>    party API rate limits, payments provider's own capacity) are also
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>    sized for the forecast peak — the fleet can be perfectly sized and
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>    still fail if the database's max_connections isn't
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>[ ] Have a scale-down plan for after the event, to avoid paying for
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>    peak capacity indefinitely
+</code></pre></div>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Measure a real (or realistic toy) service's average request rate and
+   average request duration, and use Little's Law to compute required
+   concurrency and instance count for both current load and a hypothesized
+   2x growth scenario.</li>
+<li>Run a k6 (or similar) load test against that service at
+   production-equivalent sizing, ramping load until p99 latency clearly
+   degrades, and record the actual per-instance ceiling.</li>
+<li>Compare the load test's measured ceiling to your Little's Law estimate
+   from step 1 — if they disagree significantly, investigate which input
+   assumption was wrong (average duration under load vs. idle? a downstream
+   dependency limit you didn't account for?).</li>
+<li>Write a pre-event capacity checklist entry for one upcoming predictable
+   spike (real or hypothetical) using the checklist above, with concrete
+   numbers instead of placeholders.</li>
+</ol>
 
 
 

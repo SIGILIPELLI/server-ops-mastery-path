@@ -1327,6 +1327,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Zero-Downtime Deploy Patterns
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1343,6 +1361,80 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pattern-1-rolling-restart-across-multiple-backends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 1: rolling restart across multiple backends
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pattern-2-socket-handoff-on-a-single-host-systemd-socket-activation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 2: socket handoff on a single host (systemd socket activation)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#graceful-shutdown-on-the-app-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Graceful shutdown on the app side
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#database-migrations-the-part-that-actually-breaks-zero-downtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Database migrations: the part that actually breaks zero-downtime
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2356,69 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pattern-1-rolling-restart-across-multiple-backends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 1: rolling restart across multiple backends
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pattern-2-socket-handoff-on-a-single-host-systemd-socket-activation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern 2: socket handoff on a single host (systemd socket activation)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#graceful-shutdown-on-the-app-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Graceful shutdown on the app side
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#database-migrations-the-part-that-actually-breaks-zero-downtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Database migrations: the part that actually breaks zero-downtime
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2438,124 @@
 
 
 <h1 id="05-zero-downtime-deploy-patterns">05 · Zero-Downtime Deploy Patterns<a class="headerlink" href="#05-zero-downtime-deploy-patterns" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 2 · Intermediate.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>A "restart the service to deploy" approach drops every in-flight request
+for the seconds the process is down. Zero-downtime deployment means users
+never see an error during a release. This module covers the two most
+common patterns you can implement with tools you already have: nginx +
+systemd.</p>
+<h2 id="pattern-1-rolling-restart-across-multiple-backends">Pattern 1: rolling restart across multiple backends<a class="headerlink" href="#pattern-1-rolling-restart-across-multiple-backends" title="Permanent link">&para;</a></h2>
+<p>If you already load-balance across N backends (module 3), you can deploy
+one at a time: take it out of rotation, update it, health-check it, put it
+back, repeat.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="ch">#!/usr/bin/env bash</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nv">BACKENDS</span><span class="o">=(</span><span class="m">10</span>.0.0.11<span class="w"> </span><span class="m">10</span>.0.0.12<span class="w"> </span><span class="m">10</span>.0.0.13<span class="o">)</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nv">ARTIFACT</span><span class="o">=</span><span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">for</span><span class="w"> </span>host<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">BACKENDS</span><span class="p">[@]</span><span class="si">}</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Draining </span><span class="nv">$host</span><span class="s2"> from nginx upstream..."</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span>ssh<span class="w"> </span>lb.internal<span class="w"> </span><span class="s2">"sudo sed -i 's/server </span><span class="si">${</span><span class="nv">host</span><span class="si">}</span><span class="s2">:3000;/server </span><span class="si">${</span><span class="nv">host</span><span class="si">}</span><span class="s2">:3000 down;/' /etc/nginx/sites-available/app.conf"</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span>ssh<span class="w"> </span>lb.internal<span class="w"> </span><span class="s2">"sudo nginx -t &amp;&amp; sudo systemctl reload nginx"</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span>sleep<span class="w"> </span><span class="m">5</span><span class="w">   </span><span class="c1"># let in-flight requests to this backend finish</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Deploying to </span><span class="nv">$host</span><span class="s2">..."</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">  </span>scp<span class="w"> </span><span class="s2">"</span><span class="nv">$ARTIFACT</span><span class="s2">"</span><span class="w"> </span><span class="s2">"deploy@</span><span class="si">${</span><span class="nv">host</span><span class="si">}</span><span class="s2">:/opt/releases/"</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">  </span>ssh<span class="w"> </span><span class="s2">"deploy@</span><span class="si">${</span><span class="nv">host</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="s2">"/opt/myapp/bin/install-release.sh </span><span class="nv">$ARTIFACT</span><span class="s2"> &amp;&amp; sudo systemctl restart myapp"</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Health-checking </span><span class="nv">$host</span><span class="s2">..."</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">  </span><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>seq<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">10</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span>ssh<span class="w"> </span><span class="s2">"deploy@</span><span class="si">${</span><span class="nv">host</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="s2">"curl -sf http://127.0.0.1:3000/health"</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="k">break</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">    </span><span class="o">[[</span><span class="w"> </span><span class="nv">$i</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"FAILED health check on </span><span class="nv">$host</span><span class="s2">, aborting rollout"</span><span class="p">;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">    </span>sleep<span class="w"> </span><span class="m">2</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">  </span><span class="k">done</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Re-adding </span><span class="nv">$host</span><span class="s2"> to rotation..."</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">  </span>ssh<span class="w"> </span>lb.internal<span class="w"> </span><span class="s2">"sudo sed -i 's/server </span><span class="si">${</span><span class="nv">host</span><span class="si">}</span><span class="s2">:3000 down;/server </span><span class="si">${</span><span class="nv">host</span><span class="si">}</span><span class="s2">:3000;/' /etc/nginx/sites-available/app.conf"</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">  </span>ssh<span class="w"> </span>lb.internal<span class="w"> </span><span class="s2">"sudo nginx -t &amp;&amp; sudo systemctl reload nginx"</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$host</span><span class="s2"> done."</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="k">done</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"Rolling deploy complete."</span>
+</code></pre></div>
+<p>At any point during this loop, 2 of the 3 backends are serving live
+traffic on the new <em>or</em> old version — clients never hit a backend that's
+mid-restart. Aborting on a failed health check (rather than plowing ahead)
+means a bad build takes down at most one-third of your capacity, not all
+of it.</p>
+<h2 id="pattern-2-socket-handoff-on-a-single-host-systemd-socket-activation">Pattern 2: socket handoff on a single host (systemd socket activation)<a class="headerlink" href="#pattern-2-socket-handoff-on-a-single-host-systemd-socket-activation" title="Permanent link">&para;</a></h2>
+<p>When you only have one host, you can still avoid downtime by having the
+<em>old</em> process keep serving until the <em>new</em> process is confirmed ready,
+using two separate ports behind nginx and swapping which one nginx points
+at — this is effectively blue-green on one box, and is expanded into the
+full pattern in the module 10 capstone. The minimal version:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># old process on :3000 keeps running</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># start the new version on :3001</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>myapp-new@3001
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># health check the new one directly</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>curl<span class="w"> </span>-sf<span class="w"> </span>http://127.0.0.1:3001/health<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"new version unhealthy, not switching"</span><span class="p">;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1"># flip nginx's upstream to point at :3001</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>sudo<span class="w"> </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">'s/127.0.0.1:3000/127.0.0.1:3001/'</span><span class="w"> </span>/etc/nginx/sites-available/app.conf
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>sudo<span class="w"> </span>nginx<span class="w"> </span>-t<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>reload<span class="w"> </span>nginx
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="c1"># only now stop the old process</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>myapp@3000
+</code></pre></div>
+<p><code>nginx reload</code> (not <code>restart</code>) is itself zero-downtime for nginx's own
+process — it spawns new worker processes with the new config and lets old
+workers finish in-flight requests before exiting. That property is what
+makes flipping the upstream target safe: there's no window where nginx
+itself is down.</p>
+<h2 id="graceful-shutdown-on-the-app-side">Graceful shutdown on the app side<a class="headerlink" href="#graceful-shutdown-on-the-app-side" title="Permanent link">&para;</a></h2>
+<p>Zero-downtime deploys require the app to actually finish in-flight requests
+before dying, not drop them when it receives <code>SIGTERM</code>. Systemd sends
+<code>SIGTERM</code> on stop/restart by default:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">[Service]</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="na">ExecStart</span><span class="o">=</span><span class="s">/opt/myapp/bin/server</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="na">KillSignal</span><span class="o">=</span><span class="s">SIGTERM</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="na">TimeoutStopSec</span><span class="o">=</span><span class="s">30</span>
+</code></pre></div>
+<p>Your app's code needs to listen for <code>SIGTERM</code> and stop accepting <em>new</em>
+connections while letting existing ones complete, e.g. (Node.js):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nx">process</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'SIGTERM'</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nx">server</span><span class="p">.</span><span class="nx">close</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="mf">0</span><span class="p">));</span><span class="w">  </span><span class="c1">// stop accepting new conns, finish existing ones, then exit</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nx">setTimeout</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="mf">1</span><span class="p">),</span><span class="w"> </span><span class="mf">25000</span><span class="p">);</span><span class="w"> </span><span class="c1">// hard exit if graceful shutdown hangs</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="p">});</span>
+</code></pre></div>
+<p><code>TimeoutStopSec=30</code> in the unit must be longer than your app's own graceful
+shutdown budget, or systemd sends <code>SIGKILL</code> before the app finishes
+cleanly.</p>
+<h2 id="database-migrations-the-part-that-actually-breaks-zero-downtime">Database migrations: the part that actually breaks zero-downtime<a class="headerlink" href="#database-migrations-the-part-that-actually-breaks-zero-downtime" title="Permanent link">&para;</a></h2>
+<p>Schema changes are the usual reason "zero-downtime" deploys still cause an
+outage: if the new code expects a column the old code's still-running
+instances don't know about (or vice versa, during a rolling deploy where
+old and new code run simultaneously), requests fail. The rule: make
+migrations <strong>backward-compatible with the previous version of the code</strong>,
+and split breaking changes into multiple deploys:</p>
+<ol>
+<li>Deploy 1: add the new column as nullable; old code ignores it, new code
+   (not yet deployed) will use it.</li>
+<li>Deploy 2: ship code that writes to the new column, still reading/falling
+   back to the old one.</li>
+<li>Deploy 3 (after backfill): ship code that only uses the new column.</li>
+<li>Deploy 4: drop the old column.</li>
+</ol>
+<p>Never combine "add column" and "drop old column" in the same deploy as the
+code change that depends on both being done — that's the single most common
+cause of "zero-downtime" deploys that weren't.</p>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Extend the rolling-restart script above (or the load-balancing exercise
+   from module 3) to loop over your 3 toy backends, draining, restarting,
+   and health-checking each one in turn.</li>
+<li>While the rollout is running, hit the load balancer in a tight loop from
+   a second terminal (<code>while true; do curl -s -o /dev/null -w "%{http_code}\n" http://localhost:8080/; sleep 0.2; done</code>)
+   and confirm you see zero non-200 responses during the whole rollout.</li>
+<li>Add a <code>SIGTERM</code> handler to a toy app that sleeps 3 seconds before exiting
+   (simulating in-flight request draining), and confirm systemd's
+   <code>TimeoutStopSec</code> is set high enough that <code>systemctl restart</code> doesn't kill
+   it mid-drain.</li>
+</ol>
 
 
 

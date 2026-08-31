@@ -2159,6 +2159,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · On-Call Culture & Escalation Design
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2175,6 +2193,102 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#alert-quality-page-for-the-right-things-or-people-stop-trusting-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alert quality: page for the right things, or people stop trusting pages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tracking-and-reducing-pages-that-shouldnt-have-been-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tracking and reducing pages that shouldn't have been pages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#escalation-policies-what-happens-when-the-primary-doesnt-respond" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Escalation policies: what happens when the primary doesn't respond
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rotation-design-sustainable-schedules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rotation design: sustainable schedules
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handoff-context-transfer-between-rotations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Handoff: context transfer between rotations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#blameless-culture-applied-to-on-call-specifically" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Blameless culture, applied to on-call specifically
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2378,91 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#alert-quality-page-for-the-right-things-or-people-stop-trusting-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alert quality: page for the right things, or people stop trusting pages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tracking-and-reducing-pages-that-shouldnt-have-been-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tracking and reducing pages that shouldn't have been pages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#escalation-policies-what-happens-when-the-primary-doesnt-respond" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Escalation policies: what happens when the primary doesn't respond
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rotation-design-sustainable-schedules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rotation design: sustainable schedules
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handoff-context-transfer-between-rotations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Handoff: context transfer between rotations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#blameless-culture-applied-to-on-call-specifically" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Blameless culture, applied to on-call specifically
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2482,151 @@
 
 
 <h1 id="08-on-call-culture-escalation-design">08 · On-Call Culture &amp; Escalation Design<a class="headerlink" href="#08-on-call-culture-escalation-design" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 4 · Master.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Runbooks and incident process (module 03) assume someone is actually
+available, alert, and equipped to respond when paged. This module is about
+designing the on-call <em>system</em> — rotation, escalation paths, alert quality,
+and the human sustainability side — so that assumption holds up over
+months and years, not just the first week.</p>
+<h2 id="alert-quality-page-for-the-right-things-or-people-stop-trusting-pages">Alert quality: page for the right things, or people stop trusting pages<a class="headerlink" href="#alert-quality-page-for-the-right-things-or-people-stop-trusting-pages" title="Permanent link">&para;</a></h2>
+<p>The single biggest driver of on-call burnout and, paradoxically, of missed
+real incidents, is <strong>alert fatigue</strong> — too many low-value or non-actionable
+pages train responders to under-react, including to the page that matters.</p>
+<p>A page should meet a specific bar:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Good page criteria (ask before adding any new alert):
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>[ ] Is this actionable RIGHT NOW by whoever's paged? (if the fix can wait
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    until business hours, it's a ticket, not a page)
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>[ ] Does it indicate real or imminent user impact? (not just "a metric
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    crossed an arbitrary threshold with no clear consequence")
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>[ ] Is there a runbook, or is the fix genuinely a judgment call that needs
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    a human paged rather than automation handling it?
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>[ ] Would a reasonable person paged at 3am agree this warranted waking up?
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Bad: pages on every 5xx, even isolated/transient ones</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AnyErrorOccurred</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">increase(http_requests_total{status=~"5.."}[1m]) &gt; 0</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> severity</span><span class="p">:</span><span class="w"> </span><span class="nv">page</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1"># Better: pages only on a sustained rate that indicates real, ongoing impact</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">alert</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HighErrorRate</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span><span class="nt">expr</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="no">sum(rate(http_requests_total{status=~"5.."}[5m])) </span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="no">/ sum(rate(http_requests_total[5m])) &gt; 0.05</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">  </span><span class="nt">for</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5m</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> severity</span><span class="p">:</span><span class="w"> </span><span class="nv">page</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="nt">runbook</span><span class="p">:</span><span class="w"> </span><span class="s">"https://wiki.internal/runbooks/high-error-rate"</span>
+</code></pre></div>
+<p>The <code>for: 5m</code> clause and the linked runbook are both deliberate: <code>for</code>
+avoids paging on a single noisy spike that self-resolves, and a runbook
+link means the person paged has a starting point instead of investigating
+from zero every time, even for a rare alert they don't remember.</p>
+<h2 id="tracking-and-reducing-pages-that-shouldnt-have-been-pages">Tracking and reducing pages that shouldn't have been pages<a class="headerlink" href="#tracking-and-reducing-pages-that-shouldnt-have-been-pages" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a># Weekly on-call retro question set:
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>- How many pages fired this week? How many were actionable?
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>- Of the non-actionable ones, was the alert threshold wrong, or should it
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>  not exist at all?
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>- Did any page recur more than twice — if so, is there a fix (not just a
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>  runbook workaround) that would prevent it recurring a third time?
+</code></pre></div>
+<p>A team that tracks <strong>pages per week</strong> and <strong>% actionable</strong> as an explicit
+metric, and treats a rising trend or a low actionable-percentage as a
+problem to fix (tune the threshold, fix the underlying flaky behavior,
+delete the alert) — rather than an accepted cost of running production —
+is the difference between on-call staying sustainable and slowly becoming
+something people dread and try to avoid.</p>
+<h2 id="escalation-policies-what-happens-when-the-primary-doesnt-respond">Escalation policies: what happens when the primary doesn't respond<a class="headerlink" href="#escalation-policies-what-happens-when-the-primary-doesnt-respond" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Conceptual PagerDuty escalation policy</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nt">escalation_policy</span><span class="p">:</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">orders-service-oncall</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">rules</span><span class="p">:</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">escalation_delay_minutes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">      </span><span class="nt">targets</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">primary_oncall</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">escalation_delay_minutes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">      </span><span class="nt">targets</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">secondary_oncall</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">escalation_delay_minutes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">      </span><span class="nt">targets</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">team_lead</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">engineering_manager</span><span class="p p-Indicator">]</span>
+</code></pre></div>
+<p>Every layer exists to answer "what if the previous layer doesn't
+acknowledge in time" — a phone on silent, a dead battery, being in an area
+with no signal. An escalation policy with only one layer (page the primary,
+and if they don't respond, nothing happens) has a silent single point of
+failure identical in shape to the infrastructure SPOFs from Level 3 module
+01, just in the human layer instead of the technical one.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Multi-channel notification within one layer, not just one channel</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nt">targets</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">primary_oncall</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nt">notification_rules</span><span class="p">:</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> delay_minutes</span><span class="p">:</span><span class="w"> </span><span class="nv">0</span><span class="p p-Indicator">,</span><span class="nt"> channel</span><span class="p">:</span><span class="w"> </span><span class="nv">push</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> delay_minutes</span><span class="p">:</span><span class="w"> </span><span class="nv">2</span><span class="p p-Indicator">,</span><span class="nt"> channel</span><span class="p">:</span><span class="w"> </span><span class="nv">sms</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> delay_minutes</span><span class="p">:</span><span class="w"> </span><span class="nv">4</span><span class="p p-Indicator">,</span><span class="nt"> channel</span><span class="p">:</span><span class="w"> </span><span class="nv">phone_call</span><span class="w"> </span><span class="p p-Indicator">}</span>
+</code></pre></div>
+<h2 id="rotation-design-sustainable-schedules">Rotation design: sustainable schedules<a class="headerlink" href="#rotation-design-sustainable-schedules" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Weekly rotation:  1 person primary + 1 person secondary, swap every Monday
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>                  → predictable, easy to plan around, but one bad week can
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>                    be exhausting with no relief
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>Follow-the-sun:   3 regions (APAC/EMEA/Americas) each cover their own
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>                  daytime hours → nobody is paged overnight, but requires
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>                  a genuinely distributed team and careful handoff process
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>Primary/secondary
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>with escalation:  primary gets first page; secondary exists as backup, not
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>                  as "also gets paged every time" (avoids doubling fatigue)
+</code></pre></div>
+<p>Rotation fairness matters concretely, not just as a morale nicety:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a># Track and review, don't just assume fairness:
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>- pages per person per rotation (should be roughly even, or explicitly
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  compensated/rotated if one service is genuinely noisier)
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>- off-hours pages per person per month
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>- time-to-acknowledge, per person (a consistently slow acknowledger may
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>  need a schedule adjustment, or may indicate a burned-out responder)
+</code></pre></div>
+<p>Compensation for on-call (extra pay, time off in lieu) is a policy decision
+outside engineering's control, but the <em>data</em> enabling that decision fairly
+— actual page load per person — is an engineering responsibility to
+collect and surface.</p>
+<h2 id="handoff-context-transfer-between-rotations">Handoff: context transfer between rotations<a class="headerlink" href="#handoff-context-transfer-between-rotations" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="gh"># On-call handoff notes template — filled in at the end of every rotation</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="gu">## Ongoing issues to watch</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">-</span><span class="w"> </span><span class="sb">`orders`</span> p99 latency has been creeping up over the week, not yet
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>  alert-worthy but worth watching (see dashboard link)
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="gu">## Incidents this rotation</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="k">-</span><span class="w"> </span>SEV2 on Tuesday, payments timeout — see postmortem [link]
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="k">-</span><span class="w"> </span>Action items from that postmortem are still open, due 2026-09-07
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="gu">## Changes deployed this rotation that could still be a factor</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="k">-</span><span class="w"> </span>New rate limiter shipped Thursday — if odd 429s show up, check this first
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="gu">## Anything flaky/annoying but not yet fixed</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="k">-</span><span class="w"> </span>The disk-usage alert on <span class="sb">`log-01`</span> fires around 2am most nights and
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>  self-resolves — investigated once, inconclusive, not yet silenced
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>  (should probably be fixed or explicitly muted, see retro backlog)
+</code></pre></div>
+<p>A structured handoff prevents the next rotation from rediscovering
+context the previous one already had — especially the "flaky but not
+fixed" category, which otherwise gets independently investigated by every
+new on-call engineer, wasting the same effort repeatedly instead of once.</p>
+<h2 id="blameless-culture-applied-to-on-call-specifically">Blameless culture, applied to on-call specifically<a class="headerlink" href="#blameless-culture-applied-to-on-call-specifically" title="Permanent link">&para;</a></h2>
+<p>The same blameless principle from module 03's postmortems applies to
+on-call performance: a slow acknowledgment or a missed page should trigger
+"is the alert routing/escalation policy adequate" and "is this person
+overloaded," not individual blame. A culture where being paged and failing
+to immediately fix a complex issue solo is treated as a personal failing
+teaches people to hide struggle and avoid escalating for help — exactly the
+opposite of what a healthy escalation policy depends on.</p>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Audit your current (or a hypothetical) alerting setup against the "good
+   page criteria" checklist above — for each alert, keep, tune the
+   threshold, or delete.</li>
+<li>Design an escalation policy with at least 3 layers and multi-channel
+   notification within the first layer, and write down the specific
+   condition that triggers each escalation step.</li>
+<li>Pick a rotation model (weekly, follow-the-sun, etc.) appropriate for
+   your team's size and geographic distribution, and justify the choice
+   against the trade-offs described above.</li>
+<li>Write a handoff template for your team and fill it out once, honestly,
+   for a real or recent rotation — including at least one "flaky but not
+   yet fixed" item.</li>
+</ol>
 
 
 

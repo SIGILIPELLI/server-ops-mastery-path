@@ -2019,6 +2019,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Incident Response & Runbooks
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2035,6 +2053,91 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#incident-severity-levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Incident severity levels
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incident-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Incident roles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-incident-timeline-what-to-record-and-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The incident timeline: what to record, and when
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#runbooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runbooks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#postmortems-blameless-and-focused-on-systems-not-people" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Postmortems: blameless, and focused on systems not people
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2264,6 +2367,80 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#incident-severity-levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Incident severity levels
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incident-roles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Incident roles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-incident-timeline-what-to-record-and-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The incident timeline: what to record, and when
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#runbooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runbooks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#postmortems-blameless-and-focused-on-systems-not-people" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Postmortems: blameless, and focused on systems not people
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2283,8 +2460,210 @@
 
 
 <h1 id="03-incident-response-runbooks">03 · Incident Response &amp; Runbooks<a class="headerlink" href="#03-incident-response-runbooks" title="Permanent link">&para;</a></h1>
-<p>This module is part of Level 4 · Master.</p>
-<p>More lessons are on the way — check back soon.</p>
+<p>Every design in Levels 1-3 assumes something eventually goes wrong despite
+the redundancy, health checks, and chaos testing. This module is about what
+happens in the minutes and hours after it does — the process, roles, and
+documentation that turn "something is broken" into "it's fixed, and we
+understand why," without depending on any one person's memory under
+pressure.</p>
+<h2 id="incident-severity-levels">Incident severity levels<a class="headerlink" href="#incident-severity-levels" title="Permanent link">&para;</a></h2>
+<p>Not every failure deserves the same response. A shared severity scale lets
+anyone — even someone unfamiliar with the specific system — gauge urgency
+correctly from the first message:</p>
+<table>
+<thead>
+<tr>
+<th>Severity</th>
+<th>Definition</th>
+<th>Example</th>
+<th>Response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SEV1</td>
+<td>Full outage or data loss, all/most customers affected</td>
+<td>Checkout completely down</td>
+<td>Page immediately, all-hands, exec notified</td>
+</tr>
+<tr>
+<td>SEV2</td>
+<td>Partial outage or major degradation</td>
+<td>One region down but others absorbing traffic</td>
+<td>Page on-call, escalate if not resolving</td>
+</tr>
+<tr>
+<td>SEV3</td>
+<td>Minor degradation, workaround exists</td>
+<td>Elevated latency on a non-critical endpoint</td>
+<td>Ticket, business-hours fix</td>
+</tr>
+<tr>
+<td>SEV4</td>
+<td>Cosmetic or no customer impact</td>
+<td>A dashboard panel is wrong</td>
+<td>Ticket, no urgency</td>
+</tr>
+</tbody>
+</table>
+<p>Declaring a severity is itself an action someone takes explicitly and
+early — an incident that's quietly assumed to be "probably SEV3" often
+doesn't get the escalation and communication a real SEV1 needs until it's
+already dragged on.</p>
+<h2 id="incident-roles">Incident roles<a class="headerlink" href="#incident-roles" title="Permanent link">&para;</a></h2>
+<p>Clear roles prevent the two classic failure modes of incident response:
+nobody making decisions ("who's actually driving this?"), and everybody
+trying to fix it at once with nobody communicating status.</p>
+<ul>
+<li><strong>Incident Commander (IC)</strong> — coordinates the response, makes the
+  call on severity/escalation, is not necessarily the person typing
+  commands. Owns the timeline and the decision to declare "resolved."
+  Empowered to pull in more people, without needing permission.
+  Recommended for SEV1-2 and worth declaring on any potential SEV1.</li>
+<li><strong>Operator(s)</strong> — the person(s) actually running diagnostics and
+  applying fixes, following the IC's prioritization.
+  Recommended for all severities where hands-on debugging is needed.</li>
+<li><strong>Communications lead</strong> — posts status updates to stakeholders/status
+  page, so the IC and operators aren't interrupted repeatedly for "any
+  update?"
+  Recommended for SEV1-2, especially customer-facing incidents.</li>
+<li><strong>Scribe</strong> — keeps a live timestamped log of what was tried, what was
+  observed, and when — this becomes the raw material for the postmortem
+  and dramatically speeds it up if kept in real time instead of
+  reconstructed afterward.
+  Recommended for SEV1, valuable for SEV2.</li>
+</ul>
+<p>On a small team, one person may hold two of these roles simultaneously
+(never IC + sole operator with no scribe on a SEV1, if avoidable) — the
+point is that each function gets done by someone, explicitly assigned, not
+assumed.</p>
+<h2 id="the-incident-timeline-what-to-record-and-when">The incident timeline: what to record, and when<a class="headerlink" href="#the-incident-timeline-what-to-record-and-when" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>14:02  Alert fires: error rate on `orders` &gt; 5% for 5 min
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>14:03  On-call acknowledges page
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>14:05  IC declared: alice. Operator: bob. Scribe: carol.
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>14:06  Severity set: SEV2 (checkout degraded, not fully down)
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>14:07  bob: checked orders dashboard — p99 latency 3x normal, error rate 8%
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>14:09  bob: traced errors to payments timeout (Level 3 module 09's tracing)
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>14:11  bob: payments provider status page shows a known incident on their side
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>14:12  carol: posted status update — "investigating checkout delays"
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>14:15  bob: enabled circuit breaker fallback (Level 3 module 07) to fail
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>       fast instead of timing out slowly
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>14:17  error rate back to &lt;1%; latency still elevated but acceptable
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>14:25  payments provider resolves their incident
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>14:27  alice: declares incident resolved
+</code></pre></div>
+<p>Recording <em>decisions and observations as they happen</em>, not just the final
+outcome, is what makes the eventual postmortem accurate — a timeline
+reconstructed from memory a day later reliably loses the details that
+matter most (what was tried and ruled out, and why).</p>
+<h2 id="runbooks">Runbooks<a class="headerlink" href="#runbooks" title="Permanent link">&para;</a></h2>
+<p>A runbook is a step-by-step procedure for a <em>specific, anticipated</em>
+failure, written so someone who didn't build the system can follow it
+correctly under pressure. It complements the general incident process
+above by removing guesswork for known failure modes.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="gh"># Runbook: Postgres primary unresponsive</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="gu">## Symptoms</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="k">-</span><span class="w"> </span><span class="sb">`pg_isready`</span> fails against the primary host
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="k">-</span><span class="w"> </span>Alert: "database connection errors" fired for <span class="sb">`orders`</span> and <span class="sb">`payments`</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="gu">## Diagnosis</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">1.</span> SSH to the primary: <span class="sb">`ssh db-primary-01`</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="k">2.</span> Check if the process is running: <span class="sb">`systemctl status postgresql`</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="k">3.</span> Check disk space: <span class="sb">`df -h /var/lib/postgresql`</span> — if full, this is the
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>   likely cause; see "Disk full" section below.
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="k">4.</span> Check the replica's lag before doing anything else:
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>   <span class="sb">`psql -h db-replica-01 -c "SELECT now() - pg_last_xact_replay_timestamp();"`</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>   If lag &gt; 60s, promoting now risks losing recent writes — page a senior
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>   engineer before proceeding rather than promoting unilaterally.
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="gu">## Resolution: promote the replica</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="k">1.</span> On the replica: <span class="sb">`sudo -u postgres pg_ctl promote -D /var/lib/postgresql/16/main`</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="k">2.</span> Update the app's connection string / service discovery entry to point
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>   at the new primary (see <span class="sb">`deploy/db-failover.sh`</span>).
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="k">3.</span> Confirm writes succeed: <span class="sb">`psql -h &lt;new-primary&gt; -c "INSERT INTO health_check ..."`</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="k">4.</span> Page the database team to rebuild a new replica once the dust settles —
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>   the system is now running without redundancy until that's done.
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="gu">## Rollback</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>There is no clean rollback once a replica is promoted — the old primary,
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>if it comes back, must be reconfigured as a replica of the new primary
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>(re-image it), never brought back as a second primary (split-brain).
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="gu">## Escalation</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>If replica lag &gt; 60s or promotion fails: page the database on-call lead
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>directly (see <span class="ni">#db-oncall</span> in PagerDuty), do not attempt manual recovery
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>without them.
+</code></pre></div>
+<p>The structure that matters, in every runbook: <strong>symptoms</strong> (how do you know
+this is the problem), <strong>diagnosis</strong> (how do you confirm it before acting),
+<strong>resolution</strong> (exact commands, not vague descriptions), <strong>rollback</strong> (what
+if the fix doesn't work or makes it worse), and <strong>escalation</strong> (when to
+stop and get help, and exactly who).</p>
+<h2 id="postmortems-blameless-and-focused-on-systems-not-people">Postmortems: blameless, and focused on systems not people<a class="headerlink" href="#postmortems-blameless-and-focused-on-systems-not-people" title="Permanent link">&para;</a></h2>
+<p>A postmortem is written after every SEV1 (and often SEV2) once things are
+stable, answering: what happened, what was the impact, what was the
+timeline, and — the part that actually prevents recurrence — what
+systemic changes will reduce the chance or impact of this class of failure
+happening again.</p>
+<p><strong>Blameless</strong> means the postmortem asks "what about our systems and
+processes allowed this to happen" instead of "who caused this." A blameful
+postmortem culture teaches people to hide mistakes and avoid reporting
+near-misses, which removes exactly the information needed to prevent
+repeats — it actively makes the organization less reliable over time.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="gh"># Postmortem: Checkout degradation, 2026-08-31</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="gu">## Impact</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>Checkout success rate dropped from 99.8% to 92% for 15 minutes (14:02-14:17),
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>affecting an estimated 340 orders.
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="gu">## Root cause</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>Upstream payments provider had a regional outage. Our <span class="sb">`orders`</span> service had
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>no circuit breaker configured for payments calls, so it kept trying and
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>timing out slowly (2s timeout × 2 retries) instead of failing fast, which
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>amplified latency and consumed connection pool capacity.
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="gu">## What went well</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="k">-</span><span class="w"> </span>Alert fired promptly and correctly identified the affected service.
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="k">-</span><span class="w"> </span>Tracing (Level 3 module 09) correctly pinpointed payments as the source
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>  within 3 minutes of investigation starting.
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="gu">## What went poorly</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="k">-</span><span class="w"> </span>No circuit breaker existed for the payments dependency despite it being
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>  an external, less-reliable call — this is exactly the scenario Level 3
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>  module 07 describes as circuit breaking's purpose.
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="k">-</span><span class="w"> </span>Status page update took 5 minutes after severity was declared — slower
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>  than our 2-minute target.
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="gu">## Action items</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>| Action | Owner | Due |
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>|---|---|---|
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>| Add circuit breaker to all <span class="sb">`orders → payments`</span> calls | bob | 2026-09-07 |
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>| Add automated status-page draft on SEV1/2 declaration | carol | 2026-09-14 |
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>| Add a chaos game day (Level 3 module 08) simulating payments latency | alice | 2026-09-21 |
+</code></pre></div>
+<p>The action items table, with named owners and dates, is what separates a
+postmortem that actually improves reliability from one that's a formality
+— an "action items" section with no owner or due date reliably never gets
+done.</p>
+<h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Write a runbook, in the format above, for one real failure mode in a
+   system you know (or one from an earlier module's capstone) — be specific
+   enough with commands that someone unfamiliar with the system could
+   follow it.</li>
+<li>Run (or simulate) a tabletop incident: have someone else read only your
+   runbook's "Symptoms" section and try to diagnose and resolve the
+   simulated issue using just the runbook. Note anywhere they got stuck or
+   needed information the runbook didn't provide, and fix the runbook.</li>
+<li>Write a blameless postmortem for a real or simulated incident, including
+   a timeline, root cause, and an action items table with owners and dates.</li>
+<li>Assign the four incident roles (IC, operator, comms, scribe) for a
+   hypothetical SEV1 on your team (or a team of one, explicitly noting
+   which roles you'd combine) and write one sentence on what each role is
+   responsible for <em>not</em> doing (e.g. "the IC does not personally debug the
+   database — that's the operator's job").</li>
+</ol>
 
 
 
