@@ -16,4 +16,7 @@ region design, capacity planning, incident response, and patching at scale.
 9. Platform Engineering & Internal Developer Experience
 10. Capstone — Designing a Resilient Global Platform
 
-_Full lessons for this level are in progress — check back soon._
+These modules assume everything from Levels 1-3 (SSH/hardening, nginx/TLS/
+CI-CD, HA/DR/IaC) is second nature, and build the organizational and
+architectural judgment layered on top — capacity math, incident process,
+compliance, cost, and the capstone's full-platform design exercise.

@@ -17,4 +17,7 @@ code.
 9. Observability at Scale (metrics, logs, traces)
 10. Capstone — Highly Available Web Service Design
 
-_Full lessons for this level are in progress — check back soon._
+Work through the modules in order — HA concepts and DNS/LB patterns set up
+the vocabulary, backups and IaC give you the tools to rebuild and recover,
+and the capstone has you design a full highly-available web service from
+the primitives covered along the way.

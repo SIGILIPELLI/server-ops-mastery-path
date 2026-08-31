@@ -17,4 +17,6 @@ staged environments, zero-downtime deploys, and basic monitoring.
 9. Centralized Logging Basics
 10. Capstone — Blue-Green Deploy Pipeline
 
-_Full lessons for this level are in progress — check back soon._
+Work through the modules in order — each one builds on the primitives
+(nginx, systemd, health checks) introduced in the ones before it, and the
+capstone ties all ten together into one working blue-green pipeline.
