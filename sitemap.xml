@@ -1,187 +1,187 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/privacy/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/privacy/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-1/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-1/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-1/01-server-basics-ssh-access/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-1/01-server-basics-ssh-access/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-1/02-initial-hardening-checklist/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-1/02-initial-hardening-checklist/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-1/03-package-management/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-1/03-package-management/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-1/04-process-management-systemd/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-1/04-process-management-systemd/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-1/05-basic-networking-concepts/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-1/05-basic-networking-concepts/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-1/06-build-deploy-script/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-1/06-build-deploy-script/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-1/07-environment-variables-config/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-1/07-environment-variables-config/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-1/08-log-basics/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-1/08-log-basics/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-1/09-cron-scheduled-tasks/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-1/09-cron-scheduled-tasks/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-1/10-capstone-bootstrap-script/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-1/10-capstone-bootstrap-script/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-2/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-2/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-2/01-reverse-proxies-nginx/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-2/01-reverse-proxies-nginx/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-2/02-tls-ssl-certs/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-2/02-tls-ssl-certs/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-2/03-load-balancing-basics/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-2/03-load-balancing-basics/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-2/04-environment-based-deployment/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-2/04-environment-based-deployment/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-2/05-zero-downtime-deploy/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-2/05-zero-downtime-deploy/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-2/06-secrets-config-management/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-2/06-secrets-config-management/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-2/07-cicd-pipeline-basics/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-2/07-cicd-pipeline-basics/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-2/08-basic-monitoring/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-2/08-basic-monitoring/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-2/09-centralized-logging-basics/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-2/09-centralized-logging-basics/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-2/10-capstone-blue-green-deploy/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-2/10-capstone-blue-green-deploy/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-3/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-3/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-3/01-ha-concepts/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-3/01-ha-concepts/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-3/02-dns-lb-ha-patterns/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-3/02-dns-lb-ha-patterns/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-3/03-backup-disaster-recovery/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-3/03-backup-disaster-recovery/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-3/04-containerization-basics-docker/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-3/04-containerization-basics-docker/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-3/05-infrastructure-as-code-overview/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-3/05-infrastructure-as-code-overview/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-3/06-configuration-drift-idempotency/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-3/06-configuration-drift-idempotency/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-3/07-service-mesh-internal-networking/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-3/07-service-mesh-internal-networking/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-3/08-chaos-engineering-basics/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-3/08-chaos-engineering-basics/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-3/09-observability-at-scale/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-3/09-observability-at-scale/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-3/10-capstone-ha-web-service-design/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-3/10-capstone-ha-web-service-design/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-4/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-4/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-4/01-multi-region-multi-az-concepts/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-4/01-multi-region-multi-az-concepts/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-4/02-capacity-planning/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-4/02-capacity-planning/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-4/03-incident-response-runbooks/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-4/03-incident-response-runbooks/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-4/04-security-patching-at-scale/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-4/04-security-patching-at-scale/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-4/05-choosing-ha-architecture-for-sla/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-4/05-choosing-ha-architecture-for-sla/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-4/06-cost-aware-infrastructure-design/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-4/06-cost-aware-infrastructure-design/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-4/07-compliance-audit-considerations/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-4/07-compliance-audit-considerations/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-4/08-oncall-culture-escalation-design/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-4/08-oncall-culture-escalation-design/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-4/09-platform-engineering-devex/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-4/09-platform-engineering-devex/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
     <url>
-         <loc>https://sigilipelli.github.io/server-ops-mastery-path/level-4/10-capstone-resilient-global-platform/</loc>
+         <loc>https://sigilipelli.github.io/server-ops-skillmastery/level-4/10-capstone-resilient-global-platform/</loc>
          <lastmod>2026-09-01</lastmod>
     </url>
 </urlset>
