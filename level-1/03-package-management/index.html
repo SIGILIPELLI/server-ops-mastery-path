@@ -923,6 +923,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2596,6 +2607,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2726,6 +2748,31 @@ images.</p>
 <p><code>dpkg -L &lt;package&gt;</code> (Debian/Ubuntu) or <code>rpm -ql &lt;package&gt;</code> (RHEL-family) is
 often the fastest way to answer "where did this config file come from?" when
 you're debugging an unfamiliar server.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>The APT dependency-resolution algorithm.</strong> <code>apt install</code> doesn't just fetch
+the package you named — it builds a directed graph of <code>Depends</code>/<code>Recommends</code>/
+<code>Conflicts</code>/<code>Breaks</code> relationships declared in each package's control file,
+then runs a SAT-like solver to find a consistent set of package versions
+satisfying every constraint simultaneously. <code>apt update</code> refreshes the local
+copy of the repository's <code>Packages</code> index (a signed manifest of every
+available package, version, and dependency list) from each configured
+source in <code>/etc/apt/sources.list.d/</code>; <code>apt install</code> reads only that cached
+index, which is why a stale cache can offer a version that 404s on download.</p>
+<p><strong>Why packages are cryptographically signed.</strong> Each repository publishes a
+<code>Release</code> file listing SHA256 hashes of every index file, and that <code>Release</code>
+file itself is GPG-signed by the repository's key (stored in
+<code>/etc/apt/trusted.gpg.d/</code>). APT verifies the signature chain — Release
+signature → index hashes → package hashes — before installing anything,
+so a compromised mirror or a machine-in-the-middle can't silently swap in a
+trojaned <code>.deb</code> without invalidating a hash somewhere in that chain.</p>
+<p><strong>dpkg vs apt.</strong> <code>dpkg</code> is the low-level package database and installer — it
+unpacks a <code>.deb</code>'s file list into the filesystem and records it in
+<code>/var/lib/dpkg/status</code>, but has no concept of remote repositories or
+transitive dependencies; it fails loudly if a dependency is missing. <code>apt</code>
+is the dependency-aware layer on top that decides <em>which</em> <code>.deb</code>s to hand
+<code>dpkg</code>. This is why <code>dpkg -i</code> can leave a system in a "broken dependencies"
+state that only <code>apt --fix-broken install</code> (which re-runs the solver) can
+resolve.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <p>On the hardened VM from module 2:</p>
 <ol>

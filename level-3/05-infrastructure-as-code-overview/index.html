@@ -1916,6 +1916,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2540,6 +2551,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2730,6 +2752,42 @@ just as a local file on one engineer's laptop:</p>
 <p>The <code>dynamodb_table</code> provides locking — a second <code>terraform apply</code> started
 while one is already running waits/fails instead of racing against the
 first and corrupting state.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>Why Terraform needs a state file at all, when the cloud provider already
+knows what exists.</strong> Terraform's <code>.tf</code> files describe desired resources by
+logical name (<code>aws_instance.web</code>), but cloud APIs identify resources by
+opaque IDs (<code>i-0abc123...</code>) that don't appear anywhere in your code. The
+state file is the mapping between the two — without it, <code>terraform plan</code>
+would have no way to know that <code>aws_instance.web</code> in your code <em>is</em>
+<code>i-0abc123</code> in AWS rather than a brand-new resource to create. This is
+also why deleting a resource outside Terraform (module 06's drift) doesn't
+just get silently ignored: <code>plan</code> reads the state file's ID, queries AWS
+for it, gets "not found," and reports that as a resource needing to be
+recreated — the state file, not the code, is what <code>plan</code> diffs live
+infrastructure against first.</p>
+<p><strong>Why the DynamoDB lock table prevents state corruption, mechanically.</strong>
+Terraform doesn't merge concurrent changes to state — it treats state as a
+single mutable blob it downloads, mutates in memory during <code>apply</code>, and
+uploads back. Two <code>apply</code> runs racing against the same state file would
+each read the same starting point, make independent changes, and the
+second upload would silently clobber the first's changes with no
+awareness they ever happened. The DynamoDB table is used purely as a
+distributed lock: before touching state, Terraform writes a lock record
+with a client ID; a second <code>apply</code> attempting to acquire the same lock
+sees the existing record and refuses to proceed until it's released —
+turning a silent, undetectable race into an explicit "state locked, try
+again later" error.</p>
+<p><strong>Why <code>terraform apply</code> sometimes wants to destroy and recreate a resource
+you only edited slightly.</strong> Not every attribute of a cloud resource is
+mutable in place — an EC2 instance's AMI, for instance, can't be changed
+on a running instance via API; the only way to get that instance onto a
+new AMI is to terminate it and launch a new one. Terraform's provider
+schema marks such attributes <code>ForceNew</code>, so any diff touching one produces
+a destroy-then-create plan rather than an update — which is exactly the
+kind of line <code>terraform plan</code>'s review step is meant to catch before it
+runs against a resource holding a live database, since "recreate" for a
+stateful resource means data loss unless it's backed by separate durable
+storage.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Write a Terraform file that provisions one VM and a security group

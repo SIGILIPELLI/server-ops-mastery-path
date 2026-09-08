@@ -1018,6 +1018,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2562,6 +2573,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2720,6 +2742,31 @@ be.</p>
 <a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="c1"># or, given the PID:</span>
 <a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>sudo<span class="w"> </span>cat<span class="w"> </span>/proc/<span class="k">$(</span>pgrep<span class="w"> </span>-f<span class="w"> </span>myapp<span class="k">)</span>/environ<span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span><span class="s1">'\0'</span><span class="w"> </span><span class="s1">'\n'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>APP_ENV
 </code></pre></div>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>Environment variables as a per-process kernel data structure.</strong> Every
+process has an environment block — a flat array of <code>KEY=value</code> strings living
+alongside its argument list, set up by the <code>execve()</code> syscall that started
+it. A child process inherits a <em>copy</em> of its parent's environment at fork
+time; after that they're independent, which is why <code>export FOO=bar</code> in one
+shell has no effect on an already-running sibling shell, and why a systemd
+service's environment comes from <code>Environment=</code>/<code>EnvironmentFile=</code> in its
+unit file (systemd is its direct parent, not your interactive shell) rather
+than from whatever you exported at a terminal.</p>
+<p><strong>Why <code>.env</code> files aren't loaded automatically by the OS.</strong> There is no
+kernel or shell mechanism that treats a file named <code>.env</code> specially — a
+process reads environment variables purely from the block it was execve'd
+with. Tools like <code>dotenv</code> libraries or <code>docker run --env-file</code> work by
+explicitly parsing the file's <code>KEY=value</code> lines and calling <code>setenv()</code> (or
+passing them into the child's environment block) before or during process
+start; without that explicit step, <code>.env</code> is just an inert text file.</p>
+<p><strong>The precedence chain and why it matters for debugging.</strong> Most
+applications resolve configuration through several layers: compiled
+defaults → config file → environment variables → CLI flags, applied in that
+order so each later layer overrides the former. A value that seems to be
+"ignored" is almost always being overridden by a later layer — checking
+<code>printenv | grep VARNAME</code> on the running process (<code>cat /proc/&lt;pid&gt;/environ</code>)
+tells you definitively what the process actually received, independent of
+what you think you set.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Create <code>/etc/myapp/myapp.env</code> with at least three variables, lock it down

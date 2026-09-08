@@ -1080,6 +1080,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2518,6 +2529,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2772,6 +2794,26 @@ level into one repeatable, idempotent tool.</p>
 work with your key, <code>sudo whoami</code> should print <code>root</code>, and
 <code>curl -I http://203.0.113.10</code> should return <code>HTTP/1.1 200 OK</code> from nginx.
 Only then close the original root session.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>Why the bootstrap script is safe to re-run (real idempotency, not luck).</strong>
+Each step is written as a check-then-act guard around a state-mutating
+command: <code>id deploy &amp;&gt;/dev/null || useradd ...</code> inspects the actual
+<code>/etc/passwd</code> database before deciding to act, and appending an SSH key goes
+through a <code>grep -qxF "$key" authorized_keys || echo "$key" &gt;&gt; authorized_keys</code>
+pattern rather than an unconditional append. This mirrors how configuration
+management tools (Ansible, Puppet) work internally — every resource is a
+convergence function from current-state to desired-state, not a fire-and-forget
+command — the difference here is you're hand-rolling the same guard logic in
+shell.</p>
+<p><strong>Why closing the root session only after a new login works matters.</strong>
+Disabling password auth and root login (<code>sshd_config</code> changes) doesn't take
+effect until <code>sshd</code> reloads its config — but your <em>existing</em> SSH session is
+a live TCP connection to an already-forked <code>sshd</code> child process that keeps
+running under the old settings until it exits. If the new access path is
+broken (bad key format, wrong permissions), the reload has already locked
+out future logins while your current session is the only way in — closing it
+before verifying a fresh connection is how servers get permanently locked
+out during hardening.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Run the full script against a fresh VM, following the worked example.</li>

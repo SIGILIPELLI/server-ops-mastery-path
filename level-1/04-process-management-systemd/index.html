@@ -923,6 +923,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2540,6 +2551,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2699,6 +2721,34 @@ and leave things in a confusing state.</p>
 </code></pre></div>
 <p>Expected <code>status</code> output includes <code>Active: active (running)</code> and the most
 recent journal lines showing the "hello from ..." messages every 5 seconds.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>systemd's cgroup-based process supervision.</strong> When systemd starts a
+service unit, it doesn't just <code>fork</code>/<code>exec</code> and hope — it places the new
+process (and every process it forks) into a dedicated Linux control group
+(cgroup) under <code>/sys/fs/cgroup/system.slice/&lt;unit&gt;.service/</code>. Because the
+kernel tracks cgroup membership independently of parent-child PID
+relationships, systemd can reliably enumerate and kill <em>every</em> descendant
+of a service — including daemonizing processes that re-parent to PID 1 — by
+walking the cgroup, something traditional init scripts using a single
+recorded PID cannot do correctly. This is also how <code>Restart=on-failure</code>
+detects "the service died": systemd is the parent (or watches via the
+cgroup's process-exit notifications) and receives the exit status directly.</p>
+<p><strong>Why <code>systemctl status</code> is instant while a log-file <code>tail</code> isn't.</strong> systemd
+services log to the journal via a socket write, and <code>journald</code> stores
+entries in a binary, indexed format (<code>/var/log/journal/</code>) rather than
+appending flat text — <code>journalctl -u &lt;unit&gt;</code> performs an indexed lookup by
+unit name and time range instead of a linear scan, which is why it stays
+fast even with gigabytes of history.</p>
+<p><strong>Unit dependency ordering.</strong> <code>After=network.target</code> in a unit file doesn't
+mean "wait until networking is fully configured" — <code>network.target</code> is a
+synchronization point that other units reach when they're done, not a
+guarantee about DHCP completion. Real network readiness needs
+<code>After=network-online.target</code> plus <code>Wants=network-online.target</code>, because
+systemd resolves the dependency graph and starts units in parallel wherever
+the graph allows, only serializing where explicit <code>Before=</code>/<code>After=</code>
+edges exist. This is why omitting the right ordering directive causes
+services to intermittently fail to bind on boot — a race, not a
+deterministic bug.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Write the <code>hello.service</code> unit above and get it running with

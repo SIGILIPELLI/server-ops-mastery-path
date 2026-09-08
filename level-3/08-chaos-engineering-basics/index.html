@@ -2000,6 +2000,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2540,6 +2551,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2696,6 +2718,44 @@ hypothesis, and expand only after confidence builds:</p>
 <p>Never start at step 4. Chaos engineering earns broader scope over time by
 demonstrating the safety mechanisms (fast, correct auto-revert) actually
 work at a small scale first.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>Why <code>tc qdisc netem</code> can simulate latency/loss without touching the
+application at all.</strong> <code>tc</code> (traffic control) programs the Linux kernel's
+network queuing discipline layer — the code path every outbound packet
+passes through between the socket buffer and the NIC driver, below any
+application or even the TCP stack's retransmission logic. <code>netem</code> inserts
+itself as that queuing discipline and delays, drops, reorders, or
+duplicates packets according to its parameters before they're handed to
+the network device. Because this operates below the socket layer, it
+faithfully reproduces what <em>real</em> network degradation looks like to the
+application (timeouts firing, TCP retransmits triggering, connections
+resetting) rather than an approximation from mocking a client library —
+which is exactly why it's trusted to validate module 07's timeout/circuit
+breaker configuration instead of a unit test with a fake slow response.</p>
+<p><strong>Why the auto-revert/stop-condition mechanism is the actual safety
+boundary, not the blast-radius scoping alone.</strong> Chaos Mesh's <code>duration:
+"60s"</code> and AWS FIS's <code>stopConditions</code> both work the same way structurally:
+the platform doesn't just fire the fault and walk away — it holds a
+persistent handle to what it changed (the pod-kill controller's target
+selection, or the CloudWatch alarm subscription) and runs a supervisory
+loop that either counts down to the duration and reverses the action, or
+polls the named alarm and reverses immediately if it fires. This is a
+categorically different guarantee than "someone remembers to run the
+cleanup command" — a human-run <code>tc qdisc del</code> step can be skipped under
+incident pressure or if the terminal session drops, but a stop condition
+tied to the platform's own reconciliation loop reverts even if every human
+watching the experiment walks away.</p>
+<p><strong>Why resource exhaustion experiments reveal failures that process-kill
+experiments can't.</strong> Killing a process tests the <em>binary</em> up/down health
+check path — the exact thing <code>max_fails</code>/liveness probes are built for.
+<code>stress-ng --vm-bytes 1G</code> or filling <code>/var</code> instead tests the much harder
+<em>degraded-but-technically-running</em> case: a process that responds to health
+checks (because the check itself is cheap) while every real request times
+out or the OOM killer is about to select it based on cgroup memory
+pressure and <code>oom_score_adj</code>. This is the gap most health-check designs
+miss — "process responds to <code>/healthz</code>" and "process can actually serve a
+real request under current resource pressure" are different claims, and
+only resource-exhaustion chaos tests the second one.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Pick one HA mechanism you've built in an earlier module (e.g. the

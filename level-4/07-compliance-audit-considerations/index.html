@@ -2348,6 +2348,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2533,6 +2544,17 @@
     <span class="md-ellipsis">
       
         Data classification and handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
       
     </span>
   </a>
@@ -2748,6 +2770,42 @@ proportional to sensitivity:</p>
 dangerous mistake — it means weaker controls are applied to data that
 needed stronger ones, discovered only during an incident or an audit
 finding.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>Why CloudTrail's cross-account destination is what makes a trail
+resistant to a compromised admin, not merely "best practice."</strong> IAM
+permissions in AWS are evaluated per-account; an identity with admin
+rights in the account being audited can, by definition, modify or delete
+resources (including a same-account S3 bucket and its bucket policy) in
+that account. Shipping the trail to a <em>separate</em> AWS account whose only
+relationship to the source account is "receives write-once log objects"
+means deleting the trail requires compromising a second, more tightly
+restricted account with a much smaller attack surface — the security
+property comes specifically from the account boundary, since IAM has no
+concept of "this admin can do everything except touch the audit log" that
+would be equally trustworthy from a single account.</p>
+<p><strong>Why <code>pgaudit</code> logging at the database layer catches what
+application-level logging structurally cannot.</strong> Application logs record
+what the app <em>chose</em> to log about a request — a compromised or buggy
+application can simply not log a query it doesn't want traced, or an
+engineer with direct database credentials can bypass the application
+entirely and query the table straight through <code>psql</code>. <code>pgaudit</code> hooks into
+Postgres's own executor, logging every statement that actually reaches the
+query engine regardless of which client or credential issued it — so it
+captures the direct-access path the application-log approach has no
+visibility into at all, which is exactly the gap auditors probing "who
+read this PII table" are checking for.</p>
+<p><strong>Why access review has to be a recurring process, mechanically tied to
+drift, not a one-time grant audit.</strong> An IAM/RBAC grant is a static
+artifact that stays valid until someone explicitly revokes it — nothing in
+the permission model itself expires access when the underlying need
+disappears (a project ends, a role changes, an engineer moves teams).
+This is structurally identical to Level 3 module 06's configuration drift:
+the declared state ("this person needs prod DB access") silently diverges
+from reality ("they haven't needed it in 4 months") with no automatic
+signal, which is why access review has to be a scheduled, recurring check
+against current need — exactly the same "run the check regularly, don't
+assume the initial grant is still correct" discipline as a nightly
+<code>terraform plan</code>.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Pick one compliance framework relevant to a system you know (or SOC 2

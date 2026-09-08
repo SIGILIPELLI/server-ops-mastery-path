@@ -2039,6 +2039,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2562,6 +2573,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2736,6 +2758,41 @@ is usually</p>
 trace search, traces carry the same <code>request_id</code> logs use) — building the
 three pillars in isolation, without the cross-links, leaves you back to
 manual correlation under pressure.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>Why trace context propagation is what actually stitches spans into one
+trace, not just shared naming.</strong> Each span carries a trace ID (shared
+across the whole request) and its own span ID, plus the parent span ID it
+was created under — OpenTelemetry propagates this triple across process
+boundaries via the W3C <code>traceparent</code> HTTP header
+(<code>00-&lt;trace-id&gt;-&lt;span-id&gt;-&lt;flags&gt;</code>). When <code>orders</code> calls <code>payments</code>, the
+OTel SDK automatically injects that header on the outbound request; the
+receiving service's SDK reads it and creates its own span as a <em>child</em> of
+the span ID in that header rather than starting a new trace. The tree
+structure you see in a Jaeger UI isn't reconstructed from timestamps or
+service names after the fact — it's the literal parent-child graph
+encoded in each span's own metadata at creation time.</p>
+<p><strong>Why Prometheus's pull model changes what "the metric is down" means
+compared to logs/traces' push model.</strong> Prometheus scrapes each target's
+<code>/metrics</code> endpoint on an interval rather than services pushing data to
+it — which means a target that's completely unreachable produces a
+distinct, queryable signal (the <code>up</code> metric for that target drops to 0)
+instead of simply going silent the way a crashed log-shipper would. This
+is also why Prometheus counters are defined to only increase (<code>rate()</code>
+computes the per-second increase over a window, correctly handling
+counter resets from a restarted process) rather than being reset to zero
+and reported as a delta — a push-based system would need the client to
+track and transmit deltas itself, and lose data if the push failed
+silently.</p>
+<p><strong>Why tail-based sampling needs a buffering collector, structurally.</strong>
+Deciding "keep this trace because it had an error" requires having <em>all</em>
+of a trace's spans in hand before deciding — but spans from one trace
+arrive at the collector from different services at different times as
+each hop completes. The OTel Collector's tail-sampling processor buffers
+spans by trace ID for a configured window, waiting for the trace to look
+complete (or timing out), before applying the keep/drop policies —
+trading memory and a few seconds of latency in the collector for the
+ability to make sampling decisions on the trace's actual outcome, which a
+per-span, decide-immediately (head-based) sampler structurally cannot do.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Add a <code>request_id</code> (generated at the edge, propagated via an HTTP

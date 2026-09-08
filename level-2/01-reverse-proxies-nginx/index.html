@@ -1439,6 +1439,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2562,6 +2573,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2725,6 +2747,33 @@ built for exactly this.</p>
 <p>The <code>curl -H "Host: ..."</code> trick lets you test name-based virtual hosting
 from the server itself without needing real DNS yet — nginx picks the
 <code>server_name</code> block purely from the <code>Host</code> header.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>nginx's event-loop architecture — why one worker handles thousands of
+connections.</strong> Unlike a thread-per-connection server, nginx workers run an
+asynchronous event loop built on the kernel's <code>epoll</code> (Linux) facility: a
+worker registers every open socket's file descriptor with <code>epoll</code>, then
+blocks on a single <code>epoll_wait()</code> call that returns only the subset of
+sockets that actually have data ready. This means one worker process can
+juggle tens of thousands of idle-or-slow client connections using constant
+memory per connection and no thread-context-switch overhead — the worker
+never blocks waiting on any single connection's I/O.</p>
+<p><strong>What "reverse proxying" does at the socket level.</strong> nginx terminates the
+client's TCP connection completely — it is a real HTTP server (or TLS
+endpoint) from the client's perspective — parses the HTTP request, then
+opens a <em>separate</em> TCP connection to the configured upstream and re-emits an
+equivalent request over it, relaying the response back. This decoupling
+(two independent TCP connections, not one pass-through pipe) is what lets
+nginx buffer slow-client uploads, add/rewrite headers, terminate TLS while
+speaking plaintext to the backend, and multiplex many client connections
+onto a small pool of persistent keep-alive connections to the upstream.</p>
+<p><strong><code>proxy_pass</code> header rewriting and why <code>Host</code>/<code>X-Forwarded-For</code> need
+explicit config.</strong> The backend, on its own new TCP connection, has no idea
+who the original client is or what hostname they requested — by default the
+proxied request carries nginx's own view of things. <code>proxy_set_header Host
+$host</code> and <code>X-Forwarded-For $proxy_add_x_forwarded_for</code> explicitly forward
+that context because HTTP has no automatic mechanism for it; omitting them
+is the actual cause of backends generating wrong redirect URLs or logging
+every request as coming from the proxy's own IP.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Run two toy backends on <code>:3000</code> and <code>:3001</code> (e.g. <code>python3 -m http.server</code>

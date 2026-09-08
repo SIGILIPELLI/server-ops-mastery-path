@@ -1832,6 +1832,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2540,6 +2551,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2689,6 +2711,51 @@ record to the secondary if it goes unhealthy:</p>
 — but it demonstrates the exact mechanism: something has to detect the
 failure, then rewrite what DNS answers, and every client is bound by the
 TTL until it re-resolves.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>Why the resolver chain, not your server, decides how "instant" failover
+really is.</strong> A client resolving <code>app.example.com</code> almost never talks to
+your authoritative nameserver directly. It asks its OS stub resolver,
+which asks a recursive resolver (ISP, <code>1.1.1.1</code>, <code>8.8.8.8</code>, or a corporate
+DNS forwarder), which — only on a cache miss — walks the delegation chain
+(root → <code>.com</code> → your NS records) to your authoritative server and caches
+the answer for the TTL. Every hop in that chain can cache independently,
+and some enforce a <em>minimum</em> TTL floor regardless of what you publish —
+which is exactly why "TTL disrespect" exists and why lowering a TTL from
+3600 to 60 doesn't take effect instantly: the old, longer-TTL answer is
+still sitting in caches that honored the original value when they fetched
+it, and it won't be re-fetched until <em>that</em> TTL expires.</p>
+<p><strong>Health-checked DNS is a control-plane poller, not part of the query
+path.</strong> When Route 53 or Cloudflare "health-checks" an endpoint, a fleet of
+distributed probers hits your <code>/healthz</code> on an interval (commonly every
+10-30s from multiple regions) and writes a health status into the DNS
+provider's control plane. The <em>next</em> DNS query — which may come seconds or
+minutes later depending on caching — gets served from whatever the
+authoritative server's zone data currently says, which the health-check
+system updated out-of-band. There's no synchronous link between "the
+backend just died" and "the next resolver query reflects that" — the gap
+is: probe interval + number of consecutive failures required (to avoid
+flapping) + propagation to the authoritative server + remaining TTL on
+already-cached answers anywhere in the chain.</p>
+<p><strong>Why round-robin DNS doesn't actually balance load evenly.</strong> A resolver
+that caches an <code>A</code> record with multiple IPs typically returns them in a
+fixed rotated order per query, but many resolvers (and virtually all OS
+stub resolvers, and any client-side connection pool) then pick <em>one</em> IP
+from the list and reuse it for the TTL's duration, or even for the process
+lifetime. This means load distribution is a function of how many distinct
+clients/resolvers query you, not how many requests each client makes —
+one client behind a corporate NAT can send thousands of requests to
+whichever single IP its resolver happened to hand back first.</p>
+<p><strong>Anycast resolves what DNS-level failover structurally cannot: sub-second
+failover with no TTL involved at all.</strong> With anycast, the same IP address
+is originated from multiple points of presence via BGP, and it is the
+<em>internet's routing table</em>, not a DNS answer, that decides which physical
+instance a packet reaches — determined by BGP path length/preference at
+each hop between the client and your announcing routers. When an
+anycast-announcing node fails, withdrawing its BGP route causes traffic to
+converge on the next-best announcer within the time it takes route
+withdrawal to propagate (typically single-digit seconds across a well-peered
+network) — no client cache, no TTL, because the IP address itself never
+changes; only which physical machine answers to it does.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Set up <code>dnsmasq</code> as above and confirm <code>dig app.test @127.0.0.1</code> (or

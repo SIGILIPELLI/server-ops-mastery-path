@@ -2415,6 +2415,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2555,6 +2566,17 @@
     <span class="md-ellipsis">
       
         Escape hatches: golden paths must not become golden cages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
       
     </span>
   </a>
@@ -2723,6 +2745,42 @@ default when justified:</p>
 <em>and</em> skips the baseline requirements it was enforcing (tagging, security
 scanning) reintroduces exactly the inconsistency platform engineering was
 built to eliminate.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>Why Terraform's <code>validation</code> block enforces guardrails at plan time, not
+review time.</strong> A <code>variable</code> block's <code>validation { condition ... }</code> is
+evaluated by Terraform itself during <code>terraform plan</code>/<code>apply</code>, before any
+API call to the cloud provider is made — an invalid <code>instance_size</code> fails
+immediately with the custom <code>error_message</code>, with no dependency on a
+human reviewer noticing an out-of-range value in a PR diff. This is a
+categorically stronger guarantee than a code-review checklist: a review
+step can be skipped under time pressure or simply missed, while a
+<code>validation</code> block runs deterministically on every single invocation,
+which is why platform guardrails are built into the module's own schema
+rather than documented as a convention teams are expected to follow.</p>
+<p><strong>Why a golden path wins adoption through friction differential, not
+mandate.</strong> Teams don't choose infrastructure patterns by evaluating which
+is "correct" in the abstract — they choose whichever path requires less
+effort to ship the feature they actually care about. A scaffolded service
+that already has CI, health checks, and monitoring wired up means the
+<em>marginal</em> effort of doing the right thing is near zero, while the
+ad-hoc alternative requires reproducing all of that from scratch. This
+is the same behavioral mechanism behind Dependabot-style automated PRs
+(Level 4 module 04) or a default-secure Terraform module here — making the
+correct choice cheaper than the incorrect one changes behavior far more
+reliably than policy alone, because it doesn't depend on anyone
+remembering or enforcing the policy.</p>
+<p><strong>Why DORA metrics specifically (not just "is the platform up") measure
+platform success.</strong> Deployment frequency and lead time for changes measure
+how much friction the platform adds to the <em>path from commit to
+production</em> — the exact surface a golden path is meant to shrink — while
+change failure rate and MTTR measure whether the safety rails (CI gates,
+staged rollouts, health checks the template wires up by default) actually
+reduce the blast radius and detection time when something does go wrong.
+A platform can have perfect uptime for its own control-plane components
+while still failing its purpose if it makes shipping <em>application</em> changes
+slower or riskier than going around it — which is why these four numbers,
+measured on the teams <em>using</em> the platform rather than the platform's own
+infrastructure, are the metrics that actually reveal whether it's working.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Pick one recurring task engineers on your team do manually today

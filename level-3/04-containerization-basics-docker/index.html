@@ -1899,6 +1899,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2562,6 +2573,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2743,6 +2765,43 @@ disposable unit; durable state has to be explicitly placed outside it.</p>
 centralized logging module) rather than read locally — a container that's
 rescheduled onto a different host takes its logs with it unless they're
 already centralized.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>Why layer ordering actually changes build time, mechanically.</strong> Docker
+builds an image as a stack of read-only layers, one per instruction, and
+caches each layer keyed by a hash of the instruction plus its build
+context (for <code>COPY</code>, that includes a hash of the copied files' contents).
+On a rebuild, Docker walks the instruction list and reuses every cached
+layer up to the first one whose inputs changed — every layer <em>after</em> that
+point is rebuilt regardless of whether it would have produced identical
+output. <code>COPY package.json package-lock.json ./</code> followed by <code>RUN npm ci</code>
+before <code>COPY . .</code> means an application source change only invalidates the
+<code>COPY . .</code> layer onward — <code>npm ci</code> reruns only when the manifests
+themselves change, not on every source edit.</p>
+<p><strong>Why containers isolate without a hypervisor.</strong> A container is not a
+lightweight VM — it's an ordinary Linux process that the kernel makes
+<em>appear</em> isolated using two independent mechanisms: namespaces (PID, net,
+mount, UTS, IPC — each gives the process its own view of that resource
+category, so <code>docker run</code>'s process sees itself as PID 1 in its own PID
+namespace even though it's just another PID on the host) and cgroups
+(the same systemd mechanism from Level 1 module 4, used here to enforce
+<code>--memory</code>/<code>--cpus</code> limits rather than just track process trees). Because
+there's one shared kernel underneath all of this — unlike a VM's separate
+kernel per guest — a container escape or kernel exploit has a much larger
+blast radius than a VM escape, which is the concrete reason <code>USER appuser</code>
+and avoiding <code>--privileged</code> matter operationally, not just as a checklist
+item.</p>
+<p><strong>Why the writable layer is disposable but a bind mount/volume isn't.</strong>
+Every running container gets one additional writable layer on top of its
+read-only image layers (a union filesystem, historically overlay2 on
+Linux), and <code>docker rm</code> discards that writable layer along with the
+container. A named volume is mounted <em>through</em> that layer at a specific
+path, backed by storage Docker manages outside any image layer — so
+<code>docker rm</code> on a container with the volume attached leaves the volume's
+data untouched on the host, and a new container mounting the same volume
+picks up exactly where the old one left off. This is the mechanical reason
+"never store durable data in the container's own filesystem" isn't a
+style preference — that data is architecturally scoped to the container's
+lifetime, full stop.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Write a <code>Dockerfile</code> for a small app (any language) that follows the

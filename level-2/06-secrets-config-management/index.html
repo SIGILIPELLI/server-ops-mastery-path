@@ -1579,6 +1579,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2562,6 +2573,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2684,6 +2706,35 @@ third-party aggregator (module 9).</p>
 <a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>sudo<span class="w"> </span>-u<span class="w"> </span>deploy<span class="w"> </span>cat<span class="w"> </span>/etc/myapp/secrets.env<span class="w">    </span><span class="c1"># works — same user</span>
 <a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>sudo<span class="w"> </span>-u<span class="w"> </span>nobody<span class="w"> </span>cat<span class="w"> </span>/etc/myapp/secrets.env<span class="w">    </span><span class="c1"># Permission denied — confirms isolation</span>
 </code></pre></div>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>Why secrets in environment variables are visible to more than you'd
+think.</strong> An environment variable set on a process is readable by anything
+with access to <code>/proc/&lt;pid&gt;/environ</code> on that host (typically root, or the
+same UID) and is included verbatim in crash dumps, some logging middleware
+that dumps <code>process.env</code>, and child-process environments unless explicitly
+stripped. It is <em>not</em> automatically exposed over the network or to other
+users, but it is far more exposed than a value fetched at runtime from a
+secrets manager and held only in application memory, never touching disk,
+shell history, or a source-controlled <code>.env</code> file.</p>
+<p><strong>How a secrets manager (Vault, AWS Secrets Manager) actually restricts
+access.</strong> These systems store secrets encrypted at rest and only decrypt
+them when a request presents valid, scoped credentials (an IAM role, a
+Vault token tied to a policy) — access is enforced by the secrets manager's
+own authorization check on every read, and every read is logged centrally.
+This is qualitatively different from a file on disk with restrictive
+permissions: file permissions only stop <em>other users on that host</em>; a
+secrets manager can also grant/revoke/rotate an individual application's
+access without touching any other consumer of the same secret, and produces
+a full audit trail of who fetched what and when.</p>
+<p><strong>Why rotating a secret is hard in practice.</strong> Rotation isn't just
+"generate a new value" — every consumer holding the old value in memory or a
+connection pool needs to pick up the new one before the old one is
+invalidated, or you get a brief window of failed auth. This is why
+production secrets rotation is usually staged: both old and new credentials
+are valid simultaneously for an overlap window, consumers are bounced (or
+poll for updates) to pick up the new value, and only then is the old value
+revoked — a mechanism directly analogous to blue-green deployment, applied
+to credentials instead of application code.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Create a <code>secrets.env</code> file with mode <code>600</code> owned by a dedicated

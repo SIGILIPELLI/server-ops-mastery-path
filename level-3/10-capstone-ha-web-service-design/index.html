@@ -2100,6 +2100,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2628,6 +2639,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2805,6 +2827,38 @@ of these, specifically (not "yes, generally"):</p>
       surface a violation of the RPO/RTO/availability targets before a
       customer notices</li>
 </ul>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>Why splitting instance IPs by AZ-mapped subnet turns an ambiguous
+outage into a diagnosable one.</strong> With <code>10.0.1.x</code>/<code>10.0.2.x</code> mapped 1:1 to
+AZs in the <code>orders_backend</code> upstream, an on-call engineer watching nginx's
+upstream state doesn't have to guess whether three unrelated instance
+failures are a coincidence or a single AZ event — <code>nginx -T</code> or
+<code>upstream_conf</code>-style status shows exactly which subnet went dark. This
+is the same signal the load balancer itself uses passively via
+<code>max_fails</code>/<code>fail_timeout</code>, just made legible to a human at 3am instead of
+only acted on invisibly — the design choice pays off twice, once in the
+LB's automatic routing and once in incident triage.</p>
+<p><strong>Why synchronous replication, not just "a replica exists," is what makes
+the 5-minute RPO credible for an AZ failure.</strong> An async replica can lag
+behind the primary by an unbounded amount under load — if the primary AZ
+disappears mid-lag, every unreplicated write is gone, and the actual RPO
+during a real event could be far worse than 5 minutes despite the replica
+"being there." A <em>synchronous</em> replica requires the primary to receive
+write acknowledgment from the replica before confirming the commit to the
+client, which caps the possible data loss at "whatever was in flight at
+the instant of failure" — the RPO number in the design is only true
+because of this specific mechanism, not because a second Postgres instance
+happens to exist in another AZ.</p>
+<p><strong>Why the two-tier DR plan (replica promotion vs. full restore) has to be
+rehearsed separately, not just once.</strong> Promoting a synchronous replica
+(Patroni failover) and restoring from an off-region backup with WAL replay
+are different code paths exercising different failure assumptions — the
+first assumes the replica's data is intact and reachable, the second
+assumes it isn't and rebuilds from durable object storage instead. A game
+day that only ever tests replica promotion (the common, easy case) leaves
+the 25-minute full-restore RTO as an unverified number from module 03's
+"untested backup is a hypothesis" warning, applied here at the level of
+the entire recovery <em>procedure</em>, not just the backup file.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Take a real (or realistic toy) service you run or have access to, and

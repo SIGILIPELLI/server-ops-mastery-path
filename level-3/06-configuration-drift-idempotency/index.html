@@ -1944,6 +1944,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2540,6 +2551,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2716,6 +2738,40 @@ re-run" problem.</p>
 <code>changed: false</code> on a second run against an already-converged host —
 <code>ansible-playbook site.yml</code> becomes something you can run nightly via cron
 as a drift-correction job, not just a one-time setup script.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>Why <code>terraform plan</code> can diff reality without touching it.</strong> Terraform
+keeps a state file mapping each resource in your <code>.tf</code> code to the real
+provider object's ID (e.g. an AWS instance ID). <code>plan</code> calls each
+provider's <em>read</em> API for every tracked resource — a GET, not a mutating
+call — to fetch current attribute values, then does a three-way diff
+between the state file, the live values just fetched, and what the <code>.tf</code>
+code declares. A resource that changed outside Terraform shows up as a
+diff between "live" and "state" even before comparing to code, which is
+how <code>plan</code> catches drift that config alone can't see: it's not comparing
+your code to your infrastructure, it's comparing three things at once.</p>
+<p><strong>Why Ansible modules report <code>changed: false</code> instead of just "succeeding"
+on a no-op run.</strong> Each built-in module (<code>apt</code>, <code>file</code>, <code>user</code>, <code>cron</code>, …)
+follows a check-then-act pattern internally: it queries current state
+(<code>dpkg -l</code>, <code>stat()</code>, <code>getent passwd</code>, parses <code>/etc/crontab</code> by the task's
+<code>name</code> comment marker) and compares it field-by-field against the task's
+declared parameters <em>before</em> issuing any mutating syscall. Only a real
+mismatch triggers the underlying action; if state already matches, the
+module returns <code>changed: false</code> without invoking <code>apt-get install</code> or
+<code>useradd</code> at all. This is what <code>--check</code> mode piggybacks on: it runs the
+same comparison logic and reports what <em>would</em> change, then stops before
+the action step — the module architecture makes dry-run and idempotency
+the same code path, not two separate implementations that could drift
+from each other.</p>
+<p><strong>Why <code>shell</code>/<code>command</code> tasks can't be idempotent no matter how carefully
+written.</strong> Ansible has no way to introspect what a raw shell command's
+effect <em>would</em> be without running it — there's no structured "current
+state" to compare against, only exit code and stdout/stderr after the
+fact. That's why <code>shell</code> tasks default to reporting <code>changed: true</code> on
+every run regardless of whether anything actually changed (unless you add
+a manual <code>creates:</code>/<code>changed_when:</code> guard) — the module system trades
+Ansible's ability to reason about the operation for the flexibility of an
+arbitrary command, and idempotency then becomes the script author's
+responsibility instead of the module's.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Take a shell script you (or the examples above) wrote that isn't

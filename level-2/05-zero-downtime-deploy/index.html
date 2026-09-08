@@ -1529,6 +1529,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2518,6 +2529,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2654,6 +2676,32 @@ and split breaking changes into multiple deploys:</p>
 <p>Never combine "add column" and "drop old column" in the same deploy as the
 code change that depends on both being done — that's the single most common
 cause of "zero-downtime" deploys that weren't.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>Graceful reload via socket handoff, not restart.</strong> nginx's zero-downtime
+reload (<code>nginx -s reload</code>) works because the <em>listening socket</em> — the
+kernel-level bound file descriptor accepting new TCP connections on port
+80/443 — is inherited by new worker processes rather than closed and
+reopened. The master process spawns new workers with the reloaded config
+while old workers finish serving their already-accepted connections, then
+old workers exit; because the listening socket itself never closes, the
+kernel keeps queuing new connections throughout, so no client ever sees a
+connection refused.</p>
+<p><strong>SIGTERM and graceful shutdown windows.</strong> Deploy orchestration typically
+sends <code>SIGTERM</code> to an old process instance and waits a grace period before
+<code>SIGKILL</code>. A well-behaved application catches <code>SIGTERM</code>, stops accepting new
+requests on its listening socket, but keeps its process alive long enough to
+finish in-flight requests before exiting on its own — this is a userspace
+signal handler, not automatic OS behavior; a process that ignores <code>SIGTERM</code>
+gets forcibly killed at the grace-period boundary, dropping any request
+still in flight. This is the actual mechanism "drain before removing from
+the load balancer" relies on.</p>
+<p><strong>Why load-balancer health checks are what make rolling deploys safe.</strong> A
+new instance is only added to active rotation after it passes the health
+check's consecutive-success threshold (see load-balancing module), and an
+instance being terminated is removed from rotation <em>before</em> it's sent
+<code>SIGTERM</code> — the balancer's connection routing table and the deploy
+orchestrator's kill sequence have to be ordered correctly, or requests get
+routed to a socket that's already stopped accepting.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Extend the rolling-restart script above (or the load-balancing exercise

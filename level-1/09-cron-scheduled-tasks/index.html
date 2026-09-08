@@ -1063,6 +1063,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2540,6 +2551,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2708,6 +2730,30 @@ it's next scheduled — something plain cron gives you no easy way to inspect.</
 <a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
 <a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>tmp-cleanup.timer
 </code></pre></div>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>The cron daemon's wake-check loop.</strong> <code>cron</code> doesn't set individual timers
+per job — it's a single long-running daemon that wakes once a minute,
+compares the current minute/hour/day/month/weekday against every parsed
+crontab line, and <code>fork</code>/<code>exec</code>s any job whose fields match. This is why
+cron granularity is fixed at one minute (there's no sub-minute cron syntax)
+and why a job that starts a fraction of a second before the wake tick still
+waits for the next full minute boundary.</p>
+<p><strong>Why cron jobs run with a nearly empty environment.</strong> Cron invokes each
+job's shell directly from the daemon's own process tree, not from your
+interactive login shell — so it never sources <code>~/.bashrc</code> or <code>~/.profile</code>,
+and <code>PATH</code> defaults to a minimal <code>/usr/bin:/bin</code>. This is the actual
+mechanism behind "it works when I run it manually but fails under cron": the
+manual run inherits your full interactive-shell environment (aliases,
+extended <code>PATH</code>, exported variables), while cron's job inherits only what's
+explicitly set in the crontab or the script itself.</p>
+<p><strong>systemd timers vs cron.</strong> A <code>.timer</code> unit is a systemd unit like any
+other, evaluated by the same dependency-and-scheduling engine that starts
+services — <code>OnCalendar=</code> expressions are parsed into the same event loop
+that handles socket activation and boot ordering, and each timer's
+corresponding <code>.service</code> unit gets full journal logging and cgroup isolation
+automatically. This is why a failed systemd-timer job shows up in
+<code>systemctl status</code> and <code>journalctl -u</code>, while a failed cron job's exit
+status vanishes unless you specifically capture and log it yourself.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Write a small script that appends a timestamp to <code>/var/log/heartbeat.log</code>

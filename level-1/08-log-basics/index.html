@@ -1063,6 +1063,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2596,6 +2607,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2733,6 +2755,28 @@ skip rotation if the file is empty, and after rotating, signal nginx
 </code></pre></div>
 <p>This sequence — application log, proxy log, then correlate by timestamp —
 is the standard shape of most "why did this request fail" investigations.</p>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>syslog and journald: two logging paths, one system.</strong> Traditional Unix
+logging works via the <code>syslog()</code> C library call, which writes a formatted
+message to a Unix domain socket (<code>/dev/log</code>); a syslog daemon (<code>rsyslog</code>)
+listens on that socket and routes messages to files under <code>/var/log/</code>
+based on facility/severity rules in <code>/etc/rsyslog.d/</code>. systemd's <code>journald</code>
+intercepts this differently: it captures stdout/stderr of every unit it
+supervises directly (no syslog call needed) plus kernel messages via
+<code>/dev/kmsg</code>, storing everything in its own indexed binary format. Most
+modern distros run both, with <code>rsyslog</code> itself subscribing to the journal as
+a source — which is why the same log line can legitimately appear in both
+<code>journalctl</code> and <code>/var/log/syslog</code>.</p>
+<p><strong>Why <code>logrotate</code> uses rename-then-recreate instead of truncation.</strong> Rotating
+a log by truncating the file in place would race with a process that has it
+open and mid-<code>write()</code> — the write could land at an unexpected offset.
+Instead, <code>logrotate</code> renames the current file (<code>app.log</code> → <code>app.log.1</code>) and
+either sends the application a signal (<code>SIGHUP</code>, commonly) to reopen its log
+file at the new inode, or relies on <code>copytruncate</code> for programs that don't
+support that. The file descriptor a running process holds points to an
+inode, not a path — renaming the path doesn't invalidate writes in flight,
+which is exactly the property that makes rotation safe without stopping the
+process.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <ol>
 <li>On your VM, run <code>journalctl -u nginx --since "1 hour ago"</code> (or whatever

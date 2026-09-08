@@ -1635,6 +1635,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2562,6 +2573,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2693,6 +2715,33 @@ it (a log file alone is not an alert — nobody's <code>tail -f</code>ing it at 
 <a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>sleep<span class="w"> </span><span class="m">65</span>
 <a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>journalctl<span class="w"> </span>-t<span class="w"> </span>health-check<span class="w"> </span>--since<span class="w"> </span><span class="s2">"2 min ago"</span>
 </code></pre></div>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>Pull-based metrics collection and why it scales differently than push.</strong>
+Prometheus-style monitoring works by the monitoring server itself scraping
+an HTTP <code>/metrics</code> endpoint on each target at a fixed interval — the target
+just exposes current counter/gauge values in memory; it does no network
+calls of its own. This inverts the failure mode compared to push-based
+systems: if a target is unreachable, the <em>scrape</em> fails visibly and
+immediately (a missing data point the monitoring system itself notices),
+whereas a push-based agent failing silently just stops sending, which is
+harder to distinguish from "nothing to report."</p>
+<p><strong>Counters vs gauges — and why rate-of-change queries exist.</strong> A counter
+(e.g., total HTTP requests) only ever increases (or resets to zero on
+restart) — it's cheap for the application to maintain (an atomic increment)
+but meaningless as a raw number for alerting, since "50000 requests" tells
+you nothing about current load. Monitoring systems compute a <em>rate</em> by
+taking the derivative between two scraped counter values over the time
+between scrapes — this is why <code>rate()</code>/<code>irate()</code> functions exist and why
+they need at least two data points, and why a counter reset (process
+restart) is specifically handled by these functions rather than producing a
+nonsensical negative rate.</p>
+<p><strong>Why alert thresholds need a <code>for</code> duration.</strong> A raw threshold check
+("CPU &gt; 90%") evaluated on a single sample fires on transient spikes that
+self-resolve in seconds. Alerting rules attach a required duration
+(<code>for: 5m</code>) so the condition must hold continuously across multiple
+evaluation cycles before the alert actually fires — trading a few minutes of
+detection latency for eliminating false pages caused by momentary noise,
+which is a deliberate signal-to-noise tradeoff, not a limitation.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Write a <code>/health</code> endpoint for a toy app that fails (503) if a

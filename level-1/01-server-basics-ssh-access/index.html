@@ -856,6 +856,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2574,6 +2585,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2719,6 +2741,41 @@ this course text is generated rather than run against a real cloud
 instance — treat sample output as representative, not as a captured
 transcript, and verify against your own server.</p>
 </div>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>The TCP handshake and the SSH transport layer.</strong> <code>ssh webserver</code> first opens
+a plain TCP connection to port 22 (SYN → SYN-ACK → ACK). Only after that does
+SSH's own protocol begin: client and server exchange version banners, then
+negotiate a shared set of algorithms (key exchange, host-key type, cipher,
+MAC) by each sending an ordered list of what they support — the first mutual
+match wins. A Diffie-Hellman (or, on modern OpenSSH, Curve25519) key exchange
+then derives a shared secret over the insecure channel <em>without ever
+transmitting it</em>: each side sends a public value computed from a private
+random number, and both combine the other's public value with their own
+private one to reach the same shared secret, which an eavesdropper capturing
+only the public values cannot reconstruct. This secret seeds symmetric
+session keys (typically chacha20-poly1305 or AES-GCM) — from this point every
+byte of the session, including your login prompt and file transfers, is
+encrypted with those symmetric keys, which is why SSH is fast despite the
+expensive asymmetric math happening only once at setup.</p>
+<p><strong>Why the host-key fingerprint check exists.</strong> The DH exchange above proves
+you share a secret with <em>whoever answered on port 22</em> — not that it's the
+right machine. The server proves its identity separately by signing part of
+the handshake with its long-lived host private key; your client checks that
+signature against the public host key it already trusts (from
+<code>known_hosts</code>) or asks you to trust on first use. Skip that verification and
+a machine-in-the-middle can complete its own valid-looking handshake with
+you while relaying to the real server, reading everything in between.</p>
+<p><strong>Why key-based auth resists what password auth doesn't.</strong> After the
+transport layer is established, SSH negotiates <em>authentication</em> on top of it.
+Public-key auth works because your client signs a challenge (a hash derived
+from the session) with your private key, and the server verifies that
+signature using the public key already sitting in <code>authorized_keys</code> — this
+proves possession of the private key without ever sending it, so there's no
+password to brute-force or phish over the wire. The <code>chmod 700</code>/<code>600</code>
+requirement on <code>.ssh</code> and <code>authorized_keys</code> isn't cosmetic: <code>sshd</code> refuses to
+honor an <code>authorized_keys</code> file that group- or world-writable permissions
+could let another local user tamper with, closing a local-privilege-escalation
+path.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Spin up a free-tier or lowest-cost VM from any provider you have access to

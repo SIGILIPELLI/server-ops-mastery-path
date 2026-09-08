@@ -2303,6 +2303,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2562,6 +2573,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2732,6 +2754,44 @@ not which architecture is "best practice" in the abstract.</p>
 <a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>7. Track the error budget over time and revisit the decision when it's
 <a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>   chronically over or comfortably under spent
 </code></pre></div>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>Why availability multiplies across a dependency chain instead of
+averaging.</strong> If your system depends on a DNS provider with 99.95% uptime
+and a cloud region with 99.99% uptime, and those failures are
+independent, your system's <em>ceiling</em> is the product of their
+availabilities (0.9995 × 0.9999 ≈ 0.9994), not the minimum and certainly
+not an average — every dependency in the critical path is a term in a
+multiplication, and each additional hard dependency can only lower the
+ceiling, never raise it. This is the precise mathematical reason "audit
+every dependency's own SLA" in the decision framework isn't optional
+diligence — a system built with flawless application-level redundancy
+still inherits the availability <em>product</em> of everything beneath it, and
+no amount of your own engineering multiplies a term back upward.</p>
+<p><strong>Why the error budget is a rate-limiting mechanism, not just an
+accounting figure.</strong> Treating the budget as a live, spendable quantity
+(not a retrospective report) changes team behavior in a specific,
+mechanical way: a policy like "freeze risky deploys when budget remaining
+drops below 20%" converts an abstract reliability goal into an automatic
+gate that fires based on measured burn rate, the same way a circuit
+breaker (Level 3 module 07) trips on a measured failure rate rather than
+a human deciding case-by-case. Google's SRE practice (where the term
+originates) ties this explicitly to deploy velocity: teams whose budget is
+healthy are implicitly authorized to move faster, and the throttle
+tightens automatically as the budget burns, without anyone needing to
+negotiate it incident by incident.</p>
+<p><strong>Why the cost curve across nines is exponential rather than linear, structurally.</strong>
+Each additional nine requires eliminating the <em>next</em> most probable
+remaining failure mode, and failure modes get rarer and more expensive to
+address in roughly that order: single-instance failure (cheap — add a
+second instance), AZ failure (moderate — spread across AZs, still one
+provisioning model), region failure (expensive — a second full deployment,
+async replication, conflict resolution), then finally provider-level or
+correlated multi-region events (very expensive — a second cloud provider
+or extensive dependency substitution). Because each tier of failure mode
+requires categorically more infrastructure than the last, not just "more
+of the same," the cost curve tracks the failure-mode hierarchy's own
+increasing rarity and complexity rather than scaling with the availability
+percentage itself.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <ol>
 <li>For three systems you know (or invent three realistic ones spanning

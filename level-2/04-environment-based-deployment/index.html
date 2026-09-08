@@ -1512,6 +1512,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2540,6 +2551,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-it-actually-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Actually Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#exercise" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2670,6 +2692,29 @@ and two env files instead of two machines:</p>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nb">printf</span><span class="w"> </span><span class="s1">'PORT=3002\nLOG_LEVEL=warn\n'</span><span class="w">  </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/myapp/production.env
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># deploy the same release tarball into both dirs, then start each with its own env file</span>
 </code></pre></div>
+<h2 id="how-it-actually-works">How It Actually Works<a class="headerlink" href="#how-it-actually-works" title="Permanent link">&para;</a></h2>
+<p><strong>Why separate environments need separate everything, not just separate
+config values.</strong> An environment (dev/staging/prod) is really a distinct
+network namespace of resources — its own database instance, its own DNS
+names, sometimes its own VPC/subnet — and the "config" layer
+(environment variables, config files) is just the mechanism that tells one
+copy of the <em>same application binary</em> which set of resources to bind to at
+runtime. This separation exists because the alternative — baking environment
+identity into the build artifact — means you're no longer testing the exact
+bytes you'll deploy to production; the whole point of promoting one
+immutable build through environments is that only the environment-supplied
+configuration changes, eliminating "works in staging, breaks in prod because
+it was actually a different build" as a failure class.</p>
+<p><strong>How the OS resolves which config a process actually sees.</strong> At process
+start, <code>execve()</code> hands the new process an environment block assembled by
+whatever started it — a systemd unit's <code>Environment=</code>/<code>EnvironmentFile=</code>, a
+container runtime's <code>--env</code>, or a CI runner's job environment. There's no
+runtime "environment" concept the OS understands beyond that flat key-value
+block; an application's own code is what interprets a variable like
+<code>APP_ENV=staging</code> to decide which config file or feature flags to load, which
+is why a config framework doing something you don't expect is a userspace
+bug, not an OS one — <code>cat /proc/&lt;pid&gt;/environ</code> on the running process shows
+ground truth.</p>
 <h2 id="exercise">Exercise<a class="headerlink" href="#exercise" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Set up two systemd services (or two directories/ports on one VM)
