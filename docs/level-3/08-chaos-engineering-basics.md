@@ -159,6 +159,48 @@ Never start at step 4. Chaos engineering earns broader scope over time by
 demonstrating the safety mechanisms (fast, correct auto-revert) actually
 work at a small scale first.
 
+## How It Actually Works
+
+**Why `tc qdisc netem` can simulate latency/loss without touching the
+application at all.** `tc` (traffic control) programs the Linux kernel's
+network queuing discipline layer — the code path every outbound packet
+passes through between the socket buffer and the NIC driver, below any
+application or even the TCP stack's retransmission logic. `netem` inserts
+itself as that queuing discipline and delays, drops, reorders, or
+duplicates packets according to its parameters before they're handed to
+the network device. Because this operates below the socket layer, it
+faithfully reproduces what *real* network degradation looks like to the
+application (timeouts firing, TCP retransmits triggering, connections
+resetting) rather than an approximation from mocking a client library —
+which is exactly why it's trusted to validate module 07's timeout/circuit
+breaker configuration instead of a unit test with a fake slow response.
+
+**Why the auto-revert/stop-condition mechanism is the actual safety
+boundary, not the blast-radius scoping alone.** Chaos Mesh's `duration:
+"60s"` and AWS FIS's `stopConditions` both work the same way structurally:
+the platform doesn't just fire the fault and walk away — it holds a
+persistent handle to what it changed (the pod-kill controller's target
+selection, or the CloudWatch alarm subscription) and runs a supervisory
+loop that either counts down to the duration and reverses the action, or
+polls the named alarm and reverses immediately if it fires. This is a
+categorically different guarantee than "someone remembers to run the
+cleanup command" — a human-run `tc qdisc del` step can be skipped under
+incident pressure or if the terminal session drops, but a stop condition
+tied to the platform's own reconciliation loop reverts even if every human
+watching the experiment walks away.
+
+**Why resource exhaustion experiments reveal failures that process-kill
+experiments can't.** Killing a process tests the *binary* up/down health
+check path — the exact thing `max_fails`/liveness probes are built for.
+`stress-ng --vm-bytes 1G` or filling `/var` instead tests the much harder
+*degraded-but-technically-running* case: a process that responds to health
+checks (because the check itself is cheap) while every real request times
+out or the OOM killer is about to select it based on cgroup memory
+pressure and `oom_score_adj`. This is the gap most health-check designs
+miss — "process responds to `/healthz`" and "process can actually serve a
+real request under current resource pressure" are different claims, and
+only resource-exhaustion chaos tests the second one.
+
 ## Exercise
 
 1. Pick one HA mechanism you've built in an earlier module (e.g. the

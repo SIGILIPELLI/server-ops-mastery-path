@@ -135,6 +135,49 @@ system's real RPO is ~45 seconds (plus whatever additional lag a failure
 scenario introduces), regardless of what a design document claims — measure
 it, don't assume it.
 
+## How It Actually Works
+
+**Why cross-region latency is a physical floor, not an engineering
+problem to optimize away.** Light in fiber travels at roughly two-thirds
+the speed of light in vacuum (~200,000 km/s), so a round trip between,
+say, `us-east-1` (Virginia) and `eu-west-1` (Ireland) — about 5,800km each
+way — has a theoretical minimum of roughly 58ms just from the speed of
+light, before any switching, routing, or processing overhead is added;
+real-world measurements of 80-100ms reflect actual fiber path length
+(rarely a straight line) plus router hops, not inefficiency that better
+code could remove. This is why synchronous cross-region replication is a
+physics problem, not a database-tuning problem — no amount of engineering
+makes a commit-acknowledgment round trip faster than the path length
+allows.
+
+**Why logical replication lag is a queue, and what actually drives it.**
+`CREATE PUBLICATION`/`SUBSCRIPTION` streams a continuous feed of
+decoded write-ahead log changes from primary to standby over one logical
+replication connection. The standby applies changes serially in the order
+received; `replication_lag` is the gap between "when the primary
+committed" and "when the standby finished applying that specific
+transaction." Under load, three things independently push that gap up:
+network throughput between regions (a large batch transaction takes longer
+to transfer over a higher-RTT, possibly bandwidth-constrained link), the
+standby's own apply rate (single-threaded logical replication apply can
+become the bottleneck even with plenty of network headroom), and how far
+behind the standby already is when a burst arrives — it's a queue, so lag
+compounds under sustained write bursts rather than staying flat.
+
+**Why active-active needs a conflict resolution strategy even when writes
+"never" collide in practice.** Two regions accepting writes to the same
+row asynchronously means there's no global ordering authority deciding
+which write happened "first" from the system's perspective — each region
+only knows its own local commit order. A last-write-wins strategy resolves
+this using each write's timestamp, which depends on the writing nodes'
+clocks being reasonably synchronized (NTP-disciplined, but never perfectly
+identical) — under clock skew, "last write wins" can silently discard the
+causally later write if its region's clock happened to read slightly
+behind. This is the concrete reason many active-active designs instead
+route all writes for a given entity to one "home" region (avoiding the
+conflict entirely) rather than trusting timestamp-based resolution at
+scale.
+
 ## Exercise
 
 1. For a system you know (real or from an earlier module's capstone), write

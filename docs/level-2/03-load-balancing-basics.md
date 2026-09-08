@@ -143,6 +143,40 @@ kill %1 %2 %3   # stop the background python servers when done
 Watching nginx's access log (`sudo tail -f /var/log/nginx/access.log`) while
 curling repeatedly shows requests distributed across backends.
 
+## How It Actually Works
+
+**Health-check state machines.** A load balancer doesn't binary-flip a
+backend between "up" and "down" on a single probe result — it runs a small
+state machine per backend: consecutive failed health checks past a
+`fall`/`unhealthy_threshold` move it from `healthy` to `unhealthy`
+(removing it from the active rotation), and consecutive *successes* past a
+`rise`/`healthy_threshold` move it back. This hysteresis (requiring multiple
+consecutive results in either direction) exists specifically to avoid
+"flapping" — a backend near its resource limit rapidly toggling in and out
+of rotation on noisy single-probe results, which would otherwise make load
+distribution unstable exactly when it's already under stress.
+
+**Layer 4 vs Layer 7 load balancing — where the abstraction line sits.** A
+Layer 4 (TCP) balancer picks a backend based only on connection-level
+information (source IP/port, destination) and then forwards raw packets or
+proxies bytes without ever parsing HTTP — it can't route based on URL path
+or header, but has near-zero per-packet CPU cost. A Layer 7 balancer (like
+nginx or HAProxy in HTTP mode) fully terminates the connection, parses the
+HTTP request, and can then route `/api/*` to one pool and `/static/*` to
+another, rewrite headers, or retry idempotent requests on a different
+backend after a failure — capabilities requiring it to understand the
+protocol, not just relay bytes.
+
+**Why round-robin and least-connections produce different behavior under
+real load.** Round-robin distributes requests in the same cyclic order
+regardless of how long each backend takes to respond, which is fine when
+request costs are uniform but concentrates load on a slow backend that's
+still finishing earlier requests when new ones arrive. Least-connections
+tracks the in-flight request count per backend in the balancer's own memory
+and routes each new request to whichever backend currently has fewest open
+connections — self-correcting for backends with varying response times
+without needing to know why they're slow.
+
 ## Exercise
 
 1. Run three instances of a toy HTTP server on different local ports and

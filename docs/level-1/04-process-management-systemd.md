@@ -154,6 +154,38 @@ journalctl -u hello -n 5 --no-pager
 Expected `status` output includes `Active: active (running)` and the most
 recent journal lines showing the "hello from ..." messages every 5 seconds.
 
+## How It Actually Works
+
+**systemd's cgroup-based process supervision.** When systemd starts a
+service unit, it doesn't just `fork`/`exec` and hope — it places the new
+process (and every process it forks) into a dedicated Linux control group
+(cgroup) under `/sys/fs/cgroup/system.slice/<unit>.service/`. Because the
+kernel tracks cgroup membership independently of parent-child PID
+relationships, systemd can reliably enumerate and kill *every* descendant
+of a service — including daemonizing processes that re-parent to PID 1 — by
+walking the cgroup, something traditional init scripts using a single
+recorded PID cannot do correctly. This is also how `Restart=on-failure`
+detects "the service died": systemd is the parent (or watches via the
+cgroup's process-exit notifications) and receives the exit status directly.
+
+**Why `systemctl status` is instant while a log-file `tail` isn't.** systemd
+services log to the journal via a socket write, and `journald` stores
+entries in a binary, indexed format (`/var/log/journal/`) rather than
+appending flat text — `journalctl -u <unit>` performs an indexed lookup by
+unit name and time range instead of a linear scan, which is why it stays
+fast even with gigabytes of history.
+
+**Unit dependency ordering.** `After=network.target` in a unit file doesn't
+mean "wait until networking is fully configured" — `network.target` is a
+synchronization point that other units reach when they're done, not a
+guarantee about DHCP completion. Real network readiness needs
+`After=network-online.target` plus `Wants=network-online.target`, because
+systemd resolves the dependency graph and starts units in parallel wherever
+the graph allows, only serializing where explicit `Before=`/`After=`
+edges exist. This is why omitting the right ordering directive causes
+services to intermittently fail to bind on boot — a race, not a
+deterministic bug.
+
 ## Exercise
 
 1. Write the `hello.service` unit above and get it running with

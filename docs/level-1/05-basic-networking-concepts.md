@@ -156,6 +156,35 @@ Each step isolates a layer: DNS, network reachability, the listening socket,
 the application response, and the service's own state — so you know exactly
 where the chain breaks instead of guessing.
 
+## How It Actually Works
+
+**How a socket actually gets addressed.** A TCP connection is uniquely
+identified by a 4-tuple: (source IP, source port, destination IP,
+destination port). A server "listening on port 80" holds a socket bound to
+`0.0.0.0:80` in the `LISTEN` state; the kernel's TCP stack keeps a hash table
+of that 4-tuple for every active connection, so thousands of clients can hit
+port 80 simultaneously because each gets a distinct source port, making each
+connection's 4-tuple unique even though the destination side never changes.
+`ss -tlnp` reads this table directly out of the kernel (via netlink), not
+from parsing anything on disk.
+
+**DNS resolution as a distributed, cached lookup — not a single query.**
+Typing a hostname triggers a query to your configured resolver, which walks
+the delegation chain if uncached: root servers (referral to a TLD server) →
+TLD server (referral to the authoritative nameserver for the domain) →
+authoritative server (returns the actual A/AAAA record). Every response
+carries a TTL, and resolvers cache by TTL specifically so this multi-hop
+walk isn't repeated per request — which is also why DNS changes take up to
+the old TTL's duration to propagate: caches holding the old answer are still
+technically correct until their TTL expires.
+
+**Why `curl` to an IP works when the domain doesn't (and vice versa).**
+`curl http://1.2.3.4` skips DNS entirely and opens a TCP connection directly;
+`curl http://example.com` requires a working, correctly configured resolver
+first. If the two behave differently, the fault is isolated to DNS
+resolution, not the network path or the server — this is the actual reason
+"ping the IP first" is standard first-line network triage.
+
 ## Exercise
 
 On your VM:

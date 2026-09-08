@@ -184,6 +184,44 @@ connections during the ~2-3 second handover — this is the mechanics behind
 "the load balancer is highly available too," not just the backends behind
 it.
 
+## How It Actually Works
+
+**VRRP is a protocol, not a keepalived invention.** The VIP handover works
+because VRRP routers exchange multicast advertisements (to `224.0.0.18`)
+containing their configured priority roughly once per `advert_int`. Every
+router that hears an advertisement with a *lower* priority than its own,
+or that stops hearing advertisements at all for `3 * advert_int` seconds
+(the "master down interval"), transitions itself from BACKUP to MASTER and
+grafts the VIP onto its own interface with a gratuitous ARP broadcast —
+that gratuitous ARP is the actual mechanism that makes the network's
+switches and neighboring hosts start delivering `10.0.0.100`'s traffic to
+the new MAC address; without it, other hosts' ARP caches would keep
+pointing at the dead master's MAC for their own cache TTL.
+
+**Why `weight` on the health-check script, not just MASTER/BACKUP state,
+is what makes failover correct instead of merely present.** Without
+`track_script`, keepalived only knows "is the keepalived process alive,"
+which tells you nothing about nginx. `vrrp_script chk_nginx` runs
+`pgrep nginx` every `interval` seconds; on failure it subtracts `weight`
+from that node's effective priority. The primary's *effective* priority
+then drops from 150 to 148 — still needs to actually fall below the
+backup's 100 to trigger a transition in this specific config (this example
+would need a larger weight or lower base priority to fail over purely on
+`chk_nginx`; in practice `weight` is tuned so a single missing dependency
+drops priority below every healthy backup). This is the same
+liveness-vs-readiness gap from earlier in the module, now at the VIP layer.
+
+**Why a "few consecutive failures" threshold exists in every layer of this
+stack.** A health check interval of 2s with a strict "1 failure = down"
+rule would flap a VIP or pull a backend from an LB pool on a single dropped
+packet or GC pause — the check itself becomes a bigger availability risk
+than the failure it's meant to catch. Real systems (nginx `max_fails`,
+Kubernetes `failureThreshold`, keepalived's advert-timing math) all encode
+"N consecutive failures over a window," trading a few extra seconds of
+detection latency for immunity to single-sample noise — the same
+false-positive/false-negative tradeoff discussed above, expressed as a
+threshold instead of a policy statement.
+
 ## Exercise
 
 1. Stand up two small VMs (or containers) running nginx and configure

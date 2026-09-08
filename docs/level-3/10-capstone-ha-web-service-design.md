@@ -183,6 +183,42 @@ of these, specifically (not "yes, generally"):
       surface a violation of the RPO/RTO/availability targets before a
       customer notices
 
+## How It Actually Works
+
+**Why splitting instance IPs by AZ-mapped subnet turns an ambiguous
+outage into a diagnosable one.** With `10.0.1.x`/`10.0.2.x` mapped 1:1 to
+AZs in the `orders_backend` upstream, an on-call engineer watching nginx's
+upstream state doesn't have to guess whether three unrelated instance
+failures are a coincidence or a single AZ event — `nginx -T` or
+`upstream_conf`-style status shows exactly which subnet went dark. This
+is the same signal the load balancer itself uses passively via
+`max_fails`/`fail_timeout`, just made legible to a human at 3am instead of
+only acted on invisibly — the design choice pays off twice, once in the
+LB's automatic routing and once in incident triage.
+
+**Why synchronous replication, not just "a replica exists," is what makes
+the 5-minute RPO credible for an AZ failure.** An async replica can lag
+behind the primary by an unbounded amount under load — if the primary AZ
+disappears mid-lag, every unreplicated write is gone, and the actual RPO
+during a real event could be far worse than 5 minutes despite the replica
+"being there." A *synchronous* replica requires the primary to receive
+write acknowledgment from the replica before confirming the commit to the
+client, which caps the possible data loss at "whatever was in flight at
+the instant of failure" — the RPO number in the design is only true
+because of this specific mechanism, not because a second Postgres instance
+happens to exist in another AZ.
+
+**Why the two-tier DR plan (replica promotion vs. full restore) has to be
+rehearsed separately, not just once.** Promoting a synchronous replica
+(Patroni failover) and restoring from an off-region backup with WAL replay
+are different code paths exercising different failure assumptions — the
+first assumes the replica's data is intact and reachable, the second
+assumes it isn't and rebuilds from durable object storage instead. A game
+day that only ever tests replica promotion (the common, easy case) leaves
+the 25-minute full-restore RTO as an unverified number from module 03's
+"untested backup is a hypothesis" warning, applied here at the level of
+the entire recovery *procedure*, not just the backup file.
+
 ## Exercise
 
 1. Take a real (or realistic toy) service you run or have access to, and

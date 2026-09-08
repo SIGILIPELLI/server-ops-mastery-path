@@ -164,6 +164,37 @@ The `curl -H "Host: ..."` trick lets you test name-based virtual hosting
 from the server itself without needing real DNS yet — nginx picks the
 `server_name` block purely from the `Host` header.
 
+## How It Actually Works
+
+**nginx's event-loop architecture — why one worker handles thousands of
+connections.** Unlike a thread-per-connection server, nginx workers run an
+asynchronous event loop built on the kernel's `epoll` (Linux) facility: a
+worker registers every open socket's file descriptor with `epoll`, then
+blocks on a single `epoll_wait()` call that returns only the subset of
+sockets that actually have data ready. This means one worker process can
+juggle tens of thousands of idle-or-slow client connections using constant
+memory per connection and no thread-context-switch overhead — the worker
+never blocks waiting on any single connection's I/O.
+
+**What "reverse proxying" does at the socket level.** nginx terminates the
+client's TCP connection completely — it is a real HTTP server (or TLS
+endpoint) from the client's perspective — parses the HTTP request, then
+opens a *separate* TCP connection to the configured upstream and re-emits an
+equivalent request over it, relaying the response back. This decoupling
+(two independent TCP connections, not one pass-through pipe) is what lets
+nginx buffer slow-client uploads, add/rewrite headers, terminate TLS while
+speaking plaintext to the backend, and multiplex many client connections
+onto a small pool of persistent keep-alive connections to the upstream.
+
+**`proxy_pass` header rewriting and why `Host`/`X-Forwarded-For` need
+explicit config.** The backend, on its own new TCP connection, has no idea
+who the original client is or what hostname they requested — by default the
+proxied request carries nginx's own view of things. `proxy_set_header Host
+$host` and `X-Forwarded-For $proxy_add_x_forwarded_for` explicitly forward
+that context because HTTP has no automatic mechanism for it; omitting them
+is the actual cause of backends generating wrong redirect URLs or logging
+every request as coming from the proxy's own IP.
+
 ## Exercise
 
 1. Run two toy backends on `:3000` and `:3001` (e.g. `python3 -m http.server`

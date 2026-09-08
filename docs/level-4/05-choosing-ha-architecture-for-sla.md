@@ -130,6 +130,48 @@ not which architecture is "best practice" in the abstract.
    chronically over or comfortably under spent
 ```
 
+## How It Actually Works
+
+**Why availability multiplies across a dependency chain instead of
+averaging.** If your system depends on a DNS provider with 99.95% uptime
+and a cloud region with 99.99% uptime, and those failures are
+independent, your system's *ceiling* is the product of their
+availabilities (0.9995 × 0.9999 ≈ 0.9994), not the minimum and certainly
+not an average — every dependency in the critical path is a term in a
+multiplication, and each additional hard dependency can only lower the
+ceiling, never raise it. This is the precise mathematical reason "audit
+every dependency's own SLA" in the decision framework isn't optional
+diligence — a system built with flawless application-level redundancy
+still inherits the availability *product* of everything beneath it, and
+no amount of your own engineering multiplies a term back upward.
+
+**Why the error budget is a rate-limiting mechanism, not just an
+accounting figure.** Treating the budget as a live, spendable quantity
+(not a retrospective report) changes team behavior in a specific,
+mechanical way: a policy like "freeze risky deploys when budget remaining
+drops below 20%" converts an abstract reliability goal into an automatic
+gate that fires based on measured burn rate, the same way a circuit
+breaker (Level 3 module 07) trips on a measured failure rate rather than
+a human deciding case-by-case. Google's SRE practice (where the term
+originates) ties this explicitly to deploy velocity: teams whose budget is
+healthy are implicitly authorized to move faster, and the throttle
+tightens automatically as the budget burns, without anyone needing to
+negotiate it incident by incident.
+
+**Why the cost curve across nines is exponential rather than linear, structurally.**
+Each additional nine requires eliminating the *next* most probable
+remaining failure mode, and failure modes get rarer and more expensive to
+address in roughly that order: single-instance failure (cheap — add a
+second instance), AZ failure (moderate — spread across AZs, still one
+provisioning model), region failure (expensive — a second full deployment,
+async replication, conflict resolution), then finally provider-level or
+correlated multi-region events (very expensive — a second cloud provider
+or extensive dependency substitution). Because each tier of failure mode
+requires categorically more infrastructure than the last, not just "more
+of the same," the cost curve tracks the failure-mode hierarchy's own
+increasing rarity and complexity rather than scaling with the availability
+percentage itself.
+
 ## Exercise
 
 1. For three systems you know (or invent three realistic ones spanning

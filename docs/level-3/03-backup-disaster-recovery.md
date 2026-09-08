@@ -157,6 +157,45 @@ describes — not only on the server that might be the disaster) covering:
 5. **DR drill schedule** — e.g. quarterly, restoring into an isolated
    environment and timing the whole process end to end.
 
+## How It Actually Works
+
+**Why `pg_dump -Fc` produces a restorable file while a snapshot of the
+data directory taken mid-write might not.** `pg_dump` doesn't copy raw
+files — it opens a transaction at a consistent snapshot (via Postgres's
+MVCC) and reads each table's rows through the normal query engine, writing
+them out in a custom archive format with a built-in table of contents.
+Because it goes through MVCC, concurrent writes during the dump don't
+corrupt it — the dump reflects one consistent point-in-time view, the same
+guarantee an ordinary `SELECT` gets. A raw filesystem copy of `/var/lib/postgresql`
+taken without stopping the database, by contrast, can capture pages
+mid-write and produce a physically inconsistent copy — which is exactly
+why physical/PITR backups need either a filesystem snapshot with WAL
+replay to reach consistency, or a tool (`pg_basebackup`) that coordinates
+with the write-ahead log, rather than a plain `cp` or `tar`.
+
+**Why WAL shipping is what turns "nightly backup" into "RPO of minutes."**
+Postgres writes every change to the write-ahead log *before* applying it
+to the actual data pages (write-ahead logging is what makes crash recovery
+possible at all). PITR backup tooling archives each completed WAL segment
+continuously as it's produced, on top of a periodic full base backup.
+Restoring means: load the base backup, then replay WAL segments forward
+from that point up to any target timestamp you choose — the RPO becomes
+"however recent the last archived WAL segment is" (often seconds) instead
+of "how long since the last full dump," because the full dump is now only
+the recovery *starting point*, not the boundary of what's recoverable.
+
+**Why `pg_restore --list` catches truncation that `pg_dump`'s exit code
+doesn't.** A dump can be truncated by a disk-full condition, a killed
+process, or a network interruption mid-transfer to S3, and still leave a
+partial file on disk with `pg_dump`'s own exit code showing success if the
+truncation happened *after* the local write completed (e.g. during the
+`aws s3 cp` step). `pg_restore --list` has to actually parse the archive's
+internal table-of-contents structure to enumerate its contents — a
+truncated or corrupted file fails that parse immediately, catching the
+class of failure ("the exit code lied") that motivates verifying the
+artifact itself rather than trusting the producing command's return
+status.
+
 ## Exercise
 
 1. Write `backup-db.sh` against a local Postgres or MySQL instance, verify

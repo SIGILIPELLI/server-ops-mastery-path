@@ -123,6 +123,39 @@ sudo -u deploy cat /etc/myapp/secrets.env    # works — same user
 sudo -u nobody cat /etc/myapp/secrets.env    # Permission denied — confirms isolation
 ```
 
+## How It Actually Works
+
+**Why secrets in environment variables are visible to more than you'd
+think.** An environment variable set on a process is readable by anything
+with access to `/proc/<pid>/environ` on that host (typically root, or the
+same UID) and is included verbatim in crash dumps, some logging middleware
+that dumps `process.env`, and child-process environments unless explicitly
+stripped. It is *not* automatically exposed over the network or to other
+users, but it is far more exposed than a value fetched at runtime from a
+secrets manager and held only in application memory, never touching disk,
+shell history, or a source-controlled `.env` file.
+
+**How a secrets manager (Vault, AWS Secrets Manager) actually restricts
+access.** These systems store secrets encrypted at rest and only decrypt
+them when a request presents valid, scoped credentials (an IAM role, a
+Vault token tied to a policy) — access is enforced by the secrets manager's
+own authorization check on every read, and every read is logged centrally.
+This is qualitatively different from a file on disk with restrictive
+permissions: file permissions only stop *other users on that host*; a
+secrets manager can also grant/revoke/rotate an individual application's
+access without touching any other consumer of the same secret, and produces
+a full audit trail of who fetched what and when.
+
+**Why rotating a secret is hard in practice.** Rotation isn't just
+"generate a new value" — every consumer holding the old value in memory or a
+connection pool needs to pick up the new one before the old one is
+invalidated, or you get a brief window of failed auth. This is why
+production secrets rotation is usually staged: both old and new credentials
+are valid simultaneously for an overlap window, consumers are bounced (or
+poll for updates) to pick up the new value, and only then is the old value
+revoked — a mechanism directly analogous to blue-green deployment, applied
+to credentials instead of application code.
+
 ## Exercise
 
 1. Create a `secrets.env` file with mode `600` owned by a dedicated

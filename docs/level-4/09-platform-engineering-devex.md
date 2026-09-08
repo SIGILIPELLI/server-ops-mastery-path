@@ -164,6 +164,46 @@ The review step matters: an escape hatch that skips the golden path
 scanning) reintroduces exactly the inconsistency platform engineering was
 built to eliminate.
 
+## How It Actually Works
+
+**Why Terraform's `validation` block enforces guardrails at plan time, not
+review time.** A `variable` block's `validation { condition ... }` is
+evaluated by Terraform itself during `terraform plan`/`apply`, before any
+API call to the cloud provider is made — an invalid `instance_size` fails
+immediately with the custom `error_message`, with no dependency on a
+human reviewer noticing an out-of-range value in a PR diff. This is a
+categorically stronger guarantee than a code-review checklist: a review
+step can be skipped under time pressure or simply missed, while a
+`validation` block runs deterministically on every single invocation,
+which is why platform guardrails are built into the module's own schema
+rather than documented as a convention teams are expected to follow.
+
+**Why a golden path wins adoption through friction differential, not
+mandate.** Teams don't choose infrastructure patterns by evaluating which
+is "correct" in the abstract — they choose whichever path requires less
+effort to ship the feature they actually care about. A scaffolded service
+that already has CI, health checks, and monitoring wired up means the
+*marginal* effort of doing the right thing is near zero, while the
+ad-hoc alternative requires reproducing all of that from scratch. This
+is the same behavioral mechanism behind Dependabot-style automated PRs
+(Level 4 module 04) or a default-secure Terraform module here — making the
+correct choice cheaper than the incorrect one changes behavior far more
+reliably than policy alone, because it doesn't depend on anyone
+remembering or enforcing the policy.
+
+**Why DORA metrics specifically (not just "is the platform up") measure
+platform success.** Deployment frequency and lead time for changes measure
+how much friction the platform adds to the *path from commit to
+production* — the exact surface a golden path is meant to shrink — while
+change failure rate and MTTR measure whether the safety rails (CI gates,
+staged rollouts, health checks the template wires up by default) actually
+reduce the blast radius and detection time when something does go wrong.
+A platform can have perfect uptime for its own control-plane components
+while still failing its purpose if it makes shipping *application* changes
+slower or riskier than going around it — which is why these four numbers,
+measured on the teams *using* the platform rather than the platform's own
+infrastructure, are the metrics that actually reveal whether it's working.
+
 ## Exercise
 
 1. Pick one recurring task engineers on your team do manually today

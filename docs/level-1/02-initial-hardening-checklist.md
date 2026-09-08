@@ -213,6 +213,49 @@ sudo apt update && sudo apt upgrade -y
     *old* one. That applies to SSH config changes, firewall rules, and user
     permissions alike.
 
+## How It Actually Works
+
+**PAM and the login decision chain.** When `sshd` authenticates a user, it
+doesn't make the accept/reject call alone — it consults the Pluggable
+Authentication Modules (PAM) stack (`/etc/pam.d/sshd`), a sequence of modules
+each returning success/failure/ignore, combined with `required`/`requisite`/
+`sufficient`/`optional` control flags. Disabling password auth in
+`sshd_config` (`PasswordAuthentication no`) short-circuits this at the SSH
+protocol layer before PAM's password module is even reached, which is why
+it's more effective than just adding a strong password: an attacker can't
+present a password to be checked in the first place.
+
+**Why disabling root login narrows the attack surface disproportionately.**
+`PermitRootLogin no` doesn't make root inaccessible — you still `sudo` to it
+— but it eliminates the single highest-value credential from remote guessing
+entirely, since every Linux box has a `root` account by definition (unknown
+usernames must first be discovered) while a non-default sudo user's name is
+not guessable from the OS alone. Combined with `sudo`, actions get attributed
+to a real username in `/var/log/auth.log`, whereas shared root logins produce
+audit trails with no accountability.
+
+**How a firewall (ufw/iptables/nftables) actually filters packets.** The
+kernel's netfilter subsystem intercepts every packet at defined hook points
+in the IP stack (`PREROUTING`, `INPUT`, `FORWARD`, `OUTPUT`, `POSTROUTING`).
+`ufw` is a friendly frontend that writes `iptables`/`nftables` rules into the
+`INPUT` chain: each incoming packet is compared against rules in order,
+top to bottom, and the first matching rule's target (`ACCEPT`, `DROP`,
+`REJECT`) decides the packet's fate — this is why rule *order* matters and
+why a catch-all deny is placed last. `ACCEPT` lets the packet continue up
+the stack to the listening socket; `DROP` silently discards it (the sender's
+connection attempt just times out, revealing nothing); `REJECT` sends back an
+explicit ICMP/TCP-RST refusal. Default-deny-incoming means every port not
+explicitly opened never reaches an application socket, regardless of what's
+listening there.
+
+**Fail2ban's mechanism.** `fail2ban` tails log files (`/var/log/auth.log`)
+with regex "filters," and when a matching failure pattern (e.g., repeated
+`Failed password`) recurs past a threshold within a time window, it invokes
+an "action" — almost always inserting a temporary firewall rule that drops
+all traffic from that source IP for a set ban duration. It is reactive
+log-parsing plus firewall automation, not a kernel-level defense — it works
+entirely downstream of the same netfilter chains ufw configures.
+
 ## Exercise
 
 Using the VM from module 1:

@@ -173,6 +173,47 @@ centralized logging module) rather than read locally — a container that's
 rescheduled onto a different host takes its logs with it unless they're
 already centralized.
 
+## How It Actually Works
+
+**Why layer ordering actually changes build time, mechanically.** Docker
+builds an image as a stack of read-only layers, one per instruction, and
+caches each layer keyed by a hash of the instruction plus its build
+context (for `COPY`, that includes a hash of the copied files' contents).
+On a rebuild, Docker walks the instruction list and reuses every cached
+layer up to the first one whose inputs changed — every layer *after* that
+point is rebuilt regardless of whether it would have produced identical
+output. `COPY package.json package-lock.json ./` followed by `RUN npm ci`
+before `COPY . .` means an application source change only invalidates the
+`COPY . .` layer onward — `npm ci` reruns only when the manifests
+themselves change, not on every source edit.
+
+**Why containers isolate without a hypervisor.** A container is not a
+lightweight VM — it's an ordinary Linux process that the kernel makes
+*appear* isolated using two independent mechanisms: namespaces (PID, net,
+mount, UTS, IPC — each gives the process its own view of that resource
+category, so `docker run`'s process sees itself as PID 1 in its own PID
+namespace even though it's just another PID on the host) and cgroups
+(the same systemd mechanism from Level 1 module 4, used here to enforce
+`--memory`/`--cpus` limits rather than just track process trees). Because
+there's one shared kernel underneath all of this — unlike a VM's separate
+kernel per guest — a container escape or kernel exploit has a much larger
+blast radius than a VM escape, which is the concrete reason `USER appuser`
+and avoiding `--privileged` matter operationally, not just as a checklist
+item.
+
+**Why the writable layer is disposable but a bind mount/volume isn't.**
+Every running container gets one additional writable layer on top of its
+read-only image layers (a union filesystem, historically overlay2 on
+Linux), and `docker rm` discards that writable layer along with the
+container. A named volume is mounted *through* that layer at a specific
+path, backed by storage Docker manages outside any image layer — so
+`docker rm` on a container with the volume attached leaves the volume's
+data untouched on the host, and a new container mounting the same volume
+picks up exactly where the old one left off. This is the mechanical reason
+"never store durable data in the container's own filesystem" isn't a
+style preference — that data is architecturally scoped to the container's
+lifetime, full stop.
+
 ## Exercise
 
 1. Write a `Dockerfile` for a small app (any language) that follows the

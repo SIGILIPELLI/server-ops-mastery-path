@@ -162,6 +162,46 @@ to immediately fix a complex issue solo is treated as a personal failing
 teaches people to hide struggle and avoid escalating for help — exactly the
 opposite of what a healthy escalation policy depends on.
 
+## How It Actually Works
+
+**Why `for: 5m` on an alert rule changes what Prometheus actually
+evaluates, not just when it fires.** Without `for`, Prometheus's alerting
+rule fires the instant a single evaluation cycle's expression crosses the
+threshold — a metric that spikes for one 15-second scrape interval and
+recovers immediately still triggers a page. `for: 5m` requires the
+expression to remain continuously true across every evaluation within that
+5-minute window before the alert transitions from `pending` to `firing`
+(visible as the `ALERTS` metric's state) — it's not a delay on notification,
+it's a persistence requirement on the underlying condition itself, which
+is exactly what filters out single-scrape noise while still catching a
+genuinely sustained error rate within a bounded, known latency.
+
+**Why escalation timers alone don't guarantee delivery, and multi-channel
+within a layer is the actual fix.** A push notification depends on the
+device having connectivity and the app being allowed to interrupt Do Not
+Disturb settings — both can silently fail (phone in airplane mode, OS
+notification permission revoked) with no signal back to the paging system
+that delivery didn't happen. Escalating to a *different channel* (SMS
+uses the cellular carrier's independent delivery path; a phone call uses
+yet another) after a short delay isn't redundancy for its own sake — each
+channel has an independent failure mode, so stacking channels within one
+escalation layer is the only way to get real delivery confidence before
+falling back to escalating to a different *person*, which is a much
+slower and more disruptive recovery path.
+
+**Why tracking pages-per-person and time-to-acknowledge reveals problems a
+single incident retro can't.** Any individual page looks reasonable in
+isolation — a repeat page for the same underlying flaky alert is
+indistinguishable, incident-by-incident, from N unrelated real issues
+unless someone aggregates across time. Trending "pages per week" and "%
+actionable" surfaces exactly the pattern an in-the-moment incident
+response can't see: a specific alert firing 15 times a month at 40%
+actionable is a systemic alert-quality problem invisible from any single
+occurrence, but glaring once the data is aggregated — which is the same
+argument for tracking patch compliance % (Level 4 module 04) or error
+budget burn (module 05) as a trend rather than trusting any single
+snapshot.
+
 ## Exercise
 
 1. Audit your current (or a hypothetical) alerting setup against the "good

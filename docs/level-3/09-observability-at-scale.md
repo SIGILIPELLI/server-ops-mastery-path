@@ -183,6 +183,45 @@ trace search, traces carry the same `request_id` logs use) — building the
 three pillars in isolation, without the cross-links, leaves you back to
 manual correlation under pressure.
 
+## How It Actually Works
+
+**Why trace context propagation is what actually stitches spans into one
+trace, not just shared naming.** Each span carries a trace ID (shared
+across the whole request) and its own span ID, plus the parent span ID it
+was created under — OpenTelemetry propagates this triple across process
+boundaries via the W3C `traceparent` HTTP header
+(`00-<trace-id>-<span-id>-<flags>`). When `orders` calls `payments`, the
+OTel SDK automatically injects that header on the outbound request; the
+receiving service's SDK reads it and creates its own span as a *child* of
+the span ID in that header rather than starting a new trace. The tree
+structure you see in a Jaeger UI isn't reconstructed from timestamps or
+service names after the fact — it's the literal parent-child graph
+encoded in each span's own metadata at creation time.
+
+**Why Prometheus's pull model changes what "the metric is down" means
+compared to logs/traces' push model.** Prometheus scrapes each target's
+`/metrics` endpoint on an interval rather than services pushing data to
+it — which means a target that's completely unreachable produces a
+distinct, queryable signal (the `up` metric for that target drops to 0)
+instead of simply going silent the way a crashed log-shipper would. This
+is also why Prometheus counters are defined to only increase (`rate()`
+computes the per-second increase over a window, correctly handling
+counter resets from a restarted process) rather than being reset to zero
+and reported as a delta — a push-based system would need the client to
+track and transmit deltas itself, and lose data if the push failed
+silently.
+
+**Why tail-based sampling needs a buffering collector, structurally.**
+Deciding "keep this trace because it had an error" requires having *all*
+of a trace's spans in hand before deciding — but spans from one trace
+arrive at the collector from different services at different times as
+each hop completes. The OTel Collector's tail-sampling processor buffers
+spans by trace ID for a configured window, waiting for the trace to look
+complete (or timing out), before applying the keep/drop policies —
+trading memory and a few seconds of latency in the collector for the
+ability to make sampling decisions on the trace's actual outcome, which a
+per-span, decide-immediately (head-based) sampler structurally cannot do.
+
 ## Exercise
 
 1. Add a `request_id` (generated at the edge, propagated via an HTTP

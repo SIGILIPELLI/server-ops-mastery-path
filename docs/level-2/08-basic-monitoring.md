@@ -133,6 +133,37 @@ sleep 65
 journalctl -t health-check --since "2 min ago"
 ```
 
+## How It Actually Works
+
+**Pull-based metrics collection and why it scales differently than push.**
+Prometheus-style monitoring works by the monitoring server itself scraping
+an HTTP `/metrics` endpoint on each target at a fixed interval — the target
+just exposes current counter/gauge values in memory; it does no network
+calls of its own. This inverts the failure mode compared to push-based
+systems: if a target is unreachable, the *scrape* fails visibly and
+immediately (a missing data point the monitoring system itself notices),
+whereas a push-based agent failing silently just stops sending, which is
+harder to distinguish from "nothing to report."
+
+**Counters vs gauges — and why rate-of-change queries exist.** A counter
+(e.g., total HTTP requests) only ever increases (or resets to zero on
+restart) — it's cheap for the application to maintain (an atomic increment)
+but meaningless as a raw number for alerting, since "50000 requests" tells
+you nothing about current load. Monitoring systems compute a *rate* by
+taking the derivative between two scraped counter values over the time
+between scrapes — this is why `rate()`/`irate()` functions exist and why
+they need at least two data points, and why a counter reset (process
+restart) is specifically handled by these functions rather than producing a
+nonsensical negative rate.
+
+**Why alert thresholds need a `for` duration.** A raw threshold check
+("CPU > 90%") evaluated on a single sample fires on transient spikes that
+self-resolve in seconds. Alerting rules attach a required duration
+(`for: 5m`) so the condition must hold continuously across multiple
+evaluation cycles before the alert actually fires — trading a few minutes of
+detection latency for eliminating false pages caused by momentary noise,
+which is a deliberate signal-to-noise tradeoff, not a limitation.
+
 ## Exercise
 
 1. Write a `/health` endpoint for a toy app that fails (503) if a

@@ -121,6 +121,32 @@ printf 'PORT=3002\nLOG_LEVEL=warn\n'  | sudo tee /etc/myapp/production.env
 # deploy the same release tarball into both dirs, then start each with its own env file
 ```
 
+## How It Actually Works
+
+**Why separate environments need separate everything, not just separate
+config values.** An environment (dev/staging/prod) is really a distinct
+network namespace of resources — its own database instance, its own DNS
+names, sometimes its own VPC/subnet — and the "config" layer
+(environment variables, config files) is just the mechanism that tells one
+copy of the *same application binary* which set of resources to bind to at
+runtime. This separation exists because the alternative — baking environment
+identity into the build artifact — means you're no longer testing the exact
+bytes you'll deploy to production; the whole point of promoting one
+immutable build through environments is that only the environment-supplied
+configuration changes, eliminating "works in staging, breaks in prod because
+it was actually a different build" as a failure class.
+
+**How the OS resolves which config a process actually sees.** At process
+start, `execve()` hands the new process an environment block assembled by
+whatever started it — a systemd unit's `Environment=`/`EnvironmentFile=`, a
+container runtime's `--env`, or a CI runner's job environment. There's no
+runtime "environment" concept the OS understands beyond that flat key-value
+block; an application's own code is what interprets a variable like
+`APP_ENV=staging` to decide which config file or feature flags to load, which
+is why a config framework doing something you don't expect is a userspace
+bug, not an OS one — `cat /proc/<pid>/environ` on the running process shows
+ground truth.
+
 ## Exercise
 
 1. Set up two systemd services (or two directories/ports on one VM)

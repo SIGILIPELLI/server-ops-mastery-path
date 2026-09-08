@@ -125,6 +125,42 @@ sudo nginx -t && sudo systemctl reload nginx
 `--non-interactive --agree-tos -m <email>` is the scripted/unattended form
 you'd use from a provisioning script rather than answering prompts by hand.
 
+## How It Actually Works
+
+**The TLS handshake: asymmetric setup, symmetric bulk transfer.** A TLS
+connection begins with the client and server negotiating a cipher suite and
+protocol version (`ClientHello`/`ServerHello`), after which the server
+presents its certificate chain. In TLS 1.3, key exchange happens via
+ephemeral Diffie-Hellman (each side sending a public key share derived from
+a random private value discarded after the handshake) — the two sides derive
+a shared secret without transmitting it, and that secret seeds symmetric
+session keys used for the rest of the connection. Ephemeral (rather than
+static) key exchange is what gives TLS "forward secrecy": recording
+encrypted traffic today and later stealing the server's private key doesn't
+let an attacker decrypt it, because that private key was only ever used to
+*sign* the ephemeral exchange, not to derive the session key directly.
+
+**Certificate chain validation — why a chain, not just a certificate.** A
+leaf certificate is signed by an intermediate CA's private key; the browser
+doesn't trust the intermediate directly — it trusts a small set of root CAs
+baked into the OS/browser trust store. Validation walks the chain
+leaf → intermediate → root, checking at each link that the signature
+verifies against the next certificate's public key, until it reaches a root
+already in the trust store. `nginx`'s `ssl_certificate` directive must serve
+the *full* chain (leaf + intermediates) because the server has no way of
+knowing which intermediates a given client already has cached — omitting
+them is the actual cause of "works in Chrome, fails in curl/old Android"
+errors, since some clients bundle common intermediates and others don't.
+
+**How Let's Encrypt's ACME HTTP-01 challenge proves domain ownership.** The
+CA asks your ACME client to place a specific token at
+`http://yourdomain/.well-known/acme-challenge/<token>`, then fetches that
+URL itself over plain HTTP from the public internet. Successfully retrieving
+the expected token is treated as proof of control over the domain (only
+someone controlling the server answering on port 80 for that hostname could
+place it there) — this is why the challenge fails behind a firewall blocking
+port 80, or when DNS doesn't yet point at the right server.
+
 ## Exercise
 
 1. Point a real (or test) domain's A record at a server you control, issue a

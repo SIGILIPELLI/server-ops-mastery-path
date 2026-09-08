@@ -170,6 +170,35 @@ sudo systemctl show myapp -p Environment
 sudo cat /proc/$(pgrep -f myapp)/environ | tr '\0' '\n' | grep APP_ENV
 ```
 
+## How It Actually Works
+
+**Environment variables as a per-process kernel data structure.** Every
+process has an environment block — a flat array of `KEY=value` strings living
+alongside its argument list, set up by the `execve()` syscall that started
+it. A child process inherits a *copy* of its parent's environment at fork
+time; after that they're independent, which is why `export FOO=bar` in one
+shell has no effect on an already-running sibling shell, and why a systemd
+service's environment comes from `Environment=`/`EnvironmentFile=` in its
+unit file (systemd is its direct parent, not your interactive shell) rather
+than from whatever you exported at a terminal.
+
+**Why `.env` files aren't loaded automatically by the OS.** There is no
+kernel or shell mechanism that treats a file named `.env` specially — a
+process reads environment variables purely from the block it was execve'd
+with. Tools like `dotenv` libraries or `docker run --env-file` work by
+explicitly parsing the file's `KEY=value` lines and calling `setenv()` (or
+passing them into the child's environment block) before or during process
+start; without that explicit step, `.env` is just an inert text file.
+
+**The precedence chain and why it matters for debugging.** Most
+applications resolve configuration through several layers: compiled
+defaults → config file → environment variables → CLI flags, applied in that
+order so each later layer overrides the former. A value that seems to be
+"ignored" is almost always being overridden by a later layer — checking
+`printenv | grep VARNAME` on the running process (`cat /proc/<pid>/environ`)
+tells you definitively what the process actually received, independent of
+what you think you set.
+
 ## Exercise
 
 1. Create `/etc/myapp/myapp.env` with at least three variables, lock it down

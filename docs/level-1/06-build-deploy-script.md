@@ -139,6 +139,30 @@ If the service fails to come up, you get the failure line plus a full
 `systemctl status` dump right in the log — no need to SSH back in separately
 to find out why.
 
+## How It Actually Works
+
+**`set -euo pipefail` and shell exit-status propagation.** By default, a
+shell script keeps running after a failing command — each command sets `$?`
+but nothing checks it automatically. `set -e` makes the shell exit
+immediately if any simple command returns non-zero (with documented
+exceptions: commands in an `if`/`while` test, or before `&&`/`||`). `set -u`
+turns a reference to an unset variable into a hard error instead of silently
+expanding to an empty string — the classic case is a typo'd variable in
+`rm -rf $DIR/` becoming `rm -rf /` when `$DIR` is empty. `set -o pipefail`
+fixes a subtler gap: without it, `false | true` exits 0 because only the
+*last* command in a pipeline determines `$?`; with it, the pipeline's exit
+status is the rightmost non-zero command, so a failing step upstream of a
+pipe isn't masked.
+
+**Why deploy scripts should be idempotent at the OS level.** Re-running
+`mkdir dir` errors if `dir` exists, but `mkdir -p dir` calls the same
+`mkdir()` syscall guarded by a existence check, succeeding either way. This
+distinction matters for deploy scripts specifically because they're expected
+to run repeatedly (retries after partial failure, redeploys) — the OS-level
+side effects (files, symlinks, systemd units) need operations that converge
+to the same end state regardless of starting state, rather than commands
+that assume a pristine target.
+
 ## Exercise
 
 1. Take the `hello.service` app from module 4 and turn it into a tiny git

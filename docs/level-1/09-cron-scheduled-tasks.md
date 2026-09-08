@@ -177,6 +177,34 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now tmp-cleanup.timer
 ```
 
+## How It Actually Works
+
+**The cron daemon's wake-check loop.** `cron` doesn't set individual timers
+per job — it's a single long-running daemon that wakes once a minute,
+compares the current minute/hour/day/month/weekday against every parsed
+crontab line, and `fork`/`exec`s any job whose fields match. This is why
+cron granularity is fixed at one minute (there's no sub-minute cron syntax)
+and why a job that starts a fraction of a second before the wake tick still
+waits for the next full minute boundary.
+
+**Why cron jobs run with a nearly empty environment.** Cron invokes each
+job's shell directly from the daemon's own process tree, not from your
+interactive login shell — so it never sources `~/.bashrc` or `~/.profile`,
+and `PATH` defaults to a minimal `/usr/bin:/bin`. This is the actual
+mechanism behind "it works when I run it manually but fails under cron": the
+manual run inherits your full interactive-shell environment (aliases,
+extended `PATH`, exported variables), while cron's job inherits only what's
+explicitly set in the crontab or the script itself.
+
+**systemd timers vs cron.** A `.timer` unit is a systemd unit like any
+other, evaluated by the same dependency-and-scheduling engine that starts
+services — `OnCalendar=` expressions are parsed into the same event loop
+that handles socket activation and boot ordering, and each timer's
+corresponding `.service` unit gets full journal logging and cgroup isolation
+automatically. This is why a failed systemd-timer job shows up in
+`systemctl status` and `journalctl -u`, while a failed cron job's exit
+status vanishes unless you specifically capture and log it yourself.
+
 ## Exercise
 
 1. Write a small script that appends a timestamp to `/var/log/heartbeat.log`

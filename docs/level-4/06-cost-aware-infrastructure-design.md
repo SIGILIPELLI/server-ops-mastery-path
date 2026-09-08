@@ -184,6 +184,51 @@ capstone:
     appropriately for its actual value, not kept at 100% by default
 ```
 
+## How It Actually Works
+
+**Why data egress, not ingress, is the line item that surprises teams.**
+Cloud providers price traffic asymmetrically because of how they compete
+for your workload: getting data *into* their network is free (it lowers
+the switching cost of adopting them), while data leaving to the public
+internet or crossing to another region is metered per GB, often
+$0.05-0.12/GB — and it compounds invisibly because every layer that
+touches a response (a CDN miss, cross-region replication traffic, a
+backup shipped to another region's object storage) adds another egress
+charge on the same bytes. Intra-AZ and often intra-region traffic is free
+specifically because it stays inside the provider's own network fabric —
+which is also why the topology decisions in Level 4 module 01 (async
+cross-region replication, GeoDNS routing clients to their nearest region)
+are cost decisions as much as latency ones: every architecture pattern
+that reduces cross-region hops directly reduces this specific bill line.
+
+**Why spot/preemptible capacity is priced the way it is, mechanically.**
+Cloud providers oversubscribe physical capacity, selling the same
+hardware's *unused* headroom at a steep discount with the explicit right
+to reclaim it — spot instances are literally borrowed capacity from the
+provider's on-demand pool, reclaimed (with a short notice window, often
+via ACPI shutdown signal or a metadata-endpoint termination notice) the
+moment on-demand demand needs it back. This is why `OnDemandBaseCapacity`
+pinned to the redundancy floor is a load-bearing design choice, not a
+convenience: the floor represents capacity the system needs to be
+present *unconditionally*, while spot capacity is, definitionally, capacity
+the provider can and will take away without negotiation — mixing the two
+without that pinning risks a redundancy floor evaporating exactly when
+provider-wide demand spikes, correlated with the kind of event (regional
+traffic surge) that also stresses your own system.
+
+**Why storage lifecycle transitions save money via physically different
+media, not just a pricing tier label.** S3 Standard keeps objects on
+always-spinning, immediately-addressable storage; Glacier and Deep Archive
+store the same bytes on media optimized for cold retrieval (historically
+tape or tape-equivalent economics) that trades retrieval latency (minutes
+to hours instead of milliseconds) for a per-GB cost that's an order of
+magnitude lower. The lifecycle policy's age-based transitions work because
+they match a backup's *actual* access probability curve — a 2-day-old
+backup has a real chance of being restored today, a 2-year-old compliance
+backup has near-zero chance of ever being read, and the pricing structure
+directly rewards making that distinction explicit instead of paying
+hot-storage rates for data nobody will realistically touch again.
+
 ## Exercise
 
 1. Pull 30 days of CPU/memory utilization for a real (or toy) fleet and

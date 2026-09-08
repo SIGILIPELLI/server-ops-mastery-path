@@ -178,6 +178,44 @@ postmortem that actually improves reliability from one that's a formality
 — an "action items" section with no owner or due date reliably never gets
 done.
 
+## How It Actually Works
+
+**Why declaring severity explicitly, early, changes the outcome — not
+just the paperwork.** Paging behavior, escalation policies, and status
+communication in most incident tooling (PagerDuty, Opsgenie) are triggered
+*by the severity field itself*, not by how bad the underlying issue
+eventually turns out to be — a SEV1 declaration fires a different
+escalation policy (wider on-call rotation, faster re-page interval on no
+ack) than a ticket. An incident that "feels like SEV3" for the first 20
+minutes and only gets relabeled once it's clearly worse has already lost
+20 minutes of the faster escalation path it needed — this is the concrete
+mechanism behind "declare severity early and revise it," not just a
+process nicety.
+
+**Why a scribe's real-time log produces a more accurate postmortem than
+one written from memory.** Under incident pressure, working memory is
+consumed by the active diagnostic loop (form hypothesis, test it, observe
+result) — details of *earlier* hypotheses that were tried and ruled out
+get overwritten rather than retained, because they're no longer relevant
+to the immediate next action. A scribe capturing timestamped entries as
+they happen preserves exactly the information a postmortem needs most —
+"we suspected X first, ruled it out because Y, moved to Z" — which is
+precisely the part reconstructed timelines lose, since nobody naturally
+remembers the dead ends a day later, only the path that worked.
+
+**Why the runbook's "check replica lag before promoting" step exists as a
+hard gate, not a suggestion.** Promoting a lagging replica to primary is
+irreversible in a specific way: once the new primary starts accepting
+writes, any transactions that existed only on the old primary and hadn't
+yet replicated are permanently gone the moment the old primary is
+eventually reconciled as a follower of the new one (its own un-replicated
+writes get discarded, not merged). The 60-second threshold in the runbook
+is a deliberately conservative trip-wire converting an invisible,
+silent-data-loss risk into an explicit human decision point — encoding "a
+human must consciously accept this specific tradeoff" directly into the
+procedure, rather than letting an operator under pressure promote reflexively
+without weighing it.
+
 ## Exercise
 
 1. Write a runbook, in the format above, for one real failure mode in a

@@ -132,6 +132,45 @@ sudo nginx -t && sudo systemctl reload nginx
   a breaking schema change affects both colors regardless of which is
   "live."
 
+## How It Actually Works
+
+**Why the `upstream active` indirection, and not a direct upstream
+reference, is what makes the switch atomic.** nginx resolves an `upstream`
+block's members at config-reload time, then holds open worker-process
+connections/keepalives against whatever it resolved. The deploy script
+never edits `location / { proxy_pass ... }` directly — it edits the
+`upstream active` block and reloads. `nginx -s reload` (which
+`systemctl reload nginx` sends) spawns new worker processes with the new
+config while old workers finish in-flight requests against the *old*
+upstream and then exit — so a request that started against blue completes
+against blue even mid-switch, and every new request after the reload gets
+green. There's no window where nginx is proxying to a config that doesn't
+parse or a color that isn't there, because `nginx -t` validates syntax
+before the switch ever executes.
+
+**Why health-checking the idle color *before* touching nginx matters more
+than it looks.** The script hits `127.0.0.1:${IDLE_PORT}` directly — bypassing
+nginx and the `active` upstream entirely — which is only possible because
+each color's systemd service binds its own port. This means the health
+check is a true readiness probe of the new process (post-`fork`/`exec`,
+past its own startup/migration/cache-warm logic) with zero chance of
+production traffic reaching it if the check fails, unlike a health check
+performed *through* the load balancer, which would need the LB to already
+be pointed at the new version to test it — a chicken-and-egg problem
+blue-green with per-color ports sidesteps entirely.
+
+**Why the "flip" step, not the deploy step, is the true point of no
+return.** Right up until `sed` rewrites `upstream active` and nginx
+reloads, 100% of production traffic is still hitting the process that was
+running before the script started. Everything through step 4 (deploy,
+start, health-check, smoke-test) happens against a color receiving zero
+real traffic, so a bug found there costs nothing in production impact.
+That's the structural reason blue-green's rollback in step 6 is just the
+same `sed` pattern run in reverse: the "old" color was never stopped,
+its systemd unit is still `active (running)`, and reversing the upstream
+line returns to exactly the prior request-serving state with no process
+restart, no artifact re-extraction, and no cold-start latency.
+
 ## Exercise
 
 1. Set up two systemd services (`myapp-blue`, `myapp-green`) on different

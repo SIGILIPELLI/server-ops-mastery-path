@@ -234,6 +234,29 @@ work with your key, `sudo whoami` should print `root`, and
 `curl -I http://203.0.113.10` should return `HTTP/1.1 200 OK` from nginx.
 Only then close the original root session.
 
+## How It Actually Works
+
+**Why the bootstrap script is safe to re-run (real idempotency, not luck).**
+Each step is written as a check-then-act guard around a state-mutating
+command: `id deploy &>/dev/null || useradd ...` inspects the actual
+`/etc/passwd` database before deciding to act, and appending an SSH key goes
+through a `grep -qxF "$key" authorized_keys || echo "$key" >> authorized_keys`
+pattern rather than an unconditional append. This mirrors how configuration
+management tools (Ansible, Puppet) work internally — every resource is a
+convergence function from current-state to desired-state, not a fire-and-forget
+command — the difference here is you're hand-rolling the same guard logic in
+shell.
+
+**Why closing the root session only after a new login works matters.**
+Disabling password auth and root login (`sshd_config` changes) doesn't take
+effect until `sshd` reloads its config — but your *existing* SSH session is
+a live TCP connection to an already-forked `sshd` child process that keeps
+running under the old settings until it exits. If the new access path is
+broken (bad key format, wrong permissions), the reload has already locked
+out future logins while your current session is the only way in — closing it
+before verifying a fresh connection is how servers get permanently locked
+out during hardening.
+
 ## Exercise
 
 1. Run the full script against a fresh VM, following the worked example.

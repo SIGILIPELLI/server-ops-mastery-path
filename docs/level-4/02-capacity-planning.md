@@ -189,6 +189,49 @@ Pre-event capacity checklist:
     peak capacity indefinitely
 ```
 
+## How It Actually Works
+
+**Why Little's Law holds regardless of the arrival pattern or service time
+distribution.** `L = λ × W` isn't an empirical rule of thumb — it's a
+theorem that holds for any stable queuing system, exactly, provable purely
+from conservation of flow: over a long observation window, the average
+number of items present equals the rate at which items arrive times the
+average time each one stays, because every item that's "in the system" at
+a random instant is one that arrived recently and hasn't left yet. This is
+why it works identically whether request arrivals are perfectly steady or
+bursty, and whether service time is constant or highly variable — it
+requires no assumption about distribution shape, only that the system is
+in steady state (arrival rate isn't itself changing faster than the
+measurement window), which is exactly why it's trustworthy as a sizing
+formula rather than just a rough heuristic.
+
+**Why p99 latency, not average latency, is the number that actually
+predicts when instances fall over.** Average latency is dominated by the
+common case and can look flat while a growing fraction of requests queue
+behind a saturating resource (a connection pool, a lock, a downstream
+call) — p99 is sensitive to exactly that tail because it's measuring the
+1-in-100 request that got stuck behind contention. As utilization
+approaches a resource's saturation point, queuing theory (specifically,
+the shape of an M/M/1-like queue's wait-time curve) predicts that latency
+doesn't degrade linearly — it stays roughly flat, then rises sharply near
+saturation. This is the mechanical reason a load test's target is
+"identify the inflection point where p99 spikes," not "find where the
+average degrades" — the average lags the real capacity ceiling
+significantly, giving false confidence right up until it doesn't.
+
+**Why `minReplicas` has to be set from the Little's Law floor, not left at
+autoscaler defaults.** A Horizontal Pod Autoscaler reacts to a metric
+(CPU utilization) *after* it crosses a threshold, and scaling itself takes
+time — provisioning a new node/pod, pulling the image, passing readiness
+checks. If `minReplicas` is set below the number of instances needed to
+survive one AZ's capacity disappearing (Level 3 module 01's redundancy
+math), a sudden AZ loss can create a gap where remaining replicas are
+overloaded *before* the autoscaler's reactive scale-up completes — this is
+why the worked example ties `minReplicas` directly to the pre-computed
+`provisioned_instances` number rather than an arbitrary small floor: the
+static minimum has to already be enough to survive the failure mode
+autoscaling is too slow to react to in time.
+
 ## Exercise
 
 1. Measure a real (or realistic toy) service's average request rate and

@@ -149,6 +149,56 @@ This is a toy — real DNS failover uses your provider's health-check feature
 failure, then rewrite what DNS answers, and every client is bound by the
 TTL until it re-resolves.
 
+## How It Actually Works
+
+**Why the resolver chain, not your server, decides how "instant" failover
+really is.** A client resolving `app.example.com` almost never talks to
+your authoritative nameserver directly. It asks its OS stub resolver,
+which asks a recursive resolver (ISP, `1.1.1.1`, `8.8.8.8`, or a corporate
+DNS forwarder), which — only on a cache miss — walks the delegation chain
+(root → `.com` → your NS records) to your authoritative server and caches
+the answer for the TTL. Every hop in that chain can cache independently,
+and some enforce a *minimum* TTL floor regardless of what you publish —
+which is exactly why "TTL disrespect" exists and why lowering a TTL from
+3600 to 60 doesn't take effect instantly: the old, longer-TTL answer is
+still sitting in caches that honored the original value when they fetched
+it, and it won't be re-fetched until *that* TTL expires.
+
+**Health-checked DNS is a control-plane poller, not part of the query
+path.** When Route 53 or Cloudflare "health-checks" an endpoint, a fleet of
+distributed probers hits your `/healthz` on an interval (commonly every
+10-30s from multiple regions) and writes a health status into the DNS
+provider's control plane. The *next* DNS query — which may come seconds or
+minutes later depending on caching — gets served from whatever the
+authoritative server's zone data currently says, which the health-check
+system updated out-of-band. There's no synchronous link between "the
+backend just died" and "the next resolver query reflects that" — the gap
+is: probe interval + number of consecutive failures required (to avoid
+flapping) + propagation to the authoritative server + remaining TTL on
+already-cached answers anywhere in the chain.
+
+**Why round-robin DNS doesn't actually balance load evenly.** A resolver
+that caches an `A` record with multiple IPs typically returns them in a
+fixed rotated order per query, but many resolvers (and virtually all OS
+stub resolvers, and any client-side connection pool) then pick *one* IP
+from the list and reuse it for the TTL's duration, or even for the process
+lifetime. This means load distribution is a function of how many distinct
+clients/resolvers query you, not how many requests each client makes —
+one client behind a corporate NAT can send thousands of requests to
+whichever single IP its resolver happened to hand back first.
+
+**Anycast resolves what DNS-level failover structurally cannot: sub-second
+failover with no TTL involved at all.** With anycast, the same IP address
+is originated from multiple points of presence via BGP, and it is the
+*internet's routing table*, not a DNS answer, that decides which physical
+instance a packet reaches — determined by BGP path length/preference at
+each hop between the client and your announcing routers. When an
+anycast-announcing node fails, withdrawing its BGP route causes traffic to
+converge on the next-best announcer within the time it takes route
+withdrawal to propagate (typically single-digit seconds across a well-peered
+network) — no client cache, no TTL, because the IP address itself never
+changes; only which physical machine answers to it does.
+
 ## Exercise
 
 1. Set up `dnsmasq` as above and confirm `dig app.test @127.0.0.1` (or

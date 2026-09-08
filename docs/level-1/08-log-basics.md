@@ -145,6 +145,31 @@ systemctl status myapp --no-pager
 This sequence — application log, proxy log, then correlate by timestamp —
 is the standard shape of most "why did this request fail" investigations.
 
+## How It Actually Works
+
+**syslog and journald: two logging paths, one system.** Traditional Unix
+logging works via the `syslog()` C library call, which writes a formatted
+message to a Unix domain socket (`/dev/log`); a syslog daemon (`rsyslog`)
+listens on that socket and routes messages to files under `/var/log/`
+based on facility/severity rules in `/etc/rsyslog.d/`. systemd's `journald`
+intercepts this differently: it captures stdout/stderr of every unit it
+supervises directly (no syslog call needed) plus kernel messages via
+`/dev/kmsg`, storing everything in its own indexed binary format. Most
+modern distros run both, with `rsyslog` itself subscribing to the journal as
+a source — which is why the same log line can legitimately appear in both
+`journalctl` and `/var/log/syslog`.
+
+**Why `logrotate` uses rename-then-recreate instead of truncation.** Rotating
+a log by truncating the file in place would race with a process that has it
+open and mid-`write()` — the write could land at an unexpected offset.
+Instead, `logrotate` renames the current file (`app.log` → `app.log.1`) and
+either sends the application a signal (`SIGHUP`, commonly) to reopen its log
+file at the new inode, or relies on `copytruncate` for programs that don't
+support that. The file descriptor a running process holds points to an
+inode, not a path — renaming the path doesn't invalidate writes in flight,
+which is exactly the property that makes rotation safe without stopping the
+process.
+
 ## Exercise
 
 1. On your VM, run `journalctl -u nginx --since "1 hour ago"` (or whatever

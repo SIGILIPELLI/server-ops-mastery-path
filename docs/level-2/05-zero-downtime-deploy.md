@@ -126,6 +126,36 @@ Never combine "add column" and "drop old column" in the same deploy as the
 code change that depends on both being done — that's the single most common
 cause of "zero-downtime" deploys that weren't.
 
+## How It Actually Works
+
+**Graceful reload via socket handoff, not restart.** nginx's zero-downtime
+reload (`nginx -s reload`) works because the *listening socket* — the
+kernel-level bound file descriptor accepting new TCP connections on port
+80/443 — is inherited by new worker processes rather than closed and
+reopened. The master process spawns new workers with the reloaded config
+while old workers finish serving their already-accepted connections, then
+old workers exit; because the listening socket itself never closes, the
+kernel keeps queuing new connections throughout, so no client ever sees a
+connection refused.
+
+**SIGTERM and graceful shutdown windows.** Deploy orchestration typically
+sends `SIGTERM` to an old process instance and waits a grace period before
+`SIGKILL`. A well-behaved application catches `SIGTERM`, stops accepting new
+requests on its listening socket, but keeps its process alive long enough to
+finish in-flight requests before exiting on its own — this is a userspace
+signal handler, not automatic OS behavior; a process that ignores `SIGTERM`
+gets forcibly killed at the grace-period boundary, dropping any request
+still in flight. This is the actual mechanism "drain before removing from
+the load balancer" relies on.
+
+**Why load-balancer health checks are what make rolling deploys safe.** A
+new instance is only added to active rotation after it passes the health
+check's consecutive-success threshold (see load-balancing module), and an
+instance being terminated is removed from rotation *before* it's sent
+`SIGTERM` — the balancer's connection routing table and the deploy
+orchestrator's kill sequence have to be ordered correctly, or requests get
+routed to a socket that's already stopped accepting.
+
 ## Exercise
 
 1. Extend the rolling-restart script above (or the load-balancing exercise

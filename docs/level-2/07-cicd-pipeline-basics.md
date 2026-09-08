@@ -141,6 +141,36 @@ This symlink-swap pattern is what makes rollback fast (seconds, not a full
 rebuild-and-redeploy) — it's the same idea CI/CD pipelines rely on when a
 production smoke test fails right after deploy.
 
+## How It Actually Works
+
+**A CI runner is just an ephemeral VM/container executing a shell script.**
+Behind the YAML abstraction, a CI job is a fresh container (or VM) spun up
+from a base image, your repository checked out into it via a normal `git
+clone`, and each pipeline "step" is literally a shell command executed in
+sequence, with the job failing the moment any step returns a non-zero exit
+code — the same exit-status propagation as any shell script. The "magic" is
+entirely in orchestration around that: scheduling runners, injecting secrets
+as environment variables scoped to that one ephemeral container, caching
+dependency directories between runs, and tearing the container down
+afterward so no state leaks between builds.
+
+**Why pipeline caching keys matter for correctness, not just speed.** A
+dependency cache (`node_modules`, `~/.m2`) is keyed by a hash of the
+lockfile/manifest — when that hash changes, the cache key changes and CI
+correctly rebuilds from scratch; if a pipeline used a static cache key
+instead, changed dependencies would go undetected and stale packages would
+silently persist across builds, which is a subtle source of "passes in CI,
+fails after deploy" bugs.
+
+**Artifact promotion vs rebuilding per environment.** A pipeline that builds
+once and promotes the *same* compiled artifact (Docker image digest, binary)
+through dev → staging → prod guarantees bit-for-bit identical code runs
+everywhere; a pipeline that reruns the build step per environment risks a
+different dependency resolution, compiler version, or flaky build step
+producing genuinely different bytes at each stage — reintroducing the exact
+"different build in each environment" problem environment-based config is
+supposed to eliminate.
+
 ## Exercise
 
 1. Set up a GitHub Actions workflow for a small repo that runs lint + tests

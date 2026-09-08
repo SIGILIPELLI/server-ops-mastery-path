@@ -155,6 +155,47 @@ sidecar's retry/timeout policy?). Rules of thumb:
   into cross-service latency, can't enforce mTLS uniformly) is already
   costing more than the mesh would.
 
+## How It Actually Works
+
+**Why the sidecar sees traffic at all without the app knowing.** A sidecar
+like Envoy doesn't wrap library calls inside the application — it's a
+separate process in the same Pod/network namespace, and traffic reaches it
+via `iptables` (or `nftables`) rules injected at container startup (in
+Istio, by an init container running `iptables -t nat`) that transparently
+redirect all outbound and inbound TCP traffic on the Pod's network
+namespace through the sidecar's listener ports before it ever reaches the
+real destination. The application still connects to what it thinks is
+`payments:8080` directly — the kernel's NAT table silently rewrites the
+destination to `localhost:<envoy-port>` first. This is why mesh adoption
+needs zero application code changes: the interception happens below the
+socket layer the app code ever touches.
+
+**Why mTLS certificate rotation doesn't require restarting services.**
+Each sidecar holds a short-lived certificate (often valid for 24 hours or
+less) issued by the mesh's control-plane certificate authority (Istio's
+`istiod`), and the sidecar itself — not the application — handles
+renewal: it requests a new cert before the old one expires and swaps it
+into its TLS listener/originator config via the same dynamic
+configuration channel (xDS in Istio/Envoy) it uses for routing updates,
+with no socket-level interruption to in-flight connections. Short-lived
+certs bound the damage window if a workload identity is ever compromised
+— an attacker with a stolen cert loses access within hours, not until
+someone remembers to rotate it — which is the actual security argument
+for automated short-lived mTLS over long-lived static certs.
+
+**Why a retry budget without a circuit breaker can make an outage worse,
+not better.** `retries: attempts: 2` means every caller of a struggling
+`payments` instance sends up to 3x the request volume at it (the original
+plus 2 retries) — under real load, this is a retry storm: the added
+retry traffic is exactly what pushes an already-slow backend from
+"degraded" into "completely saturated." Circuit breaking (Envoy's outlier
+detection, ejecting a host after N consecutive 5xx responses) exists
+specifically to break this feedback loop — once a backend is ejected,
+callers fail fast instead of retrying against it, giving it a
+retry-traffic-free cooldown window to actually recover, which is the
+internal-network analog of an LB's `max_fails` pulling a backend from
+rotation instead of continuing to hammer it with health checks.
+
 ## Exercise
 
 1. Sketch (on paper or in a diagram tool) a 4-service system (e.g. `web` →

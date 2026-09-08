@@ -192,6 +192,50 @@ DevEx metrics (module 09) tracked: deployment frequency, change failure
     to every team building on it, not just the team that built it (module 09)
 ```
 
+## How It Actually Works
+
+**Why "state the SLA first, derive everything else" is the mechanism that
+prevents architecture-astronaut over-engineering, not just good practice.**
+Every decision in this capstone (warm standby vs. active-active, 30%
+standby-region sizing, automated vs. manual replica promotion) traces back
+to a single number — the 22-minute monthly downtime budget — through an
+explicit chain of justification. This ordering matters mechanically: if
+the architecture were chosen first, each subsequent decision would need
+its own separate justification with no shared reference point, and there
+would be no way to tell "we built this because the SLA requires it" apart
+from "we built this because it's more sophisticated" — the SLA-first
+ordering is what makes Decision 1's closing line ("not a default reached
+for because it's sophisticated") actually verifiable rather than asserted.
+
+**Why automating replica promotion specifically, while leaving the
+surrounding process manual, is a calculated boundary rather than
+inconsistency.** A 15-minute RTO budget has to absorb detection time
+(alerting fires, someone acknowledges), decision time (declaring a
+regional failure is real, not a transient blip), and execution time
+(promotion, DNS failover, traffic ramp) — a manually-run Patroni promotion
+alone can consume several of those minutes just in the operator finding
+the runbook and typing commands under pressure. Automating only the
+promotion step (the mechanically well-defined, rehearsed part) while
+keeping severity declaration and stakeholder communication human-driven
+(the judgment-requiring part, per Level 4 module 03's automatic-vs-manual
+failover distinction) is what fits execution time inside the remaining
+budget without removing human judgment from the part that genuinely needs
+it — deciding a regional failure is real enough to trigger the process.
+
+**Why only the Q3 production drill, not the Q1/Q2 rehearsals, can actually
+validate the RTO claim.** Q1 and Q2 each test one mechanism in isolation
+(LB health-check behavior; database promotion timing) under conditions
+that don't include the mechanisms that compound in a real regional event
+— DNS TTL-bound propagation delay, traffic ramp-up against a
+previously-30%-sized standby region actually absorbing 100% of load, and
+the interaction between all of them happening simultaneously under real
+production traffic. Little's Law (module 02) and a load test both assume
+steady-state conditions that a sudden full failover violates — which is
+why the design review checklist explicitly requires a rehearsed, not
+assumed, number for RPO/RTO: partial validation in isolation reliably
+misses the compounding effects that only show up when every mechanism
+fires together, under real load, at once.
+
 ## Exercise
 
 1. Using this capstone's structure as a template, produce the same

@@ -190,6 +190,46 @@ The `dynamodb_table` provides locking — a second `terraform apply` started
 while one is already running waits/fails instead of racing against the
 first and corrupting state.
 
+## How It Actually Works
+
+**Why Terraform needs a state file at all, when the cloud provider already
+knows what exists.** Terraform's `.tf` files describe desired resources by
+logical name (`aws_instance.web`), but cloud APIs identify resources by
+opaque IDs (`i-0abc123...`) that don't appear anywhere in your code. The
+state file is the mapping between the two — without it, `terraform plan`
+would have no way to know that `aws_instance.web` in your code *is*
+`i-0abc123` in AWS rather than a brand-new resource to create. This is
+also why deleting a resource outside Terraform (module 06's drift) doesn't
+just get silently ignored: `plan` reads the state file's ID, queries AWS
+for it, gets "not found," and reports that as a resource needing to be
+recreated — the state file, not the code, is what `plan` diffs live
+infrastructure against first.
+
+**Why the DynamoDB lock table prevents state corruption, mechanically.**
+Terraform doesn't merge concurrent changes to state — it treats state as a
+single mutable blob it downloads, mutates in memory during `apply`, and
+uploads back. Two `apply` runs racing against the same state file would
+each read the same starting point, make independent changes, and the
+second upload would silently clobber the first's changes with no
+awareness they ever happened. The DynamoDB table is used purely as a
+distributed lock: before touching state, Terraform writes a lock record
+with a client ID; a second `apply` attempting to acquire the same lock
+sees the existing record and refuses to proceed until it's released —
+turning a silent, undetectable race into an explicit "state locked, try
+again later" error.
+
+**Why `terraform apply` sometimes wants to destroy and recreate a resource
+you only edited slightly.** Not every attribute of a cloud resource is
+mutable in place — an EC2 instance's AMI, for instance, can't be changed
+on a running instance via API; the only way to get that instance onto a
+new AMI is to terminate it and launch a new one. Terraform's provider
+schema marks such attributes `ForceNew`, so any diff touching one produces
+a destroy-then-create plan rather than an update — which is exactly the
+kind of line `terraform plan`'s review step is meant to catch before it
+runs against a resource holding a live database, since "recreate" for a
+stateful resource means data loss unless it's backed by separate durable
+storage.
+
 ## Exercise
 
 1. Write a Terraform file that provisions one VM and a security group

@@ -130,6 +130,35 @@ dpkg -L nginx | head -5          # -> list files installed by the package
 often the fastest way to answer "where did this config file come from?" when
 you're debugging an unfamiliar server.
 
+## How It Actually Works
+
+**The APT dependency-resolution algorithm.** `apt install` doesn't just fetch
+the package you named — it builds a directed graph of `Depends`/`Recommends`/
+`Conflicts`/`Breaks` relationships declared in each package's control file,
+then runs a SAT-like solver to find a consistent set of package versions
+satisfying every constraint simultaneously. `apt update` refreshes the local
+copy of the repository's `Packages` index (a signed manifest of every
+available package, version, and dependency list) from each configured
+source in `/etc/apt/sources.list.d/`; `apt install` reads only that cached
+index, which is why a stale cache can offer a version that 404s on download.
+
+**Why packages are cryptographically signed.** Each repository publishes a
+`Release` file listing SHA256 hashes of every index file, and that `Release`
+file itself is GPG-signed by the repository's key (stored in
+`/etc/apt/trusted.gpg.d/`). APT verifies the signature chain — Release
+signature → index hashes → package hashes — before installing anything,
+so a compromised mirror or a machine-in-the-middle can't silently swap in a
+trojaned `.deb` without invalidating a hash somewhere in that chain.
+
+**dpkg vs apt.** `dpkg` is the low-level package database and installer — it
+unpacks a `.deb`'s file list into the filesystem and records it in
+`/var/lib/dpkg/status`, but has no concept of remote repositories or
+transitive dependencies; it fails loudly if a dependency is missing. `apt`
+is the dependency-aware layer on top that decides *which* `.deb`s to hand
+`dpkg`. This is why `dpkg -i` can leave a system in a "broken dependencies"
+state that only `apt --fix-broken install` (which re-runs the solver) can
+resolve.
+
 ## Exercise
 
 On the hardened VM from module 2:

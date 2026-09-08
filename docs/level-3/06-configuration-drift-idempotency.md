@@ -182,6 +182,44 @@ Every one of these modules checks current state before acting and reports
 `ansible-playbook site.yml` becomes something you can run nightly via cron
 as a drift-correction job, not just a one-time setup script.
 
+## How It Actually Works
+
+**Why `terraform plan` can diff reality without touching it.** Terraform
+keeps a state file mapping each resource in your `.tf` code to the real
+provider object's ID (e.g. an AWS instance ID). `plan` calls each
+provider's *read* API for every tracked resource — a GET, not a mutating
+call — to fetch current attribute values, then does a three-way diff
+between the state file, the live values just fetched, and what the `.tf`
+code declares. A resource that changed outside Terraform shows up as a
+diff between "live" and "state" even before comparing to code, which is
+how `plan` catches drift that config alone can't see: it's not comparing
+your code to your infrastructure, it's comparing three things at once.
+
+**Why Ansible modules report `changed: false` instead of just "succeeding"
+on a no-op run.** Each built-in module (`apt`, `file`, `user`, `cron`, …)
+follows a check-then-act pattern internally: it queries current state
+(`dpkg -l`, `stat()`, `getent passwd`, parses `/etc/crontab` by the task's
+`name` comment marker) and compares it field-by-field against the task's
+declared parameters *before* issuing any mutating syscall. Only a real
+mismatch triggers the underlying action; if state already matches, the
+module returns `changed: false` without invoking `apt-get install` or
+`useradd` at all. This is what `--check` mode piggybacks on: it runs the
+same comparison logic and reports what *would* change, then stops before
+the action step — the module architecture makes dry-run and idempotency
+the same code path, not two separate implementations that could drift
+from each other.
+
+**Why `shell`/`command` tasks can't be idempotent no matter how carefully
+written.** Ansible has no way to introspect what a raw shell command's
+effect *would* be without running it — there's no structured "current
+state" to compare against, only exit code and stdout/stderr after the
+fact. That's why `shell` tasks default to reporting `changed: true` on
+every run regardless of whether anything actually changed (unless you add
+a manual `creates:`/`changed_when:` guard) — the module system trades
+Ansible's ability to reason about the operation for the flexibility of an
+arbitrary command, and idempotency then becomes the script author's
+responsibility instead of the module's.
+
 ## Exercise
 
 1. Take a shell script you (or the examples above) wrote that isn't

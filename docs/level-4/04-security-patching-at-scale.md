@@ -182,6 +182,45 @@ patching from silently regressing after the initial rollout of a patching
 process; without a metric, "we patch regularly" is unfalsifiable until an
 audit or an incident proves otherwise.
 
+## How It Actually Works
+
+**Why `serial: "25%"` + `max_fail_percentage: 0` bounds blast radius
+mechanically, not just by convention.** Ansible's `serial` keyword splits
+the play's host list into successive batches and runs the *entire* task
+list against one batch before starting the next — it's not "throttle
+concurrency," it's a hard barrier: batch 2 does not begin until every task
+in batch 1 completes (or fails) across every host in that batch.
+`max_fail_percentage: 0` is checked at that same barrier — any failure in
+batch 1 halts the whole play before batch 2 is ever touched. Together
+these guarantee a bad patch can affect at most one batch's worth of hosts
+(25% here) no matter how many total batches exist, because the play
+physically cannot proceed past a failing batch to reach the rest of the
+fleet.
+
+**Why draining before reboot, not just rebooting, is what keeps a rolling
+patch from dropping requests.** A reboot severs every open TCP connection
+to that host instantly — if the host is still in the LB's active pool
+when it goes down, in-flight requests to it fail outright rather than
+being retried elsewhere. The `drain` API call in the playbook removes the
+host from the pool *before* the reboot task runs, so the LB's own health
+check (or an explicit removal) has already stopped routing new requests
+there; existing connections finish or time out normally rather than being
+cut mid-reboot. This is the same principle as blue-green's "old color
+keeps serving until proven" pattern, applied at the single-host level
+instead of the whole-fleet level.
+
+**Why CVSS score alone is a poor patch-priority signal without an
+exposure model.** CVSS measures the vulnerability's *theoretical* severity
+assuming an attacker can reach the vulnerable code path — it says nothing
+about whether your deployment actually exposes that path (a library
+loaded but never called with attacker-controlled input, or a service
+reachable only from an internal VPN, has effectively zero real-world
+exploitability regardless of score). The classification block's
+"CVSS + exploitability + exposure" formula exists because a scanner
+report ranked by CVSS alone systematically misprioritizes: a 9.8 CVSS bug
+in an unused code path outranks a 7.2 CVSS bug on your literal internet-facing
+login form, when the actual risk ordering is the reverse.
+
 ## Exercise
 
 1. Write a triage rule (like the classification block above) for your own

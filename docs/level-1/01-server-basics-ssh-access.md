@@ -147,6 +147,45 @@ to `df -h` and `free -h` constantly once the server is doing real work.
     instance — treat sample output as representative, not as a captured
     transcript, and verify against your own server.
 
+## How It Actually Works
+
+**The TCP handshake and the SSH transport layer.** `ssh webserver` first opens
+a plain TCP connection to port 22 (SYN → SYN-ACK → ACK). Only after that does
+SSH's own protocol begin: client and server exchange version banners, then
+negotiate a shared set of algorithms (key exchange, host-key type, cipher,
+MAC) by each sending an ordered list of what they support — the first mutual
+match wins. A Diffie-Hellman (or, on modern OpenSSH, Curve25519) key exchange
+then derives a shared secret over the insecure channel *without ever
+transmitting it*: each side sends a public value computed from a private
+random number, and both combine the other's public value with their own
+private one to reach the same shared secret, which an eavesdropper capturing
+only the public values cannot reconstruct. This secret seeds symmetric
+session keys (typically chacha20-poly1305 or AES-GCM) — from this point every
+byte of the session, including your login prompt and file transfers, is
+encrypted with those symmetric keys, which is why SSH is fast despite the
+expensive asymmetric math happening only once at setup.
+
+**Why the host-key fingerprint check exists.** The DH exchange above proves
+you share a secret with *whoever answered on port 22* — not that it's the
+right machine. The server proves its identity separately by signing part of
+the handshake with its long-lived host private key; your client checks that
+signature against the public host key it already trusts (from
+`known_hosts`) or asks you to trust on first use. Skip that verification and
+a machine-in-the-middle can complete its own valid-looking handshake with
+you while relaying to the real server, reading everything in between.
+
+**Why key-based auth resists what password auth doesn't.** After the
+transport layer is established, SSH negotiates *authentication* on top of it.
+Public-key auth works because your client signs a challenge (a hash derived
+from the session) with your private key, and the server verifies that
+signature using the public key already sitting in `authorized_keys` — this
+proves possession of the private key without ever sending it, so there's no
+password to brute-force or phish over the wire. The `chmod 700`/`600`
+requirement on `.ssh` and `authorized_keys` isn't cosmetic: `sshd` refuses to
+honor an `authorized_keys` file that group- or world-writable permissions
+could let another local user tamper with, closing a local-privilege-escalation
+path.
+
 ## Exercise
 
 1. Spin up a free-tier or lowest-cost VM from any provider you have access to
