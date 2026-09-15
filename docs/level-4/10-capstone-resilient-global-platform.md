@@ -240,6 +240,10 @@ assumed, number for RPO/RTO: partial validation in isolation reliably
 misses the compounding effects that only show up when every mechanism
 fires together, under real load, at once.
 
+## 🔀 Related lessons on other tracks
+
+- [Terraform — 06 · Designing a Platform's Terraform Architecture](https://sigilipelli.github.io/terraform-mastery-path/level-4/06-platform-architecture/)
+
 ## Exercise
 
 1. Using this capstone's structure as a template, produce the same

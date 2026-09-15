@@ -236,6 +236,10 @@ why the worked example ties `minReplicas` directly to the pre-computed
 static minimum has to already be enough to survive the failure mode
 autoscaling is too slow to react to in time.
 
+## 🔀 Related lessons on other tracks
+
+- [Kubernetes — 08 · Cost Optimization & Capacity Planning](https://sigilipelli.github.io/kubernetes-mastery-path/level-4/08-cost-optimization-capacity/)
+
 ## Exercise
 
 1. Measure a real (or realistic toy) service's average request rate and

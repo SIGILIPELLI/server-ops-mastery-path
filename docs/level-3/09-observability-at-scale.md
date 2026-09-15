@@ -226,6 +226,10 @@ trading memory and a few seconds of latency in the collector for the
 ability to make sampling decisions on the trace's actual outcome, which a
 per-span, decide-immediately (head-based) sampler structurally cannot do.
 
+## 🔀 Related lessons on other tracks
+
+- [Kubernetes — 05 · Observability: Metrics & Logging](https://sigilipelli.github.io/kubernetes-mastery-path/level-3/05-observability-metrics-logging/)
+
 ## Exercise
 
 1. Add a `request_id` (generated at the edge, propagated via an HTTP

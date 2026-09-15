@@ -220,6 +220,10 @@ human must consciously accept this specific tradeoff" directly into the
 procedure, rather than letting an operator under pressure promote reflexively
 without weighing it.
 
+## 🔀 Related lessons on other tracks
+
+- [Cybersecurity — 09 · Incident Response Basics](https://sigilipelli.github.io/cybersecurity-mastery-path/level-1/09-incident-response-basics/)
+
 ## Exercise
 
 1. Write a runbook, in the format above, for one real failure mode in a

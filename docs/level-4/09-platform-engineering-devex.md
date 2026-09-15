@@ -208,6 +208,10 @@ slower or riskier than going around it — which is why these four numbers,
 measured on the teams *using* the platform rather than the platform's own
 infrastructure, are the metrics that actually reveal whether it's working.
 
+## 🔀 Related lessons on other tracks
+
+- [Kubernetes — 09 · Platform Engineering on Kubernetes](https://sigilipelli.github.io/kubernetes-mastery-path/level-4/09-platform-engineering/)
+
 ## Exercise
 
 1. Pick one recurring task engineers on your team do manually today

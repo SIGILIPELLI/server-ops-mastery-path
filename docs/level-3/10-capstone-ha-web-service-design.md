@@ -223,6 +223,11 @@ the 25-minute full-restore RTO as an unverified number from module 03's
 "untested backup is a hypothesis" warning, applied here at the level of
 the entire recovery *procedure*, not just the backup file.
 
+## 🔀 Related lessons on other tracks
+
+- [IBM Cloud — 10 · Project — Highly Available Web App](https://sigilipelli.github.io/ibm-cloud-mastery-path/level-2/10-project-ha-web-app/)
+- [Azure — 01 · App Service & Web Apps Deep Dive](https://sigilipelli.github.io/azure-mastery-path/level-2/01-app-service-deep-dive/)
+
 ## Exercise
 
 1. Take a real (or realistic toy) service you run or have access to, and

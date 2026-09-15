@@ -160,6 +160,11 @@ instance being terminated is removed from rotation *before* it's sent
 orchestrator's kill sequence have to be ordered correctly, or requests get
 routed to a socket that's already stopped accepting.
 
+## 🔀 Related lessons on other tracks
+
+- [Docker — 07 · Zero-Downtime Deployments](https://sigilipelli.github.io/docker-mastery-path/level-4/07-zero-downtime-deployments/)
+- [REST API — 09 · Zero-Downtime Deployments & Migrations](https://sigilipelli.github.io/rest-api-mastery-path/level-4/09-zero-downtime-migrations/)
+
 ## Exercise
 
 1. Extend the rolling-restart script above (or the load-balancing exercise

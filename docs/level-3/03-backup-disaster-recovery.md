@@ -200,6 +200,12 @@ class of failure ("the exit code lied") that motivates verifying the
 artifact itself rather than trusting the producing command's return
 status.
 
+## 🔀 Related lessons on other tracks
+
+- [Kubernetes — 07 · Disaster Recovery & Backup Strategies](https://sigilipelli.github.io/kubernetes-mastery-path/level-4/07-disaster-recovery-backup/)
+- [AWS — Multi-Region & Disaster Recovery](https://sigilipelli.github.io/aws-mastery-path/level-3/07-multi-region-disaster-recovery/)
+- [Azure — 07 · High Availability & Disaster Recovery](https://sigilipelli.github.io/azure-mastery-path/level-3/07-ha-disaster-recovery/)
+
 ## Exercise
 
 1. Write `backup-db.sh` against a local Postgres or MySQL instance, verify

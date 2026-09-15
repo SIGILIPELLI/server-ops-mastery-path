@@ -218,6 +218,10 @@ against current need — exactly the same "run the check regularly, don't
 assume the initial grant is still correct" discipline as a nightly
 `terraform plan`.
 
+## 🔀 Related lessons on other tracks
+
+- [AWS — Compliance & Governance (Config, Audit Manager)](https://sigilipelli.github.io/aws-mastery-path/level-4/08-compliance-governance/)
+
 ## Exercise
 
 1. Pick one compliance framework relevant to a system you know (or SOC 2

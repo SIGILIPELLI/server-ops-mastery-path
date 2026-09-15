@@ -174,6 +174,10 @@ every downstream call) is the only thing that lets you reconstruct "every
 log line produced while handling this one request" after the fact, by
 querying the central store for that ID across all sources.
 
+## 🔀 Related lessons on other tracks
+
+- [Docker — 07 · Logging Drivers & Centralized Logging](https://sigilipelli.github.io/docker-mastery-path/level-3/07-logging-drivers/)
+
 ## Exercise
 
 1. Install Vector (or Filebeat) on a test VM and configure it to ship

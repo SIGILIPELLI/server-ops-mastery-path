@@ -160,6 +160,12 @@ poll for updates) to pick up the new value, and only then is the old value
 revoked — a mechanism directly analogous to blue-green deployment, applied
 to credentials instead of application code.
 
+## 🔀 Related lessons on other tracks
+
+- [Docker — 09 · Secrets & Config Management](https://sigilipelli.github.io/docker-mastery-path/level-3/09-secrets-config-management/)
+- [Embedded Python — Device Provisioning & Secrets Management](https://sigilipelli.github.io/embedded-python-mastery-path/level-4/03-provisioning-secrets/)
+- [Terraform — 08 · Secrets Management Patterns](https://sigilipelli.github.io/terraform-mastery-path/level-3/08-secrets-management/)
+
 ## Exercise
 
 1. Create a `secrets.env` file with mode `600` owned by a dedicated

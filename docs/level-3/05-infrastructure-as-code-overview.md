@@ -234,6 +234,11 @@ runs against a resource holding a live database, since "recreate" for a
 stateful resource means data loss unless it's backed by separate durable
 storage.
 
+## 🔀 Related lessons on other tracks
+
+- [Azure — 02 · Infrastructure as Code at Scale (Bicep/Terraform)](https://sigilipelli.github.io/azure-mastery-path/level-3/02-iac-at-scale/)
+- [GCP — 09 · Infrastructure as Code (Terraform on GCP)](https://sigilipelli.github.io/gcp-mastery-path/level-1/09-terraform-intro/)
+
 ## Exercise
 
 1. Write a Terraform file that provisions one VM and a security group

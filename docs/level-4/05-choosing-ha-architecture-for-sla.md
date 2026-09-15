@@ -176,6 +176,11 @@ of the same," the cost curve tracks the failure-mode hierarchy's own
 increasing rarity and complexity rather than scaling with the availability
 percentage itself.
 
+## 🔀 Related lessons on other tracks
+
+- [Agile — 04 · Choosing the Right Methodology per Project Type](https://sigilipelli.github.io/agile-mastery-path/level-4/04-choosing-right-methodology/)
+- [AI Tools — 02 · Choosing the Right AI Tool for a Task](https://sigilipelli.github.io/ai-tools-mastery-path/level-1/02-choosing-the-right-ai-tool/)
+
 ## Exercise
 
 1. For three systems you know (or invent three realistic ones spanning

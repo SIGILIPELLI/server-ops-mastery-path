@@ -203,6 +203,11 @@ order so each later layer overrides the former. A value that seems to be
 tells you definitively what the process actually received, independent of
 what you think you set.
 
+## 🔀 Related lessons on other tracks
+
+- [Docker — 09 · Secrets & Config Management](https://sigilipelli.github.io/docker-mastery-path/level-3/09-secrets-config-management/)
+- [Playwright — 08 · Environment & Test Data Management](https://sigilipelli.github.io/playwright-mastery-path/level-2/08-env-test-data/)
+
 ## Exercise
 
 1. Create `/etc/myapp/myapp.env` with at least three variables, lock it down

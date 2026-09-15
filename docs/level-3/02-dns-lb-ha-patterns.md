@@ -203,6 +203,10 @@ withdrawal to propagate (typically single-digit seconds across a well-peered
 network) — no client cache, no TTL, because the IP address itself never
 changes; only which physical machine answers to it does.
 
+## 🔀 Related lessons on other tracks
+
+- [Azure — 03 · Networking Deep Dive (Load Balancer, App Gateway)](https://sigilipelli.github.io/azure-mastery-path/level-2/03-networking-deep-dive/)
+
 ## Exercise
 
 1. Set up `dnsmasq` as above and confirm `dig app.test @127.0.0.1` (or
