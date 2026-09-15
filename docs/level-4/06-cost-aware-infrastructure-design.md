@@ -1,3 +1,7 @@
+---
+description: "Cost-Aware Infrastructure Design — Module 05 argued that reliability has a real cost curve, and that over-engineering is a genuine failure mode. This…"
+---
+
 # 06 · Cost-Aware Infrastructure Design
 
 Module 05 argued that reliability has a real cost curve, and that

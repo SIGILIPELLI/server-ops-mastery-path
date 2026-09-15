@@ -1,3 +1,7 @@
+---
+description: "Backup & Disaster Recovery Strategy — High availability (module 01) protects against a single component failing. It does not protect against data…"
+---
+
 # 03 · Backup & Disaster Recovery Strategy
 
 High availability (module 01) protects against a single component failing.

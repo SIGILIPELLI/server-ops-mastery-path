@@ -1,3 +1,7 @@
+---
+description: "DNS & Load Balancer HA Patterns — Module 01 made the load balancer itself highly available with a floating IP on the same subnet. That doesn't help once…"
+---
+
 # 02 · DNS & Load Balancer HA Patterns
 
 Module 01 made the load balancer itself highly available with a floating IP

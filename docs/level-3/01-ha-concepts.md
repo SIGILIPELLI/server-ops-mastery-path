@@ -1,3 +1,7 @@
+---
+description: "High Availability Concepts (redundancy, failover, health checks) — High availability (HA) is not a product you install — it's a design property that comes…"
+---
+
 # 01 · High Availability Concepts (redundancy, failover, health checks)
 
 High availability (HA) is not a product you install — it's a design property

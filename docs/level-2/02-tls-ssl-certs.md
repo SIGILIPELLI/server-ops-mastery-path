@@ -1,3 +1,7 @@
+---
+description: "TLS/SSL Certificates (Let's Encrypt / certbot) — TLS is what turns http:// into https://: it encrypts traffic between client and server and proves (via a…"
+---
+
 # 02 · TLS/SSL Certificates (Let's Encrypt / certbot)
 
 TLS is what turns `http://` into `https://`: it encrypts traffic between

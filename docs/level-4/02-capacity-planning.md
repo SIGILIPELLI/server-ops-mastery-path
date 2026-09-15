@@ -1,3 +1,7 @@
+---
+description: "Capacity Planning — Every HA/DR design in Level 3 assumed the surviving instances/region could actually absorb the traffic redirected to them. Capacity…"
+---
+
 # 02 · Capacity Planning
 
 Every HA/DR design in Level 3 assumed the surviving instances/region could

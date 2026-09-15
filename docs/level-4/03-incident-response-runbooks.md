@@ -1,3 +1,7 @@
+---
+description: "Incident Response & Runbooks — Every design in Levels 1-3 assumes something eventually goes wrong despite the redundancy, health checks, and chaos…"
+---
+
 # 03 · Incident Response & Runbooks
 
 Every design in Levels 1-3 assumes something eventually goes wrong despite

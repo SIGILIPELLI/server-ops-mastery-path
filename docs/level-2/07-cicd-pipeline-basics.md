@@ -1,3 +1,7 @@
+---
+description: "CI/CD Pipeline Basics — CI (continuous integration) means every code change is automatically built and tested. CD (continuous delivery/deployment) extends…"
+---
+
 # 07 · CI/CD Pipeline Basics
 
 CI (continuous integration) means every code change is automatically

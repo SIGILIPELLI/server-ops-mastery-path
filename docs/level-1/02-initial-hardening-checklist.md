@@ -1,3 +1,7 @@
+---
+description: "Initial Server Hardening Checklist — A freshly created server (especially one you got with root/password login) is not safe to leave as-is for more than a…"
+---
+
 # 02 · Initial Server Hardening Checklist
 
 A freshly created server (especially one you got with root/password login)

@@ -1,3 +1,7 @@
+---
+description: "Environment-Based Deployment (staging vs. prod) — Deploying straight to production with no intermediate check is how small bugs become customer-facing…"
+---
+
 # 04 · Environment-Based Deployment (staging vs. prod)
 
 Deploying straight to production with no intermediate check is how small

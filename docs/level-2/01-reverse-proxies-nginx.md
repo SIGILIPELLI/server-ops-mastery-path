@@ -1,3 +1,7 @@
+---
+description: "Reverse Proxies (nginx basics) — A reverse proxy sits in front of one or more backend applications and handles the stuff you don't want every app to…"
+---
+
 # 01 · Reverse Proxies (nginx basics)
 
 A reverse proxy sits in front of one or more backend applications and

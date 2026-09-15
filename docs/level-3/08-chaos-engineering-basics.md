@@ -1,3 +1,7 @@
+---
+description: "Chaos Engineering Basics — Every module so far has designed for failure — redundancy, health checks, backups, retries. Chaos engineering is how you find…"
+---
+
 # 08 · Chaos Engineering Basics
 
 Every module so far has *designed* for failure — redundancy, health checks,

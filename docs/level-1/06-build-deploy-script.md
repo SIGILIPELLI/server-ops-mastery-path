@@ -1,3 +1,7 @@
+---
+description: "Writing a Build/Deploy Script — Manually SSHing in and typing commands every time you ship a change doesn't scale and isn't repeatable. This module builds…"
+---
+
 # 06 · Writing a Build/Deploy Script
 
 Manually SSHing in and typing commands every time you ship a change doesn't

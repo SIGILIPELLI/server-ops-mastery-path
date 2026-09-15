@@ -1,3 +1,7 @@
+---
+description: "Observability at Scale (metrics, logs, traces) — Level 2 introduced basic monitoring and centralized logging — enough for a handful of services. Once you…"
+---
+
 # 09 · Observability at Scale (metrics, logs, traces)
 
 Level 2 introduced basic monitoring and centralized logging — enough for a

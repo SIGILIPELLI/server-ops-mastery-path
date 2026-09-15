@@ -1,3 +1,7 @@
+---
+description: "Basic Networking Concepts — You don't need to be a network engineer to run servers, but you do need a working model of IP addresses, subnets, DNS, and…"
+---
+
 # 05 · Basic Networking Concepts
 
 You don't need to be a network engineer to run servers, but you do need a

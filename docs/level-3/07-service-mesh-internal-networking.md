@@ -1,3 +1,7 @@
+---
+description: "Service Mesh & Internal Networking Concepts — As a deployment grows from 'one app talking to one database' into a dozen services calling each other, the…"
+---
+
 # 07 · Service Mesh & Internal Networking Concepts
 
 As a deployment grows from "one app talking to one database" into a dozen

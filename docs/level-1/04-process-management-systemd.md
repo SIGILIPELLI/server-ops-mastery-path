@@ -1,3 +1,7 @@
+---
+description: "Process Management (systemd) — Every modern mainstream Linux distribution uses systemd as its init system and service manager — it starts services at…"
+---
+
 # 04 · Process Management (systemd)
 
 Every modern mainstream Linux distribution uses **systemd** as its init

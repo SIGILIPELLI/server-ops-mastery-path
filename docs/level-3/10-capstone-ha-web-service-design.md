@@ -1,3 +1,7 @@
+---
+description: "Capstone — Highly Available Web Service Design — This capstone ties together every Level 3 module into one coherent design: a web service that survives a…"
+---
+
 # 10 · Capstone — Highly Available Web Service Design
 
 This capstone ties together every Level 3 module into one coherent design:

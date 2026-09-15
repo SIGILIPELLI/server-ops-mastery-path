@@ -1,3 +1,7 @@
+---
+description: "Multi-Region / Multi-AZ Architecture Concepts — Level 3's capstone spread a service across two availability zones (AZs) within one region. This module…"
+---
+
 # 01 · Multi-Region / Multi-AZ Architecture Concepts
 
 Level 3's capstone spread a service across two availability zones (AZs)

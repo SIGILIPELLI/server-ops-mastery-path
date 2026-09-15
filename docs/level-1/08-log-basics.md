@@ -1,3 +1,7 @@
+---
+description: "Log Basics (journalctl, /var/log) — When something goes wrong on a server, logs are almost always the first place you look. This module covers the two…"
+---
+
 # 08 · Log Basics (journalctl, /var/log)
 
 When something goes wrong on a server, logs are almost always the first

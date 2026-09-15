@@ -1,3 +1,7 @@
+---
+description: "Capstone — Blue-Green Deploy Pipeline — Blue-green deployment runs two complete, identical production environments ('blue' and 'green'). At any time, one…"
+---
+
 # 10 · Capstone — Blue-Green Deploy Pipeline
 
 Blue-green deployment runs two complete, identical production environments

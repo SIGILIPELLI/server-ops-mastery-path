@@ -1,3 +1,7 @@
+---
+description: "Basic Monitoring (uptime checks, resource metrics) — You cannot fix what you don't know is broken. This module is the minimum viable monitoring setup: is…"
+---
+
 # 08 · Basic Monitoring (uptime checks, resource metrics)
 
 You cannot fix what you don't know is broken. This module is the minimum

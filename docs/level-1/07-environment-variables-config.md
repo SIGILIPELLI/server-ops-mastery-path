@@ -1,3 +1,7 @@
+---
+description: "Environment Variables & Config Management — Hardcoding database passwords, API keys, and per-environment settings directly into source code is one of the…"
+---
+
 # 07 · Environment Variables & Config Management
 
 Hardcoding database passwords, API keys, and per-environment settings

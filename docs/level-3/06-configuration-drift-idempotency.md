@@ -1,3 +1,7 @@
+---
+description: "Configuration Drift & Idempotency — Module 05 introduced IaC's promise: describe desired state, apply it, done. That promise only holds if two properties…"
+---
+
 # 06 · Configuration Drift & Idempotency
 
 Module 05 introduced IaC's promise: describe desired state, apply it, done.

@@ -1,3 +1,7 @@
+---
+description: "Choosing the Right HA Architecture for a Given SLA — Levels 3 and 4 have built a full toolbox — multi-AZ, multi-region, warm standby, active-active, chaos…"
+---
+
 # 05 · Choosing the Right HA Architecture for a Given SLA
 
 Levels 3 and 4 have built a full toolbox — multi-AZ, multi-region, warm

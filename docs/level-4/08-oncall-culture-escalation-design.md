@@ -1,3 +1,7 @@
+---
+description: "On-Call Culture & Escalation Design — Runbooks and incident process (module 03) assume someone is actually available, alert, and equipped to respond when…"
+---
+
 # 08 · On-Call Culture & Escalation Design
 
 Runbooks and incident process (module 03) assume someone is actually

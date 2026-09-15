@@ -1,3 +1,7 @@
+---
+description: "Package Management — Almost everything you install on a Linux server — a web server, a database, a runtime — comes through the distribution's package…"
+---
+
 # 03 · Package Management
 
 Almost everything you install on a Linux server — a web server, a database,

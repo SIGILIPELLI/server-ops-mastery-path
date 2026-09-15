@@ -1,3 +1,7 @@
+---
+description: "Cron Jobs & Scheduled Tasks — Backups, cleanup jobs, periodic health checks, certificate renewals — a lot of server ops work is 'run this on a schedule…"
+---
+
 # 09 · Cron Jobs & Scheduled Tasks
 
 Backups, cleanup jobs, periodic health checks, certificate renewals — a lot

@@ -1,3 +1,7 @@
+---
+description: "Load Balancing Basics — Once one server can't (or shouldn't, for availability reasons) handle all your traffic alone, you put a load balancer in front of…"
+---
+
 # 03 · Load Balancing Basics
 
 Once one server can't (or shouldn't, for availability reasons) handle all

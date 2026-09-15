@@ -1,3 +1,7 @@
+---
+description: "Containerization Basics (Docker) as a Deployment Pattern — Everything up to this point deployed an app directly onto a server's OS — install a runtime…"
+---
+
 # 04 · Containerization Basics (Docker) as a Deployment Pattern
 
 Everything up to this point deployed an app directly onto a server's OS —

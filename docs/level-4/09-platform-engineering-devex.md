@@ -1,3 +1,7 @@
+---
+description: "Platform Engineering & Internal Developer Experience — Everything in this program so far has been 'how does an ops person build and operate reliable…"
+---
+
 # 09 · Platform Engineering & Internal Developer Experience
 
 Everything in this program so far has been "how does an ops person build

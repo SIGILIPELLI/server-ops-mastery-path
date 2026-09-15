@@ -1,3 +1,7 @@
+---
+description: "Centralized Logging Basics — Level 1 covered reading logs on a single box (journalctl, /var/log). Once you have more than one server, 'SSH into each box…"
+---
+
 # 09 · Centralized Logging Basics
 
 Level 1 covered reading logs on a single box (`journalctl`, `/var/log`).

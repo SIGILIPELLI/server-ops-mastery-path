@@ -1,3 +1,7 @@
+---
+description: "Infrastructure as Code Overview — Every server built by hand — SSH in, run commands from module 1's memory — is a snowflake: nobody fully remembers how it…"
+---
+
 # 05 · Infrastructure as Code Overview
 
 Every server built by hand — SSH in, run commands from module 1's memory —

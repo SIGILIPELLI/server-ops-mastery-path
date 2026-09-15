@@ -1,3 +1,7 @@
+---
+description: "Zero-Downtime Deploy Patterns — A 'restart the service to deploy' approach drops every in-flight request for the seconds the process is down.…"
+---
+
 # 05 · Zero-Downtime Deploy Patterns
 
 A "restart the service to deploy" approach drops every in-flight request

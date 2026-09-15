@@ -1,3 +1,7 @@
+---
+description: "Security Patching Strategy at Scale — Level 1's hardening checklist covered unattended-upgrades on one server. At fleet scale — dozens or hundreds of…"
+---
+
 # 04 · Security Patching Strategy at Scale
 
 Level 1's hardening checklist covered `unattended-upgrades` on one server.

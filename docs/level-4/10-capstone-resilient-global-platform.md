@@ -1,3 +1,7 @@
+---
+description: "Capstone — Designing a Resilient Global Platform — This is the final capstone of the entire program. Level 3's capstone designed one highly-available…"
+---
+
 # 10 · Capstone — Designing a Resilient Global Platform
 
 This is the final capstone of the entire program. Level 3's capstone

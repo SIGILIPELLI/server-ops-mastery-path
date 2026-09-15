@@ -1,3 +1,7 @@
+---
+description: "Server Basics & SSH Access — Before you can administer a server you need to know what kind of thing you're actually logging into, and how to get a secure…"
+---
+
 # 01 · Server Basics & SSH Access
 
 Before you can administer a server you need to know what kind of thing you're

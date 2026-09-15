@@ -1,3 +1,7 @@
+---
+description: "Secrets & Configuration Management — Level 1 covered environment variables for basic config. This module is about the harder half: secrets — database…"
+---
+
 # 06 · Secrets & Configuration Management
 
 Level 1 covered environment variables for basic config. This module is

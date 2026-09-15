@@ -1,3 +1,7 @@
+---
+description: "Compliance & Audit Considerations for Ops — Everything built so far — IaC, backups, patching, incident response — turns out to also be most of what…"
+---
+
 # 07 · Compliance & Audit Considerations for Ops
 
 Everything built so far — IaC, backups, patching, incident response — turns
