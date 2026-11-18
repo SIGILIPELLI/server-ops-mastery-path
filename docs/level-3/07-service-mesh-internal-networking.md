@@ -202,7 +202,7 @@ rotation instead of continuing to hammer it with health checks.
 
 ## 🔀 Related lessons on other tracks
 
-- [Azure — 03 · Advanced AKS (Service Mesh, Multi-Cluster)](https://sigilipelli.github.io/azure-mastery-path/level-4/03-advanced-aks-service-mesh/)
+- [Azure — 03 · Advanced AKS (Service Mesh, Multi-Cluster)](https://learnmasterypath.com/azure-mastery-path/level-4/03-advanced-aks-service-mesh/)
 
 ## Exercise
 

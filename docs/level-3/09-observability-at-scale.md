@@ -228,7 +228,7 @@ per-span, decide-immediately (head-based) sampler structurally cannot do.
 
 ## 🔀 Related lessons on other tracks
 
-- [Kubernetes — 05 · Observability: Metrics & Logging](https://sigilipelli.github.io/kubernetes-mastery-path/level-3/05-observability-metrics-logging/)
+- [Kubernetes — 05 · Observability: Metrics & Logging](https://learnmasterypath.com/kubernetes-mastery-path/level-3/05-observability-metrics-logging/)
 
 ## Exercise
 

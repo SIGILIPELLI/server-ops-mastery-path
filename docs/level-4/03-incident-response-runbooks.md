@@ -222,7 +222,7 @@ without weighing it.
 
 ## 🔀 Related lessons on other tracks
 
-- [Cybersecurity — 09 · Incident Response Basics](https://sigilipelli.github.io/cybersecurity-mastery-path/level-1/09-incident-response-basics/)
+- [Cybersecurity — 09 · Incident Response Basics](https://learnmasterypath.com/cybersecurity-mastery-path/level-1/09-incident-response-basics/)
 
 ## Exercise
 

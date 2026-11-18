@@ -178,8 +178,8 @@ percentage itself.
 
 ## 🔀 Related lessons on other tracks
 
-- [Agile — 04 · Choosing the Right Methodology per Project Type](https://sigilipelli.github.io/agile-mastery-path/level-4/04-choosing-right-methodology/)
-- [AI Tools — 02 · Choosing the Right AI Tool for a Task](https://sigilipelli.github.io/ai-tools-mastery-path/level-1/02-choosing-the-right-ai-tool/)
+- [Agile — 04 · Choosing the Right Methodology per Project Type](https://learnmasterypath.com/agile-mastery-path/level-4/04-choosing-right-methodology/)
+- [AI Tools — 02 · Choosing the Right AI Tool for a Task](https://learnmasterypath.com/ai-tools-mastery-path/level-1/02-choosing-the-right-ai-tool/)
 
 ## Exercise
 

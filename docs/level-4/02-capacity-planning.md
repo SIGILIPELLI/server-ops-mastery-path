@@ -238,7 +238,7 @@ autoscaling is too slow to react to in time.
 
 ## 🔀 Related lessons on other tracks
 
-- [Kubernetes — 08 · Cost Optimization & Capacity Planning](https://sigilipelli.github.io/kubernetes-mastery-path/level-4/08-cost-optimization-capacity/)
+- [Kubernetes — 08 · Cost Optimization & Capacity Planning](https://learnmasterypath.com/kubernetes-mastery-path/level-4/08-cost-optimization-capacity/)
 
 ## Exercise
 

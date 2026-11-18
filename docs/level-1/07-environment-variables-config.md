@@ -205,8 +205,8 @@ what you think you set.
 
 ## 🔀 Related lessons on other tracks
 
-- [Docker — 09 · Secrets & Config Management](https://sigilipelli.github.io/docker-mastery-path/level-3/09-secrets-config-management/)
-- [Playwright — 08 · Environment & Test Data Management](https://sigilipelli.github.io/playwright-mastery-path/level-2/08-env-test-data/)
+- [Docker — 09 · Secrets & Config Management](https://learnmasterypath.com/docker-mastery-path/level-3/09-secrets-config-management/)
+- [Playwright — 08 · Environment & Test Data Management](https://learnmasterypath.com/playwright-mastery-path/level-2/08-env-test-data/)
 
 ## Exercise
 

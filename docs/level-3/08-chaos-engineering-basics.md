@@ -207,8 +207,8 @@ only resource-exhaustion chaos tests the second one.
 
 ## 🔀 Related lessons on other tracks
 
-- [AWS — Chaos Engineering & Resilience Testing](https://sigilipelli.github.io/aws-mastery-path/level-4/09-chaos-engineering-resilience/)
-- [GCP — 09 · Chaos Engineering & Resilience Testing](https://sigilipelli.github.io/gcp-mastery-path/level-4/09-chaos-engineering-resilience/)
+- [AWS — Chaos Engineering & Resilience Testing](https://learnmasterypath.com/aws-mastery-path/level-4/09-chaos-engineering-resilience/)
+- [GCP — 09 · Chaos Engineering & Resilience Testing](https://learnmasterypath.com/gcp-mastery-path/level-4/09-chaos-engineering-resilience/)
 
 ## Exercise
 

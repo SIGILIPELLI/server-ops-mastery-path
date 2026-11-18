@@ -210,7 +210,7 @@ infrastructure, are the metrics that actually reveal whether it's working.
 
 ## 🔀 Related lessons on other tracks
 
-- [Kubernetes — 09 · Platform Engineering on Kubernetes](https://sigilipelli.github.io/kubernetes-mastery-path/level-4/09-platform-engineering/)
+- [Kubernetes — 09 · Platform Engineering on Kubernetes](https://learnmasterypath.com/kubernetes-mastery-path/level-4/09-platform-engineering/)
 
 ## Exercise
 

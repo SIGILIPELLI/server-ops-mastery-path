@@ -228,9 +228,9 @@ threshold instead of a policy statement.
 
 ## 🔀 Related lessons on other tracks
 
-- [Azure — 07 · High Availability & Disaster Recovery](https://sigilipelli.github.io/azure-mastery-path/level-3/07-ha-disaster-recovery/)
-- [Freertos — Fault-Tolerant & High-Availability Design](https://sigilipelli.github.io/freertos-mastery-path/level-4/07-fault-tolerant-design/)
-- [REST API — 06 · Multi-Region & High Availability APIs](https://sigilipelli.github.io/rest-api-mastery-path/level-4/06-multi-region-ha/)
+- [Azure — 07 · High Availability & Disaster Recovery](https://learnmasterypath.com/azure-mastery-path/level-3/07-ha-disaster-recovery/)
+- [Freertos — Fault-Tolerant & High-Availability Design](https://learnmasterypath.com/freertos-mastery-path/level-4/07-fault-tolerant-design/)
+- [REST API — 06 · Multi-Region & High Availability APIs](https://learnmasterypath.com/rest-api-mastery-path/level-4/06-multi-region-ha/)
 
 ## Exercise
 

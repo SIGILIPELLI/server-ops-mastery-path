@@ -162,9 +162,9 @@ to credentials instead of application code.
 
 ## 🔀 Related lessons on other tracks
 
-- [Docker — 09 · Secrets & Config Management](https://sigilipelli.github.io/docker-mastery-path/level-3/09-secrets-config-management/)
-- [Embedded Python — Device Provisioning & Secrets Management](https://sigilipelli.github.io/embedded-python-mastery-path/level-4/03-provisioning-secrets/)
-- [Terraform — 08 · Secrets Management Patterns](https://sigilipelli.github.io/terraform-mastery-path/level-3/08-secrets-management/)
+- [Docker — 09 · Secrets & Config Management](https://learnmasterypath.com/docker-mastery-path/level-3/09-secrets-config-management/)
+- [Embedded Python — Device Provisioning & Secrets Management](https://learnmasterypath.com/embedded-python-mastery-path/level-4/03-provisioning-secrets/)
+- [Terraform — 08 · Secrets Management Patterns](https://learnmasterypath.com/terraform-mastery-path/level-3/08-secrets-management/)
 
 ## Exercise
 

@@ -202,9 +202,9 @@ status.
 
 ## 🔀 Related lessons on other tracks
 
-- [Kubernetes — 07 · Disaster Recovery & Backup Strategies](https://sigilipelli.github.io/kubernetes-mastery-path/level-4/07-disaster-recovery-backup/)
-- [AWS — Multi-Region & Disaster Recovery](https://sigilipelli.github.io/aws-mastery-path/level-3/07-multi-region-disaster-recovery/)
-- [Azure — 07 · High Availability & Disaster Recovery](https://sigilipelli.github.io/azure-mastery-path/level-3/07-ha-disaster-recovery/)
+- [Kubernetes — 07 · Disaster Recovery & Backup Strategies](https://learnmasterypath.com/kubernetes-mastery-path/level-4/07-disaster-recovery-backup/)
+- [AWS — Multi-Region & Disaster Recovery](https://learnmasterypath.com/aws-mastery-path/level-3/07-multi-region-disaster-recovery/)
+- [Azure — 07 · High Availability & Disaster Recovery](https://learnmasterypath.com/azure-mastery-path/level-3/07-ha-disaster-recovery/)
 
 ## Exercise
 

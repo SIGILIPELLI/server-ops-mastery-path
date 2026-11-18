@@ -205,7 +205,7 @@ changes; only which physical machine answers to it does.
 
 ## 🔀 Related lessons on other tracks
 
-- [Azure — 03 · Networking Deep Dive (Load Balancer, App Gateway)](https://sigilipelli.github.io/azure-mastery-path/level-2/03-networking-deep-dive/)
+- [Azure — 03 · Networking Deep Dive (Load Balancer, App Gateway)](https://learnmasterypath.com/azure-mastery-path/level-2/03-networking-deep-dive/)
 
 ## Exercise
 

@@ -242,7 +242,7 @@ fires together, under real load, at once.
 
 ## 🔀 Related lessons on other tracks
 
-- [Terraform — 06 · Designing a Platform's Terraform Architecture](https://sigilipelli.github.io/terraform-mastery-path/level-4/06-platform-architecture/)
+- [Terraform — 06 · Designing a Platform's Terraform Architecture](https://learnmasterypath.com/terraform-mastery-path/level-4/06-platform-architecture/)
 
 ## Exercise
 

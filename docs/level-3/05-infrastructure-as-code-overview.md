@@ -236,8 +236,8 @@ storage.
 
 ## 🔀 Related lessons on other tracks
 
-- [Azure — 02 · Infrastructure as Code at Scale (Bicep/Terraform)](https://sigilipelli.github.io/azure-mastery-path/level-3/02-iac-at-scale/)
-- [GCP — 09 · Infrastructure as Code (Terraform on GCP)](https://sigilipelli.github.io/gcp-mastery-path/level-1/09-terraform-intro/)
+- [Azure — 02 · Infrastructure as Code at Scale (Bicep/Terraform)](https://learnmasterypath.com/azure-mastery-path/level-3/02-iac-at-scale/)
+- [GCP — 09 · Infrastructure as Code (Terraform on GCP)](https://learnmasterypath.com/gcp-mastery-path/level-1/09-terraform-intro/)
 
 ## Exercise
 

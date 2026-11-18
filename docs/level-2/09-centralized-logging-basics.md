@@ -176,7 +176,7 @@ querying the central store for that ID across all sources.
 
 ## 🔀 Related lessons on other tracks
 
-- [Docker — 07 · Logging Drivers & Centralized Logging](https://sigilipelli.github.io/docker-mastery-path/level-3/07-logging-drivers/)
+- [Docker — 07 · Logging Drivers & Centralized Logging](https://learnmasterypath.com/docker-mastery-path/level-3/07-logging-drivers/)
 
 ## Exercise
 

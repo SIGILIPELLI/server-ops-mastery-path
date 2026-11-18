@@ -162,8 +162,8 @@ routed to a socket that's already stopped accepting.
 
 ## 🔀 Related lessons on other tracks
 
-- [Docker — 07 · Zero-Downtime Deployments](https://sigilipelli.github.io/docker-mastery-path/level-4/07-zero-downtime-deployments/)
-- [REST API — 09 · Zero-Downtime Deployments & Migrations](https://sigilipelli.github.io/rest-api-mastery-path/level-4/09-zero-downtime-migrations/)
+- [Docker — 07 · Zero-Downtime Deployments](https://learnmasterypath.com/docker-mastery-path/level-4/07-zero-downtime-deployments/)
+- [REST API — 09 · Zero-Downtime Deployments & Migrations](https://learnmasterypath.com/rest-api-mastery-path/level-4/09-zero-downtime-migrations/)
 
 ## Exercise
 
