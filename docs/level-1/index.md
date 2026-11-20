@@ -1,3 +1,7 @@
+---
+description: "Level 1 (Entry) of the free Server Ops Mastery Path. Get comfortable administering a Linux server from the command line — securing it, installing software…"
+---
+
 # Level 1 · Entry <span class="level-badge">Foundations</span>
 
 Goal: get comfortable administering a Linux server from the command line —

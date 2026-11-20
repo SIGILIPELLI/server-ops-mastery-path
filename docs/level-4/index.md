@@ -1,3 +1,7 @@
+---
+description: "Level 4 (Master) of the free Server Ops Mastery Path. Think like an infrastructure architect and an on-call lead — multi- region design, capacity planning…"
+---
+
 # Level 4 · Master <span class="level-badge">Master</span>
 
 Goal: think like an infrastructure architect and an on-call lead — multi-

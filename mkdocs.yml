@@ -6,6 +6,7 @@ repo_name: server-ops-mastery-path
 
 theme:
   name: material
+  font: false
   favicon: assets/favicon.svg
   custom_dir: docs/overrides
   palette:
@@ -24,6 +25,7 @@ theme:
         icon: material/brightness-4
         name: Switch to light mode
   features:
+    - navigation.path
     - navigation.tabs
     - navigation.sections
     - navigation.expand
@@ -55,6 +57,22 @@ extra_css:
 extra_javascript:
   - javascripts/progress-tracker.js
 
+
+
+
+
+extra:
+  related:
+    - name: "Linux"
+      url: https://learnmasterypath.com/linux-mastery-path/
+    - name: "NodeMCU/IoT"
+      url: https://learnmasterypath.com/nodemcu-mastery-path/
+    - name: "Terraform"
+      url: https://learnmasterypath.com/terraform-mastery-path/
+    - name: "Kubernetes"
+      url: https://learnmasterypath.com/kubernetes-mastery-path/
+    - name: "Docker"
+      url: https://learnmasterypath.com/docker-mastery-path/
 
 nav:
   - Home: index.md

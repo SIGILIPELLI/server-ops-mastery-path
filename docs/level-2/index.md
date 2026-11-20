@@ -1,3 +1,7 @@
+---
+description: "Level 2 (Intermediate) of the free Server Ops Mastery Path. Move from \"a server that runs one app\" to \"a server (or fleet) that serves production traffic…"
+---
+
 # Level 2 · Intermediate <span class="level-badge">Intermediate</span>
 
 Goal: move from "a server that runs one app" to "a server (or fleet) that

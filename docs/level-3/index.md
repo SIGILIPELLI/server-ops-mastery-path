@@ -1,3 +1,7 @@
+---
+description: "Level 3 (Advanced) of the free Server Ops Mastery Path. Design for failure — high availability, disaster recovery, containerized deployment patterns, and…"
+---
+
 # Level 3 · Advanced <span class="level-badge">Advanced</span>
 
 Goal: design for failure — high availability, disaster recovery,
