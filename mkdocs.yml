@@ -53,9 +53,11 @@ markdown_extensions:
 extra_css:
   - stylesheets/extra.css
   - stylesheets/progress-tracker.css
+  - stylesheets/final-quiz.css
 
 extra_javascript:
   - javascripts/progress-tracker.js
+  - javascripts/final-quiz.js
 
 
 
@@ -134,3 +136,5 @@ nav:
       - "08 · On-Call Culture & Escalation Design": level-4/08-oncall-culture-escalation-design.md
       - "09 · Platform Engineering & Internal Developer Experience": level-4/09-platform-engineering-devex.md
       - "10 · Capstone — Designing a Resilient Global Platform": level-4/10-capstone-resilient-global-platform.md
+  - "🎯 Final Quiz": quiz.md
+
