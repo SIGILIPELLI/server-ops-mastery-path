@@ -84,7 +84,7 @@ not_in_nav: |
 
 nav:
   - Home: index.md
-  - "💼 Interview Questions": interview-questions.md
+  - Interview Questions: interview-questions.md
   - "Level 1 · Entry":
       - Overview: level-1/index.md
       - "01 · Server Basics & SSH Access": level-1/01-server-basics-ssh-access.md
@@ -139,5 +139,5 @@ nav:
       - "08 · On-Call Culture & Escalation Design": level-4/08-oncall-culture-escalation-design.md
       - "09 · Platform Engineering & Internal Developer Experience": level-4/09-platform-engineering-devex.md
       - "10 · Capstone — Designing a Resilient Global Platform": level-4/10-capstone-resilient-global-platform.md
-  - "🎯 Final Quiz": quiz.md
+  - Final Quiz: quiz.md
 
