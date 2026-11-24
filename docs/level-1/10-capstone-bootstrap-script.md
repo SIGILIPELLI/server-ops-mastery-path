@@ -2,7 +2,7 @@
 description: "Capstone — Server Bootstrap Script — The capstone for Level 1: a single script that takes a brand-new server from 'just booted, root/password access only'…"
 ---
 
-# 10 · Capstone — Server Bootstrap Script
+# 10 · Project — Server Bootstrap Script
 
 The capstone for Level 1: a single script that takes a brand-new server from
 "just booted, root/password access only" to "hardened, running a web server
