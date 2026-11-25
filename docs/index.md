@@ -8,7 +8,7 @@ description: "Free Linux server administration and DevOps course from beginner t
 A structured, module-wise training program in Linux server administration and
 DevOps fundamentals — from your first SSH login to designing highly available,
 multi-region infrastructure — with real shell/systemd/nginx snippets in every
-module and a hands-on project at the end of each level.
+module and a hands-on project at the end of Levels 1–3 and a capstone at the end of Level 4.
 
 ## How the program is organized
 
@@ -27,7 +27,7 @@ module and a hands-on project at the end of each level.
   are written to be correct and runnable but are not executed against a live
   server as part of building this course, so review them before running
   against production.
-- Each level ends with a project that combines everything learned in that level.
+- Levels 1–3 each end with a project that combines everything learned in that level, and Level 4 ends with the course capstone.
 - Use the search bar (top of the page) to jump straight to a topic.
 - Examples target a modern Debian/Ubuntu server (`apt`, `systemd`, `ufw`);
   notes call out RHEL/CentOS (`yum`/`dnf`, `firewalld`) differences where they
