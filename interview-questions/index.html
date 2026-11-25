@@ -1,0 +1,4551 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="179 Server Ops interview questions with answers and explanations, from beginner to advanced, organised by level. Free, from the Server Ops Mastery Path.">
+      
+      
+      
+        <link rel="canonical" href="https://learnmasterypath.com/server-ops-mastery-path/interview-questions/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../level-1/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
+    
+    
+  
+  <title>Server Ops Interview Questions and Answers (179 Questions)</title>
+
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../stylesheets/progress-tracker.css">
+    
+      <link rel="stylesheet" href="../stylesheets/final-quiz.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-05VBGCXN12"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-05VBGCXN12');
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mastery Path">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Server Ops Interview Questions and Answers (179 Questions)">
+  <meta property="og:description" content="179 Server Ops interview questions with answers and explanations, from beginner to advanced, organised by level. Free, from the Server Ops Mastery Path.">
+  <meta property="og:url" content="https://learnmasterypath.com/server-ops-mastery-path/interview-questions/">
+  <meta property="og:image" content="https://learnmasterypath.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Mastery Path: free structured courses, beginner to master">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Server Ops Interview Questions and Answers (179 Questions)">
+  <meta name="twitter:description" content="179 Server Ops interview questions with answers and explanations, from beginner to advanced, organised by level. Free, from the Server Ops Mastery Path.">
+  <meta name="twitter:image" content="https://learnmasterypath.com/og-image.png">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9440969811959397"
+     crossorigin="anonymous"></script><script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Mastery Path", "item": "https://learnmasterypath.com/"},
+      {"@type": "ListItem", "position": 2, "name": "Server Ops Mastery Path", "item": "https://learnmasterypath.com/server-ops-mastery-path/"},
+      {"@type": "ListItem", "position": 3, "name": "Interview Questions", "item": "https://learnmasterypath.com/server-ops-mastery-path/interview-questions/"}
+    ]
+  }
+  </script>
+  <style>
+    .md-banner a:hover { text-decoration: underline !important; }
+    .mp-related { margin-top: 2.4rem; padding-top: 1rem; border-top: 1px solid var(--md-default-fg-color--lightest); font-size: .78rem; }
+    .mp-related h2 { font-size: .9rem; margin: 0 0 .5rem; }
+    .mp-related ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem .9rem; }
+    .mp-related li { margin: 0 !important; }
+  </style>
+  <script type="application/json" id="mp-course-meta">{"home": false, "id": "server-ops-mastery-path", "name": "Server Ops Mastery Path", "repo": "https://github.com/SIGILIPELLI/server-ops-mastery-path", "src": "interview-questions.md", "url": "https://learnmasterypath.com/server-ops-mastery-path/"}</script>
+  <link rel="stylesheet" href="https://learnmasterypath.com/assets/learn.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://learnmasterypath.com/assets/course.css?v=1">
+  <script src="https://learnmasterypath.com/assets/learn.js" defer></script>
+  <script src="https://learnmasterypath.com/assets/signup.js" defer></script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#server-ops-interview-questions-and-answers" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+            
+  <a href="https://learnmasterypath.com/" style="color: inherit; text-decoration: none;">
+    &larr; Mastery Path &middot; all 100+ free courses
+  </a>
+  <span style="opacity: .6; margin: 0 .6em;">|</span>
+  <a href="https://learnmasterypath.com/search/" style="color: inherit; text-decoration: none;">Search all courses</a>
+  <span style="opacity: .6; margin: 0 .6em;">|</span>
+  <a href="https://learnmasterypath.com/resume/" style="color: inherit; font-weight: 700; text-decoration: none;">
+    Got the skills? Free resume ATS check &rarr;
+  </a>
+
+          </div>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Server Ops Mastery Path" class="md-header__button md-logo" aria-label="Server Ops Mastery Path" data-md-component="logo">
+      <svg class="mp-mark" viewBox="0 0 160 160" role="img" aria-label="Mastery Path logo">
+  <circle cx="80" cy="80" r="74" fill="#FAF7EF" stroke="#2FA98D" stroke-width="5"/>
+  <rect class="mp-bar mp-bar-1" x="36" y="90" width="17" height="24" rx="5" fill="#2FA98D"/>
+  <rect class="mp-bar mp-bar-2" x="59" y="74" width="17" height="40" rx="5" fill="#7FC9B7"/>
+  <rect class="mp-bar mp-bar-3" x="82" y="56" width="17" height="58" rx="5" fill="#E0B457"/>
+  <rect class="mp-bar mp-bar-4" x="105" y="38" width="17" height="76" rx="5" fill="#C97B4A"/>
+  <circle class="mp-dot" cx="44.5" cy="82" r="7" fill="#22261f"/>
+</svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Server Ops Mastery Path
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Server Ops Interview Questions and Answers (179 Questions)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SIGILIPELLI/server-ops-mastery-path" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    server-ops-mastery-path
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Interview Questions
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../level-1/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 1 · Entry
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../level-2/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 2 · Intermediate
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../level-3/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 3 · Advanced
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../level-4/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 4 · Master
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../level-2/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 2 · Intermediate
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../level-3/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 3 · Advanced
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../level-4/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Level 4 · Master
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../quiz/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Final Quiz
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Server Ops Mastery Path" class="md-nav__button md-logo" aria-label="Server Ops Mastery Path" data-md-component="logo">
+      <svg class="mp-mark" viewBox="0 0 160 160" role="img" aria-label="Mastery Path logo">
+  <circle cx="80" cy="80" r="74" fill="#FAF7EF" stroke="#2FA98D" stroke-width="5"/>
+  <rect class="mp-bar mp-bar-1" x="36" y="90" width="17" height="24" rx="5" fill="#2FA98D"/>
+  <rect class="mp-bar mp-bar-2" x="59" y="74" width="17" height="40" rx="5" fill="#7FC9B7"/>
+  <rect class="mp-bar mp-bar-3" x="82" y="56" width="17" height="58" rx="5" fill="#E0B457"/>
+  <rect class="mp-bar mp-bar-4" x="105" y="38" width="17" height="76" rx="5" fill="#C97B4A"/>
+  <circle class="mp-dot" cx="44.5" cy="82" r="7" fill="#22261f"/>
+</svg>
+    </a>
+    Server Ops Mastery Path
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SIGILIPELLI/server-ops-mastery-path" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    server-ops-mastery-path
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interview Questions
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interview Questions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#level-1-entry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 1 · Entry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 1 · Entry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-server-basics-ssh-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · Server Basics &amp; SSH Access
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-initial-server-hardening-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · Initial Server Hardening Checklist
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-package-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Package Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-process-management-systemd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Process Management (systemd)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05-basic-networking-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 · Basic Networking Concepts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-writing-a-builddeploy-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Writing a Build/Deploy Script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-environment-variables-config-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · Environment Variables &amp; Config Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#08-log-basics-journalctl-varlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        08 · Log Basics (journalctl, /var/log)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#09-cron-jobs-scheduled-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        09 · Cron Jobs &amp; Scheduled Tasks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-capstone-server-bootstrap-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10 · Capstone — Server Bootstrap Script
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#level-2-intermediate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 2 · Intermediate
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 2 · Intermediate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-reverse-proxies-nginx-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · Reverse Proxies (nginx basics)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-tlsssl-certificates-lets-encrypt-certbot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · TLS/SSL Certificates (Let's Encrypt / certbot)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-load-balancing-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Load Balancing Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-environment-based-deployment-staging-vs-prod" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Environment-Based Deployment (staging vs. prod)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05-zero-downtime-deploy-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 · Zero-Downtime Deploy Patterns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-secrets-configuration-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Secrets &amp; Configuration Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-cicd-pipeline-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · CI/CD Pipeline Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#08-basic-monitoring-uptime-checks-resource-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        08 · Basic Monitoring (uptime checks, resource metrics)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#09-centralized-logging-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        09 · Centralized Logging Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-capstone-blue-green-deploy-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10 · Capstone — Blue-Green Deploy Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#level-3-advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 3 · Advanced
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 3 · Advanced">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-high-availability-concepts-redundancy-failover-health-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · High Availability Concepts (redundancy, failover, health checks)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-dns-load-balancer-ha-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · DNS &amp; Load Balancer HA Patterns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-backup-disaster-recovery-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Backup &amp; Disaster Recovery Strategy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-containerization-basics-docker-as-a-deployment-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Containerization Basics (Docker) as a Deployment Pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05-infrastructure-as-code-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 · Infrastructure as Code Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-configuration-drift-idempotency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Configuration Drift &amp; Idempotency
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-service-mesh-internal-networking-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · Service Mesh &amp; Internal Networking Concepts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#08-chaos-engineering-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        08 · Chaos Engineering Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#09-observability-at-scale-metrics-logs-traces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        09 · Observability at Scale (metrics, logs, traces)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-capstone-highly-available-web-service-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10 · Capstone — Highly Available Web Service Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#level-4-master" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 4 · Master
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 4 · Master">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-multi-region-multi-az-architecture-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · Multi-Region / Multi-AZ Architecture Concepts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-capacity-planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · Capacity Planning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-incident-response-runbooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Incident Response &amp; Runbooks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-security-patching-strategy-at-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Security Patching Strategy at Scale
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05-choosing-the-right-ha-architecture-for-a-given-sla" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 · Choosing the Right HA Architecture for a Given SLA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-cost-aware-infrastructure-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Cost-Aware Infrastructure Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-compliance-audit-considerations-for-ops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · Compliance &amp; Audit Considerations for Ops
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#08-on-call-culture-escalation-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        08 · On-Call Culture &amp; Escalation Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#09-platform-engineering-internal-developer-experience" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        09 · Platform Engineering &amp; Internal Developer Experience
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-capstone-designing-a-resilient-global-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10 · Capstone — Designing a Resilient Global Platform
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mixed-questions-across-all-levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mixed questions across all levels
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-coding-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical coding questions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical coding questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#atomic-releases-with-health-check-and-rollback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atomic releases with health check and rollback
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#an-access-log-health-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        An access-log health report
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../level-1/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 1 · Entry
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 1 · Entry
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/01-server-basics-ssh-access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Server Basics & SSH Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/02-initial-hardening-checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Initial Server Hardening Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/03-package-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Package Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/04-process-management-systemd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Process Management (systemd)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/05-basic-networking-concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Basic Networking Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/06-build-deploy-script/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Writing a Build/Deploy Script
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/07-environment-variables-config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Environment Variables & Config Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/08-log-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Log Basics (journalctl, /var/log)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/09-cron-scheduled-tasks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Cron Jobs & Scheduled Tasks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-1/10-capstone-bootstrap-script/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Server Bootstrap Script
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../level-2/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 2 · Intermediate
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 2 · Intermediate
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../level-3/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 3 · Advanced
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 3 · Advanced
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../level-4/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 4 · Master
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 4 · Master
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../level-2/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 2 · Intermediate
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 2 · Intermediate
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/01-reverse-proxies-nginx/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Reverse Proxies (nginx basics)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/02-tls-ssl-certs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · TLS/SSL Certificates (Let's Encrypt / certbot)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/03-load-balancing-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Load Balancing Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/04-environment-based-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Environment-Based Deployment (staging vs. prod)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/05-zero-downtime-deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Zero-Downtime Deploy Patterns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/06-secrets-config-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Secrets & Configuration Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/07-cicd-pipeline-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · CI/CD Pipeline Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/08-basic-monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Basic Monitoring (uptime checks, resource metrics)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/09-centralized-logging-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Centralized Logging Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-2/10-capstone-blue-green-deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Blue-Green Deploy Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../level-3/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 3 · Advanced
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 3 · Advanced
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/01-ha-concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · High Availability Concepts (redundancy, failover, health checks)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/02-dns-lb-ha-patterns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · DNS & Load Balancer HA Patterns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/03-backup-disaster-recovery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Backup & Disaster Recovery Strategy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/04-containerization-basics-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Containerization Basics (Docker) as a Deployment Pattern
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/05-infrastructure-as-code-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Infrastructure as Code Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/06-configuration-drift-idempotency/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Configuration Drift & Idempotency
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/07-service-mesh-internal-networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Service Mesh & Internal Networking Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/08-chaos-engineering-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · Chaos Engineering Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/09-observability-at-scale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Observability at Scale (metrics, logs, traces)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-3/10-capstone-ha-web-service-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Project — Highly Available Web Service Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../level-4/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Level 4 · Master
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Level 4 · Master
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/01-multi-region-multi-az-concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 · Multi-Region / Multi-AZ Architecture Concepts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/02-capacity-planning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 · Capacity Planning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/03-incident-response-runbooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 · Incident Response & Runbooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/04-security-patching-at-scale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 · Security Patching Strategy at Scale
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/05-choosing-ha-architecture-for-sla/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 · Choosing the Right HA Architecture for a Given SLA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/06-cost-aware-infrastructure-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 · Cost-Aware Infrastructure Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/07-compliance-audit-considerations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 · Compliance & Audit Considerations for Ops
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/08-oncall-culture-escalation-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 · On-Call Culture & Escalation Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/09-platform-engineering-devex/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 · Platform Engineering & Internal Developer Experience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../level-4/10-capstone-resilient-global-platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 · Capstone — Designing a Resilient Global Platform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quiz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Final Quiz
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#level-1-entry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 1 · Entry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 1 · Entry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-server-basics-ssh-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · Server Basics &amp; SSH Access
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-initial-server-hardening-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · Initial Server Hardening Checklist
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-package-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Package Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-process-management-systemd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Process Management (systemd)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05-basic-networking-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 · Basic Networking Concepts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-writing-a-builddeploy-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Writing a Build/Deploy Script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-environment-variables-config-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · Environment Variables &amp; Config Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#08-log-basics-journalctl-varlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        08 · Log Basics (journalctl, /var/log)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#09-cron-jobs-scheduled-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        09 · Cron Jobs &amp; Scheduled Tasks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-capstone-server-bootstrap-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10 · Capstone — Server Bootstrap Script
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#level-2-intermediate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 2 · Intermediate
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 2 · Intermediate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-reverse-proxies-nginx-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · Reverse Proxies (nginx basics)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-tlsssl-certificates-lets-encrypt-certbot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · TLS/SSL Certificates (Let's Encrypt / certbot)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-load-balancing-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Load Balancing Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-environment-based-deployment-staging-vs-prod" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Environment-Based Deployment (staging vs. prod)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05-zero-downtime-deploy-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 · Zero-Downtime Deploy Patterns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-secrets-configuration-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Secrets &amp; Configuration Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-cicd-pipeline-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · CI/CD Pipeline Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#08-basic-monitoring-uptime-checks-resource-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        08 · Basic Monitoring (uptime checks, resource metrics)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#09-centralized-logging-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        09 · Centralized Logging Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-capstone-blue-green-deploy-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10 · Capstone — Blue-Green Deploy Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#level-3-advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 3 · Advanced
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 3 · Advanced">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-high-availability-concepts-redundancy-failover-health-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · High Availability Concepts (redundancy, failover, health checks)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-dns-load-balancer-ha-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · DNS &amp; Load Balancer HA Patterns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-backup-disaster-recovery-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Backup &amp; Disaster Recovery Strategy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-containerization-basics-docker-as-a-deployment-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Containerization Basics (Docker) as a Deployment Pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05-infrastructure-as-code-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 · Infrastructure as Code Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-configuration-drift-idempotency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Configuration Drift &amp; Idempotency
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-service-mesh-internal-networking-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · Service Mesh &amp; Internal Networking Concepts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#08-chaos-engineering-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        08 · Chaos Engineering Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#09-observability-at-scale-metrics-logs-traces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        09 · Observability at Scale (metrics, logs, traces)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-capstone-highly-available-web-service-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10 · Capstone — Highly Available Web Service Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#level-4-master" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Level 4 · Master
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Level 4 · Master">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-multi-region-multi-az-architecture-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        01 · Multi-Region / Multi-AZ Architecture Concepts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#02-capacity-planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        02 · Capacity Planning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-incident-response-runbooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        03 · Incident Response &amp; Runbooks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-security-patching-strategy-at-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        04 · Security Patching Strategy at Scale
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05-choosing-the-right-ha-architecture-for-a-given-sla" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        05 · Choosing the Right HA Architecture for a Given SLA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-cost-aware-infrastructure-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        06 · Cost-Aware Infrastructure Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#07-compliance-audit-considerations-for-ops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        07 · Compliance &amp; Audit Considerations for Ops
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#08-on-call-culture-escalation-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        08 · On-Call Culture &amp; Escalation Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#09-platform-engineering-internal-developer-experience" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        09 · Platform Engineering &amp; Internal Developer Experience
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-capstone-designing-a-resilient-global-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10 · Capstone — Designing a Resilient Global Platform
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mixed-questions-across-all-levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mixed questions across all levels
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-coding-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical coding questions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical coding questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#atomic-releases-with-health-check-and-rollback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atomic releases with health check and rollback
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#an-access-log-health-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        An access-log health report
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+              
+              <article class="md-content__inner md-typeset">
+                
+  
+                  
+
+
+  
+  
+
+
+<h1 id="server-ops-interview-questions-and-answers">Server Ops Interview Questions and Answers<a class="headerlink" href="#server-ops-interview-questions-and-answers" title="Permanent link">&para;</a></h1>
+<p><strong>179 questions</strong> with the correct answer and a short explanation, organised from beginner (Level 1) to advanced (Level 4). Every question comes from a lesson in the free Server Ops Mastery Path, so you can open the lesson to go deeper.</p>
+<div class="admonition tip">
+<p class="admonition-title">Practise, don't just read</p>
+<p>Each lesson also ends with an interactive quiz, and the <a href="../quiz/">final quiz</a> tests all four levels. Try to answer each question below before reading the answer.</p>
+</div>
+<h2 id="level-1-entry">Level 1 · Entry<a class="headerlink" href="#level-1-entry" title="Permanent link">&para;</a></h2>
+<h3 id="01-server-basics-ssh-access"><a href="../level-1/01-server-basics-ssh-access/">01 · Server Basics &amp; SSH Access</a><a class="headerlink" href="#01-server-basics-ssh-access" title="Permanent link">&para;</a></h3>
+<p><strong>Q1.</strong> Which SSH authentication method is preferred over passwords on servers?</p>
+<p><strong>Answer:</strong> Public-key authentication with a protected private key</p>
+<p>Keys resist guessing and can be revoked per user.</p>
+<p><strong>Q2.</strong> What does ssh-copy-id do?</p>
+<p><strong>Answer:</strong> Appends your public key to the remote user's ~/.ssh/authorized_keys</p>
+<p>Never share the private key.</p>
+<p><strong>Q3.</strong> What permission bits (octal) do these produce?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>touch<span class="w"> </span>f<span class="p">;</span><span class="w"> </span>chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>f<span class="p">;</span><span class="w"> </span>stat<span class="w"> </span>-c<span class="w"> </span>%a<span class="w"> </span>f<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span>stat<span class="w"> </span>-f<span class="w"> </span>%Lp<span class="w"> </span>f
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>chmod<span class="w"> </span>u+x,g-r<span class="w"> </span>f<span class="p">;</span><span class="w"> </span>stat<span class="w"> </span>-c<span class="w"> </span>%a<span class="w"> </span>f<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span>stat<span class="w"> </span>-f<span class="w"> </span>%Lp<span class="w"> </span>f
+</code></pre></div>
+<p><strong>Answer:</strong> 600
+700</p>
+<p>chmod 600 leaves rw for the owner only; adding u+x gives 700 and removing group read changes nothing. Verified by running it in bash.</p>
+<p><strong>Q4.</strong> Which file must have strict permissions or ssh refuses to use it?</p>
+<p><strong>Answer:</strong> The private key (for example mode 600)</p>
+<p>Keep ~/.ssh at 700.</p>
+<h3 id="02-initial-server-hardening-checklist"><a href="../level-1/02-initial-hardening-checklist/">02 · Initial Server Hardening Checklist</a><a class="headerlink" href="#02-initial-server-hardening-checklist" title="Permanent link">&para;</a></h3>
+<p><strong>Q5.</strong> Which sshd setting stops direct root login?</p>
+<p><strong>Answer:</strong> PermitRootLogin no</p>
+<p>Use a normal user with sudo.</p>
+<p><strong>Q6.</strong> Why disable password authentication after keys work?</p>
+<p><strong>Answer:</strong> It removes the brute-force password attack surface</p>
+<p>Test key login in a second session before closing the first.</p>
+<p><strong>Q7.</strong> What is the first thing to do on a fresh server?</p>
+<p><strong>Answer:</strong> Apply updates, create a non-root admin user and secure SSH</p>
+<p>Harden before exposing services.</p>
+<p><strong>Q8.</strong> What does a host firewall such as ufw or nftables do?</p>
+<p><strong>Answer:</strong> Allows only the needed inbound ports and blocks the rest</p>
+<p>Default deny.</p>
+<h3 id="03-package-management"><a href="../level-1/03-package-management/">03 · Package Management</a><a class="headerlink" href="#03-package-management" title="Permanent link">&para;</a></h3>
+<p><strong>Q9.</strong> What does apt update do compared with apt upgrade?</p>
+<p><strong>Answer:</strong> update refreshes package lists; upgrade installs newer versions</p>
+<p>Run update first.</p>
+<p><strong>Q10.</strong> Why pin or hold critical package versions in production?</p>
+<p><strong>Answer:</strong> To avoid unplanned behaviour changes during automatic upgrades</p>
+<p>Upgrade deliberately, tested in staging.</p>
+<p><strong>Q11.</strong> What does a package manager verify when installing?</p>
+<p><strong>Answer:</strong> Signatures of packages from configured repositories</p>
+<p>Only add trusted repos.</p>
+<p><strong>Q12.</strong> What is the safest way to install software on a server?</p>
+<p><strong>Answer:</strong> From the distribution or a vendor's signed repository, not curl | sh from unknown sources</p>
+<p>Verify what you run as root.</p>
+<h3 id="04-process-management-systemd"><a href="../level-1/04-process-management-systemd/">04 · Process Management (systemd)</a><a class="headerlink" href="#04-process-management-systemd" title="Permanent link">&para;</a></h3>
+<p><strong>Q13.</strong> What does systemctl enable myapp do?</p>
+<p><strong>Answer:</strong> Configures the service to start at boot</p>
+<p>Use --now to also start it.</p>
+<p><strong>Q14.</strong> What does Restart=on-failure in a unit file do?</p>
+<p><strong>Answer:</strong> Restarts the service if it exits with an error</p>
+<p>Add RestartSec to avoid tight loops.</p>
+<p><strong>Q15.</strong> Which commands show why a service failed?</p>
+<p><strong>Answer:</strong> systemctl status myapp and journalctl -u myapp</p>
+<p>Logs live in the journal.</p>
+<p><strong>Q16.</strong> Why run a service as a dedicated non-root user?</p>
+<p><strong>Answer:</strong> Limits damage if the process is compromised</p>
+<p>User= in the unit file.</p>
+<h3 id="05-basic-networking-concepts"><a href="../level-1/05-basic-networking-concepts/">05 · Basic Networking Concepts</a><a class="headerlink" href="#05-basic-networking-concepts" title="Permanent link">&para;</a></h3>
+<p><strong>Q17.</strong> What is the difference between TCP and UDP?</p>
+<p><strong>Answer:</strong> TCP is reliable and connection-oriented; UDP is connectionless without delivery guarantees</p>
+<p>DNS often uses UDP; HTTP uses TCP.</p>
+<p><strong>Q18.</strong> How many usable host addresses does a /24 IPv4 network have?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">print</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="mi">32</span><span class="o">-</span><span class="mi">24</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 254</p>
+<p>256 addresses minus network and broadcast. Verified by running it.</p>
+<p><strong>Q19.</strong> What port does HTTPS use by default?</p>
+<p><strong>Answer:</strong> 443</p>
+<p>HTTP is 80, SSH is 22.</p>
+<p><strong>Q20.</strong> What does DNS do?</p>
+<p><strong>Answer:</strong> Translates names to IP addresses</p>
+<p>A, AAAA and CNAME records.</p>
+<h3 id="06-writing-a-builddeploy-script"><a href="../level-1/06-build-deploy-script/">06 · Writing a Build/Deploy Script</a><a class="headerlink" href="#06-writing-a-builddeploy-script" title="Permanent link">&para;</a></h3>
+<p><strong>Q21.</strong> What does this deploy-script fragment print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">set</span><span class="w"> </span>-eu
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nv">release</span><span class="o">=</span>app-v1
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">for</span><span class="w"> </span>step<span class="w"> </span><span class="k">in</span><span class="w"> </span>build<span class="w"> </span><span class="nb">test</span><span class="w"> </span>ship<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"step: </span><span class="nv">$step</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nv">name</span><span class="o">=</span><span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">world</span><span class="si">}</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"hello </span><span class="si">${</span><span class="nv">name</span><span class="si">}</span><span class="s2"> </span><span class="si">${</span><span class="nv">release</span><span class="p">#app-</span><span class="si">}</span><span class="s2">"</span>
+</code></pre></div>
+<p><strong>Answer:</strong> step: build
+step: test
+step: ship
+hello world v1</p>
+<p>${1:-world} supplies a default; ${var#prefix} strips a prefix. Verified by running it in bash.</p>
+<p><strong>Q22.</strong> What does set -e do here?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">set</span><span class="w"> </span>-e
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">echo</span><span class="w"> </span>one
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nb">false</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nb">echo</span><span class="w"> </span>two
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nb">echo</span><span class="w"> </span>three
+</code></pre></div>
+<p><strong>Answer:</strong> one</p>
+<p>set -e exits at the first failing command, so two and three never print. Verified by running it in bash.</p>
+<p><strong>Q23.</strong> Why make deploy scripts idempotent?</p>
+<p><strong>Answer:</strong> Re-running them after a partial failure must leave the system in the same correct state</p>
+<p>Check before create; use mkdir -p, ln -sfn.</p>
+<p><strong>Q24.</strong> Why use set -euo pipefail at the top of a script?</p>
+<p><strong>Answer:</strong> Stop on errors, undefined variables and failed pipeline stages instead of continuing silently</p>
+<p>Fail fast.</p>
+<h3 id="07-environment-variables-config-management"><a href="../level-1/07-environment-variables-config/">07 · Environment Variables &amp; Config Management</a><a class="headerlink" href="#07-environment-variables-config-management" title="Permanent link">&para;</a></h3>
+<p><strong>Q25.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">APP_PORT</span><span class="o">=</span><span class="m">8080</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nv">env_file</span><span class="o">=</span><span class="k">$(</span>mktemp<span class="k">)</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nb">printf</span><span class="w"> </span><span class="s1">'DB_HOST=db1\nDB_PORT=5432\n'</span><span class="w"> </span>&gt;<span class="w"> </span><span class="nv">$env_file</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="nb">set</span><span class="w"> </span>-a<span class="p">;</span><span class="w"> </span>.<span class="w"> </span><span class="nv">$env_file</span><span class="p">;</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span>+a
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$DB_HOST</span><span class="s2">:</span><span class="nv">$DB_PORT</span><span class="s2"> </span><span class="nv">$APP_PORT</span><span class="s2">"</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">MISSING</span><span class="k">:-</span><span class="nv">default</span><span class="si">}</span><span class="s2">"</span>
+</code></pre></div>
+<p><strong>Answer:</strong> db1:5432 8080
+default</p>
+<p>set -a exports sourced variables; ${VAR:-x} supplies a fallback. Verified by running it in bash.</p>
+<p><strong>Q26.</strong> Where should secrets never be stored?</p>
+<p><strong>Answer:</strong> In version control</p>
+<p>Use secret stores or protected files.</p>
+<p><strong>Q27.</strong> What is the twelve-factor guidance on config?</p>
+<p><strong>Answer:</strong> Store config in the environment, separate from code</p>
+<p>Same artifact for every environment.</p>
+<p><strong>Q28.</strong> Why not print environment variables in logs?</p>
+<p><strong>Answer:</strong> They may contain secrets</p>
+<p>Log keys, not values.</p>
+<h3 id="08-log-basics-journalctl-varlog"><a href="../level-1/08-log-basics/">08 · Log Basics (journalctl, /var/log)</a><a class="headerlink" href="#08-log-basics-journalctl-varlog" title="Permanent link">&para;</a></h3>
+<p><strong>Q29.</strong> Where do systemd services typically log?</p>
+<p><strong>Answer:</strong> To the journal, viewed with journalctl</p>
+<p>Some also write to /var/log.</p>
+<p><strong>Q30.</strong> Which command follows a service's logs live?</p>
+<p><strong>Answer:</strong> journalctl -u myapp -f</p>
+<p>Like tail -f.</p>
+<p><strong>Q31.</strong> What does log rotation do?</p>
+<p><strong>Answer:</strong> Archives and compresses old logs and starts new ones so disks do not fill</p>
+<p>logrotate.</p>
+<p><strong>Q32.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">printf</span><span class="w"> </span><span class="s1">'INFO ok\nERROR bad\nINFO ok\nERROR worse\n'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-c<span class="w"> </span>ERROR
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">printf</span><span class="w"> </span><span class="s1">'a\nb\na\n'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>-c<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-rn<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{print $1, $2}'</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 2
+2 a</p>
+<p>grep -c counts matching lines; uniq -c prefixes counts. Verified by running it in bash.</p>
+<h3 id="09-cron-jobs-scheduled-tasks"><a href="../level-1/09-cron-scheduled-tasks/">09 · Cron Jobs &amp; Scheduled Tasks</a><a class="headerlink" href="#09-cron-jobs-scheduled-tasks" title="Permanent link">&para;</a></h3>
+<p><strong>Q33.</strong> Which of these five-field schedules means 'at 02:30 every day'? (prints the matching hour:minute fields)</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">'30 2 * * *'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{printf "minute=%s hour=%s\n", $1, $2}'</span>
+</code></pre></div>
+<p><strong>Answer:</strong> minute=30 hour=2</p>
+<p>The fields are minute, hour, day of month, month, day of week. Verified by running it in bash.</p>
+<p><strong>Q34.</strong> What does */15 in the minute field mean?</p>
+<p><strong>Answer:</strong> Every 15 minutes</p>
+<p>Step values.</p>
+<p><strong>Q35.</strong> Why do cron jobs often fail when copied from a terminal?</p>
+<p><strong>Answer:</strong> Cron runs with a minimal environment, so use absolute paths and set variables</p>
+<p>Redirect output to a log.</p>
+<p><strong>Q36.</strong> How do you prevent overlapping runs of a long cron job?</p>
+<p><strong>Answer:</strong> Use a lock (flock) so a new run exits if the old one is still running</p>
+<p>Avoid pile-ups.</p>
+<h3 id="10-capstone-server-bootstrap-script"><a href="../level-1/10-capstone-bootstrap-script/">10 · Capstone — Server Bootstrap Script</a><a class="headerlink" href="#10-capstone-server-bootstrap-script" title="Permanent link">&para;</a></h3>
+<p><strong>Q37.</strong> What is the purpose of the bootstrap capstone script?</p>
+<p><strong>Answer:</strong> Harden a fresh server and stand up a web stack repeatably and idempotently</p>
+<p>Automation beats hand typing.</p>
+<p><strong>Q38.</strong> Which command is idempotent when run twice?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nv">d</span><span class="o">=</span><span class="k">$(</span>mktemp<span class="w"> </span>-d<span class="k">)</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$d</span>/a/b
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$d</span>/a/b<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span>ok1
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>ln<span class="w"> </span>-sfn<span class="w"> </span><span class="nv">$d</span>/a<span class="w"> </span><span class="nv">$d</span>/cur<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>ln<span class="w"> </span>-sfn<span class="w"> </span><span class="nv">$d</span>/a<span class="w"> </span><span class="nv">$d</span>/cur<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span>ok2
+</code></pre></div>
+<p><strong>Answer:</strong> ok1
+ok2</p>
+<p>mkdir -p and ln -sfn can be run repeatedly. Verified by running it in bash.</p>
+<p><strong>Q39.</strong> Why validate SSH config before restarting sshd?</p>
+<p><strong>Answer:</strong> A broken config can lock you out; use sshd -t</p>
+<p>Keep a second session open.</p>
+<p><strong>Q40.</strong> What belongs in the script output?</p>
+<p><strong>Answer:</strong> Clear steps and failures, never secrets</p>
+<p>Helps debugging.</p>
+<h2 id="level-2-intermediate">Level 2 · Intermediate<a class="headerlink" href="#level-2-intermediate" title="Permanent link">&para;</a></h2>
+<h3 id="01-reverse-proxies-nginx-basics"><a href="../level-2/01-reverse-proxies-nginx/">01 · Reverse Proxies (nginx basics)</a><a class="headerlink" href="#01-reverse-proxies-nginx-basics" title="Permanent link">&para;</a></h3>
+<p><strong>Q41.</strong> What does a reverse proxy do?</p>
+<p><strong>Answer:</strong> Accepts client requests and forwards them to backend servers</p>
+<p>nginx in front of an app.</p>
+<p><strong>Q42.</strong> Why put nginx in front of an application server?</p>
+<p><strong>Answer:</strong> TLS termination, static files, buffering and load balancing</p>
+<p>Offloads work.</p>
+<p><strong>Q43.</strong> What does proxy_set_header X-Forwarded-For $remote_addr do?</p>
+<p><strong>Answer:</strong> Passes the original client address to the backend</p>
+<p>Otherwise the backend sees the proxy's IP.</p>
+<p><strong>Q44.</strong> What command checks an nginx config before reload?</p>
+<p><strong>Answer:</strong> nginx -t</p>
+<p>Then reload without dropping connections.</p>
+<h3 id="02-tlsssl-certificates-lets-encrypt-certbot"><a href="../level-2/02-tls-ssl-certs/">02 · TLS/SSL Certificates (Let's Encrypt / certbot)</a><a class="headerlink" href="#02-tlsssl-certificates-lets-encrypt-certbot" title="Permanent link">&para;</a></h3>
+<p><strong>Q45.</strong> What does a TLS certificate prove?</p>
+<p><strong>Answer:</strong> That the server controls the domain, as vouched for by a trusted CA</p>
+<p>It authenticates identity, with encryption.</p>
+<p><strong>Q46.</strong> What does certbot do?</p>
+<p><strong>Answer:</strong> Obtains and renews Let's Encrypt certificates</p>
+<p>Automate renewal.</p>
+<p><strong>Q47.</strong> Why must you test certificate renewal?</p>
+<p><strong>Answer:</strong> Expired certificates cause outages</p>
+<p>certbot renew --dry-run.</p>
+<p><strong>Q48.</strong> How long do Let's Encrypt certificates last?</p>
+<p><strong>Answer:</strong> About 90 days, so renewal must be automatic</p>
+<p>Short lifetimes limit exposure.</p>
+<h3 id="03-load-balancing-basics"><a href="../level-2/03-load-balancing-basics/">03 · Load Balancing Basics</a><a class="headerlink" href="#03-load-balancing-basics" title="Permanent link">&para;</a></h3>
+<p><strong>Q49.</strong> What is the aim of a load balancer?</p>
+<p><strong>Answer:</strong> Distribute requests across healthy backends</p>
+<p>Improves capacity and availability.</p>
+<p><strong>Q50.</strong> Round-robin across 3 backends: which backend index (0-based) serves request number 10 (starting at request 0)?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">print</span><span class="p">(</span><span class="mi">10</span> <span class="o">%</span> <span class="mi">3</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 1</p>
+<p>Index = request number modulo backend count. Verified by running it.</p>
+<p><strong>Q51.</strong> What do health checks do?</p>
+<p><strong>Answer:</strong> Remove failing backends from rotation</p>
+<p>Active or passive.</p>
+<p><strong>Q52.</strong> What is sticky sessions risk?</p>
+<p><strong>Answer:</strong> Uneven load and lost sessions when a backend dies</p>
+<p>Prefer stateless apps or shared session stores.</p>
+<h3 id="04-environment-based-deployment-staging-vs-prod"><a href="../level-2/04-environment-based-deployment/">04 · Environment-Based Deployment (staging vs. prod)</a><a class="headerlink" href="#04-environment-based-deployment-staging-vs-prod" title="Permanent link">&para;</a></h3>
+<p><strong>Q53.</strong> What does 'build once, deploy many' mean?</p>
+<p><strong>Answer:</strong> The same artifact is promoted from staging to production; only configuration differs</p>
+<p>Avoid 'works in staging' surprises.</p>
+<p><strong>Q54.</strong> Where should environment differences live?</p>
+<p><strong>Answer:</strong> In configuration (environment variables or files), not in code</p>
+<p>Same artifact everywhere.</p>
+<p><strong>Q55.</strong> What should staging resemble?</p>
+<p><strong>Answer:</strong> Production in topology and configuration, with safe data</p>
+<p>Realism finds problems.</p>
+<p><strong>Q56.</strong> Why tag artifacts with the git SHA?</p>
+<p><strong>Answer:</strong> Traceability: know exactly what is running</p>
+<p>Rollback by SHA.</p>
+<h3 id="05-zero-downtime-deploy-patterns"><a href="../level-2/05-zero-downtime-deploy/">05 · Zero-Downtime Deploy Patterns</a><a class="headerlink" href="#05-zero-downtime-deploy-patterns" title="Permanent link">&para;</a></h3>
+<p><strong>Q57.</strong> What is a zero-downtime deploy?</p>
+<p><strong>Answer:</strong> Replacing the running version without dropping requests</p>
+<p>Start new, check health, switch, drain old.</p>
+<p><strong>Q58.</strong> Why drain connections before stopping the old process?</p>
+<p><strong>Answer:</strong> In-flight requests can finish</p>
+<p>Graceful shutdown.</p>
+<p><strong>Q59.</strong> What breaks zero-downtime database changes?</p>
+<p><strong>Answer:</strong> Non-backward-compatible schema changes</p>
+<p>Use expand/contract migrations.</p>
+<p><strong>Q60.</strong> What is a rolling deploy?</p>
+<p><strong>Answer:</strong> Updating instances in small batches behind a load balancer</p>
+<p>Capacity must cover the batch.</p>
+<h3 id="06-secrets-configuration-management"><a href="../level-2/06-secrets-config-management/">06 · Secrets &amp; Configuration Management</a><a class="headerlink" href="#06-secrets-configuration-management" title="Permanent link">&para;</a></h3>
+<p><strong>Q61.</strong> Where do secrets belong?</p>
+<p><strong>Answer:</strong> In a secrets manager or protected file deployed out of band, never in git</p>
+<p>Rotate regularly.</p>
+<p><strong>Q62.</strong> What should you do if a secret leaks to git?</p>
+<p><strong>Answer:</strong> Rotate it immediately; removing the commit is not enough</p>
+<p>Assume it is compromised.</p>
+<p><strong>Q63.</strong> What does least privilege mean for secrets?</p>
+<p><strong>Answer:</strong> Each service gets only the credentials it needs</p>
+<p>Limits blast radius.</p>
+<p><strong>Q64.</strong> Why rotate secrets?</p>
+<p><strong>Answer:</strong> Limits the window an exposed secret is useful</p>
+<p>Automate where possible.</p>
+<h3 id="07-cicd-pipeline-basics"><a href="../level-2/07-cicd-pipeline-basics/">07 · CI/CD Pipeline Basics</a><a class="headerlink" href="#07-cicd-pipeline-basics" title="Permanent link">&para;</a></h3>
+<p><strong>Q65.</strong> What is continuous integration?</p>
+<p><strong>Answer:</strong> Merging changes frequently with automated build and tests</p>
+<p>Fast feedback.</p>
+<p><strong>Q66.</strong> What does a pipeline stage failing do?</p>
+<p><strong>Answer:</strong> Stops the pipeline so broken builds do not progress</p>
+<p>Gates protect production.</p>
+<p><strong>Q67.</strong> Why keep secrets out of pipeline logs?</p>
+<p><strong>Answer:</strong> Logs are widely readable</p>
+<p>Use masked secrets.</p>
+<p><strong>Q68.</strong> What should production deploys require?</p>
+<p><strong>Answer:</strong> Passing tests and, for sensitive systems, an approval step</p>
+<p>Protect with environments.</p>
+<h3 id="08-basic-monitoring-uptime-checks-resource-metrics"><a href="../level-2/08-basic-monitoring/">08 · Basic Monitoring (uptime checks, resource metrics)</a><a class="headerlink" href="#08-basic-monitoring-uptime-checks-resource-metrics" title="Permanent link">&para;</a></h3>
+<p><strong>Q69.</strong> Which three resources are the classic ones to watch?</p>
+<p><strong>Answer:</strong> CPU, memory and disk (plus network)</p>
+<p>Disk filling silently kills servers.</p>
+<p><strong>Q70.</strong> A disk is 400 GB, uses 300 GB and grows 5 GB/day. How many days until it is full?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nb">print</span><span class="p">((</span><span class="mi">400</span><span class="o">-</span><span class="mi">300</span><span class="p">)</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 20.0</p>
+<p>Alert on fill-rate, not just percent used. Verified by running it.</p>
+<p><strong>Q71.</strong> What does an uptime check measure?</p>
+<p><strong>Answer:</strong> Whether the service responds correctly from outside</p>
+<p>Run it from a separate location.</p>
+<p><strong>Q72.</strong> Why alert on symptoms rather than every metric?</p>
+<p><strong>Answer:</strong> Fewer false alarms and focus on user impact</p>
+<p>Page for real problems.</p>
+<h3 id="09-centralized-logging-basics"><a href="../level-2/09-centralized-logging-basics/">09 · Centralized Logging Basics</a><a class="headerlink" href="#09-centralized-logging-basics" title="Permanent link">&para;</a></h3>
+<p><strong>Q73.</strong> Why centralise logs?</p>
+<p><strong>Answer:</strong> So you can search across hosts and keep them after a server dies</p>
+<p>Ship to a central store.</p>
+<p><strong>Q74.</strong> What does a log shipper such as Vector do?</p>
+<p><strong>Answer:</strong> Collects, transforms and forwards logs to a destination</p>
+<p>Agent on each host.</p>
+<p><strong>Q75.</strong> What helps correlate a request across services?</p>
+<p><strong>Answer:</strong> A request or correlation ID in every log line</p>
+<p>Generate at the edge.</p>
+<p><strong>Q76.</strong> What should logs never contain?</p>
+<p><strong>Answer:</strong> Passwords, tokens and sensitive personal data</p>
+<p>Scrub them.</p>
+<h3 id="10-capstone-blue-green-deploy-pipeline"><a href="../level-2/10-capstone-blue-green-deploy/">10 · Capstone — Blue-Green Deploy Pipeline</a><a class="headerlink" href="#10-capstone-blue-green-deploy-pipeline" title="Permanent link">&para;</a></h3>
+<p><strong>Q77.</strong> What is blue-green deployment?</p>
+<p><strong>Answer:</strong> Two identical environments; deploy to the idle one, test, then switch traffic</p>
+<p>Instant rollback by switching back.</p>
+<p><strong>Q78.</strong> Why health-check the idle environment before switching?</p>
+<p><strong>Answer:</strong> Prevent sending users to a broken release</p>
+<p>Smoke tests too.</p>
+<p><strong>Q79.</strong> What is the main cost of blue-green?</p>
+<p><strong>Answer:</strong> Running duplicate capacity</p>
+<p>Trade cost for safety.</p>
+<p><strong>Q80.</strong> What makes rollback easy in blue-green?</p>
+<p><strong>Answer:</strong> The previous environment is still intact; switch back</p>
+<p>Keep it until confident.</p>
+<h2 id="level-3-advanced">Level 3 · Advanced<a class="headerlink" href="#level-3-advanced" title="Permanent link">&para;</a></h2>
+<h3 id="01-high-availability-concepts-redundancy-failover-health-checks"><a href="../level-3/01-ha-concepts/">01 · High Availability Concepts (redundancy, failover, health checks)</a><a class="headerlink" href="#01-high-availability-concepts-redundancy-failover-health-checks" title="Permanent link">&para;</a></h3>
+<p><strong>Q81.</strong> What is high availability?</p>
+<p><strong>Answer:</strong> Designing so the service survives component failures with little or no downtime</p>
+<p>Redundancy plus failover.</p>
+<p><strong>Q82.</strong> What is a single point of failure?</p>
+<p><strong>Answer:</strong> A component whose failure stops the whole service</p>
+<p>Remove or replicate it.</p>
+<p><strong>Q83.</strong> Two independent components each 99.9% available in series give what availability?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="mf">0.999</span><span class="o">*</span><span class="mf">0.999</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 99.8001</p>
+<p>Serial availabilities multiply; redundancy in parallel improves it. Verified by running it.</p>
+<p><strong>Q84.</strong> Two independent 99% replicas in parallel give what availability?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="mf">0.01</span><span class="o">*</span><span class="mf">0.01</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 99.99</p>
+<p>Fail only if both fail: 1 - 0.01^2. Verified by running it.</p>
+<h3 id="02-dns-load-balancer-ha-patterns"><a href="../level-3/02-dns-lb-ha-patterns/">02 · DNS &amp; Load Balancer HA Patterns</a><a class="headerlink" href="#02-dns-load-balancer-ha-patterns" title="Permanent link">&para;</a></h3>
+<p><strong>Q85.</strong> What do DNS health-checked records provide?</p>
+<p><strong>Answer:</strong> Failover by removing unhealthy endpoints from answers</p>
+<p>TTL affects failover time.</p>
+<p><strong>Q86.</strong> Why is low TTL important for failover?</p>
+<p><strong>Answer:</strong> Clients re-resolve sooner, but it increases query load</p>
+<p>Balance.</p>
+<p><strong>Q87.</strong> What is active-passive?</p>
+<p><strong>Answer:</strong> One serves traffic; the standby takes over on failure</p>
+<p>Active-active uses both.</p>
+<p><strong>Q88.</strong> What is the risk of split brain?</p>
+<p><strong>Answer:</strong> Two nodes both believe they are primary and diverge</p>
+<p>Use quorum or fencing.</p>
+<h3 id="03-backup-disaster-recovery-strategy"><a href="../level-3/03-backup-disaster-recovery/">03 · Backup &amp; Disaster Recovery Strategy</a><a class="headerlink" href="#03-backup-disaster-recovery-strategy" title="Permanent link">&para;</a></h3>
+<p><strong>Q89.</strong> What are RPO and RTO?</p>
+<p><strong>Answer:</strong> RPO is acceptable data loss in time; RTO is acceptable time to restore service</p>
+<p>Set by the business.</p>
+<p><strong>Q90.</strong> What is the 3-2-1 backup rule?</p>
+<p><strong>Answer:</strong> 3 copies, 2 media types, 1 offsite</p>
+<p>Resilience to different failures.</p>
+<p><strong>Q91.</strong> What proves a backup is good?</p>
+<p><strong>Answer:</strong> A successful restore test</p>
+<p>Test regularly.</p>
+<p><strong>Q92.</strong> If backups run every 6 hours, what is the worst-case RPO in hours?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nb">print</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 6</p>
+<p>You can lose up to one interval of data. Verified by running it.</p>
+<h3 id="04-containerization-basics-docker-as-a-deployment-pattern"><a href="../level-3/04-containerization-basics-docker/">04 · Containerization Basics (Docker) as a Deployment Pattern</a><a class="headerlink" href="#04-containerization-basics-docker-as-a-deployment-pattern" title="Permanent link">&para;</a></h3>
+<p><strong>Q93.</strong> Why containerise an application?</p>
+<p><strong>Answer:</strong> Package code and dependencies for consistent runs across environments</p>
+<p>Same image everywhere.</p>
+<p><strong>Q94.</strong> Why run containers as non-root?</p>
+<p><strong>Answer:</strong> Limits damage if the container is compromised</p>
+<p>USER in the Dockerfile.</p>
+<p><strong>Q95.</strong> Why copy dependency manifests before source in a Dockerfile?</p>
+<p><strong>Answer:</strong> Layer caching: dependencies rebuild only when they change</p>
+<p>Faster builds.</p>
+<p><strong>Q96.</strong> Where does state live for containers?</p>
+<p><strong>Answer:</strong> Outside them, in volumes or external services</p>
+<p>Containers are disposable.</p>
+<h3 id="05-infrastructure-as-code-overview"><a href="../level-3/05-infrastructure-as-code-overview/">05 · Infrastructure as Code Overview</a><a class="headerlink" href="#05-infrastructure-as-code-overview" title="Permanent link">&para;</a></h3>
+<p><strong>Q97.</strong> What is infrastructure as code?</p>
+<p><strong>Answer:</strong> Defining infrastructure in version-controlled files that tools apply</p>
+<p>Reviewable and repeatable.</p>
+<p><strong>Q98.</strong> What is a benefit of declarative IaC?</p>
+<p><strong>Answer:</strong> You describe the desired state and the tool computes the changes</p>
+<p>Plan before apply.</p>
+<p><strong>Q99.</strong> Why review a plan before applying?</p>
+<p><strong>Answer:</strong> See what will change, preventing surprises</p>
+<p>Treat apply as production change.</p>
+<p><strong>Q100.</strong> Where should IaC state be stored?</p>
+<p><strong>Answer:</strong> In a shared, locked, backed-up remote backend</p>
+<p>Avoid conflicts.</p>
+<h3 id="06-configuration-drift-idempotency"><a href="../level-3/06-configuration-drift-idempotency/">06 · Configuration Drift &amp; Idempotency</a><a class="headerlink" href="#06-configuration-drift-idempotency" title="Permanent link">&para;</a></h3>
+<p><strong>Q101.</strong> What is configuration drift?</p>
+<p><strong>Answer:</strong> Real systems diverging from their declared configuration over time</p>
+<p>Detect and reconcile.</p>
+<p><strong>Q102.</strong> What does idempotent mean for configuration tools?</p>
+<p><strong>Answer:</strong> Applying twice has the same result as once</p>
+<p>Safe to re-run.</p>
+<p><strong>Q103.</strong> What does this idempotent step print on two runs?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nv">d</span><span class="o">=</span><span class="k">$(</span>mktemp<span class="w"> </span>-d<span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="nv">f</span><span class="o">=</span><span class="nv">$d</span>/conf
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span>grep<span class="w"> </span>-q<span class="w"> </span><span class="s1">'port=80'</span><span class="w"> </span><span class="nv">$f</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s1">'port=80'</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="nv">$f</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>cat<span class="w"> </span><span class="nv">$f</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l<span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span>-d<span class="w"> </span><span class="s1">' '</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 1</p>
+<p>Check-then-append keeps one line however many times it runs. Verified by running it in bash.</p>
+<p><strong>Q104.</strong> How do you detect drift?</p>
+<p><strong>Answer:</strong> terraform plan or Ansible --check --diff regularly</p>
+<p>Alert on differences.</p>
+<h3 id="07-service-mesh-internal-networking-concepts"><a href="../level-3/07-service-mesh-internal-networking/">07 · Service Mesh &amp; Internal Networking Concepts</a><a class="headerlink" href="#07-service-mesh-internal-networking-concepts" title="Permanent link">&para;</a></h3>
+<p><strong>Q105.</strong> What is service discovery?</p>
+<p><strong>Answer:</strong> How services find each other's addresses dynamically</p>
+<p>DNS or a registry.</p>
+<p><strong>Q106.</strong> What does a service mesh add?</p>
+<p><strong>Answer:</strong> Consistent mTLS, retries, routing and telemetry between services</p>
+<p>At the cost of complexity.</p>
+<p><strong>Q107.</strong> Why is mTLS useful internally?</p>
+<p><strong>Answer:</strong> Services authenticate each other and traffic is encrypted</p>
+<p>Zero-trust networking.</p>
+<p><strong>Q108.</strong> When might you not need a mesh?</p>
+<p><strong>Answer:</strong> With few services, where simple DNS and libraries suffice</p>
+<p>Start simple.</p>
+<h3 id="08-chaos-engineering-basics"><a href="../level-3/08-chaos-engineering-basics/">08 · Chaos Engineering Basics</a><a class="headerlink" href="#08-chaos-engineering-basics" title="Permanent link">&para;</a></h3>
+<p><strong>Q109.</strong> What is chaos engineering?</p>
+<p><strong>Answer:</strong> Deliberately injecting controlled failures to test resilience</p>
+<p>Learn before real incidents.</p>
+<p><strong>Q110.</strong> What should precede a chaos experiment?</p>
+<p><strong>Answer:</strong> A hypothesis, a small blast radius and an abort plan</p>
+<p>Start in staging.</p>
+<p><strong>Q111.</strong> What does stopping one backend verify?</p>
+<p><strong>Answer:</strong> That health checks and the load balancer route around it</p>
+<p>Redundancy must be proven.</p>
+<p><strong>Q112.</strong> What do you do with the findings?</p>
+<p><strong>Answer:</strong> Fix weaknesses and rerun the experiment</p>
+<p>Improve.</p>
+<h3 id="09-observability-at-scale-metrics-logs-traces"><a href="../level-3/09-observability-at-scale/">09 · Observability at Scale (metrics, logs, traces)</a><a class="headerlink" href="#09-observability-at-scale-metrics-logs-traces" title="Permanent link">&para;</a></h3>
+<p><strong>Q113.</strong> What are the three pillars of observability?</p>
+<p><strong>Answer:</strong> Metrics, logs and traces</p>
+<p>Each answers different questions.</p>
+<p><strong>Q114.</strong> What does a trace show?</p>
+<p><strong>Answer:</strong> The path and timing of a single request across services</p>
+<p>Find slow hops.</p>
+<p><strong>Q115.</strong> What is high-cardinality risk in metrics?</p>
+<p><strong>Answer:</strong> Too many label values explode storage and cost</p>
+<p>Avoid user IDs as labels.</p>
+<p><strong>Q116.</strong> What makes alerts actionable?</p>
+<p><strong>Answer:</strong> They indicate user impact and link to a runbook</p>
+<p>Page on symptoms.</p>
+<h3 id="10-capstone-highly-available-web-service-design"><a href="../level-3/10-capstone-ha-web-service-design/">10 · Capstone — Highly Available Web Service Design</a><a class="headerlink" href="#10-capstone-highly-available-web-service-design" title="Permanent link">&para;</a></h3>
+<p><strong>Q117.</strong> What is a readiness check?</p>
+<p><strong>Answer:</strong> Whether an instance can serve traffic, including dependencies</p>
+<p>Liveness differs.</p>
+<p><strong>Q118.</strong> Which design removes a single point of failure for a web tier?</p>
+<p><strong>Answer:</strong> Multiple instances behind a load balancer across zones</p>
+<p>Plus a replicated database.</p>
+<p><strong>Q119.</strong> If one of 4 web servers can fail while still serving peak load of 300 req/s and each handles 100 req/s, are 4 enough?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nb">print</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="mi">100</span><span class="o">&gt;=</span><span class="mi">300</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Answer:</strong> True</p>
+<p>N-1 capacity: three remaining servers still handle 300. Verified by running it.</p>
+<p><strong>Q120.</strong> What belongs in the HA design doc?</p>
+<p><strong>Answer:</strong> Failure modes, recovery steps and tested assumptions</p>
+<p>Prove by testing.</p>
+<h2 id="level-4-master">Level 4 · Master<a class="headerlink" href="#level-4-master" title="Permanent link">&para;</a></h2>
+<h3 id="01-multi-region-multi-az-architecture-concepts"><a href="../level-4/01-multi-region-multi-az-concepts/">01 · Multi-Region / Multi-AZ Architecture Concepts</a><a class="headerlink" href="#01-multi-region-multi-az-architecture-concepts" title="Permanent link">&para;</a></h3>
+<p><strong>Q121.</strong> What does multi-AZ protect against?</p>
+<p><strong>Answer:</strong> Failure of a single data centre (availability zone)</p>
+<p>Latency stays low.</p>
+<p><strong>Q122.</strong> What does multi-region protect against?</p>
+<p><strong>Answer:</strong> Regional outages, at higher cost and complexity</p>
+<p>Needs data replication strategy.</p>
+<p><strong>Q123.</strong> What is the hardest part of multi-region?</p>
+<p><strong>Answer:</strong> Data consistency and failover of state</p>
+<p>Choose consistency model deliberately.</p>
+<p><strong>Q124.</strong> When is multi-region justified?</p>
+<p><strong>Answer:</strong> When the business impact of a regional outage exceeds the cost</p>
+<p>Match architecture to SLA.</p>
+<h3 id="02-capacity-planning"><a href="../level-4/02-capacity-planning/">02 · Capacity Planning</a><a class="headerlink" href="#02-capacity-planning" title="Permanent link">&para;</a></h3>
+<p><strong>Q125.</strong> Each instance safely handles 25 concurrent requests and peak is 400. With N+1 redundancy and 20% headroom, how many instances? (round up)</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">needed</span><span class="o">=</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="mi">400</span><span class="o">/</span><span class="mi">25</span><span class="p">)</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="n">with_headroom</span><span class="o">=</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">needed</span><span class="o">*</span><span class="mf">1.2</span><span class="p">)</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">with_headroom</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 21</p>
+<p>16 for peak, 20 with headroom (19.2 rounds up), plus one for N+1. Verified by running it.</p>
+<p><strong>Q126.</strong> What is the purpose of capacity planning?</p>
+<p><strong>Answer:</strong> Provision enough resources ahead of demand without overspending</p>
+<p>Use trends and tests.</p>
+<p><strong>Q127.</strong> Why use percentiles rather than averages for latency?</p>
+<p><strong>Answer:</strong> Averages hide the slow tail users experience</p>
+<p>p95 and p99.</p>
+<p><strong>Q128.</strong> What does load testing give you?</p>
+<p><strong>Answer:</strong> Evidence of where the system breaks, to ground capacity numbers</p>
+<p>Test before launch.</p>
+<h3 id="03-incident-response-runbooks"><a href="../level-4/03-incident-response-runbooks/">03 · Incident Response &amp; Runbooks</a><a class="headerlink" href="#03-incident-response-runbooks" title="Permanent link">&para;</a></h3>
+<p><strong>Q129.</strong> What is a runbook?</p>
+<p><strong>Answer:</strong> A documented procedure for diagnosing and fixing a known problem</p>
+<p>Reduces time to recovery.</p>
+<p><strong>Q130.</strong> What is the first priority in an incident?</p>
+<p><strong>Answer:</strong> Mitigate user impact, then find the root cause</p>
+<p>Stop the bleeding.</p>
+<p><strong>Q131.</strong> What is a blameless postmortem?</p>
+<p><strong>Answer:</strong> A review focused on systems and learning, not individual fault</p>
+<p>Improves safety.</p>
+<p><strong>Q132.</strong> What should an incident have?</p>
+<p><strong>Answer:</strong> A clear incident commander and communication channel</p>
+<p>Coordination.</p>
+<h3 id="04-security-patching-strategy-at-scale"><a href="../level-4/04-security-patching-at-scale/">04 · Security Patching Strategy at Scale</a><a class="headerlink" href="#04-security-patching-strategy-at-scale" title="Permanent link">&para;</a></h3>
+<p><strong>Q133.</strong> Why patch security issues promptly?</p>
+<p><strong>Answer:</strong> Known vulnerabilities are quickly exploited</p>
+<p>Prioritise by severity and exposure.</p>
+<p><strong>Q134.</strong> What does staged patching mean?</p>
+<p><strong>Answer:</strong> Patch a small group first, watch, then roll out widely</p>
+<p>Limit blast radius.</p>
+<p><strong>Q135.</strong> What does a tool like Dependabot do?</p>
+<p><strong>Answer:</strong> Opens automated pull requests for dependency updates</p>
+<p>Review and test them.</p>
+<p><strong>Q136.</strong> What do you do when you cannot patch immediately?</p>
+<p><strong>Answer:</strong> Apply compensating controls such as isolation or WAF rules</p>
+<p>Document the exception.</p>
+<h3 id="05-choosing-the-right-ha-architecture-for-a-given-sla"><a href="../level-4/05-choosing-ha-architecture-for-sla/">05 · Choosing the Right HA Architecture for a Given SLA</a><a class="headerlink" href="#05-choosing-the-right-ha-architecture-for-a-given-sla" title="Permanent link">&para;</a></h3>
+<p><strong>Q137.</strong> A 99.9% SLA allows how many minutes of downtime in a 30-day month? (rounded)</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="mi">30</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mf">0.001</span><span class="p">))</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 43</p>
+<p>43,200 minutes x 0.1% = 43.2. Verified by running it.</p>
+<p><strong>Q138.</strong> A 99.99% SLA allows about how many minutes of downtime per 30-day month? (1 decimal)</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="mi">30</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mf">0.0001</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 4.3</p>
+<p>Each extra nine cuts allowed downtime tenfold. Verified by running it.</p>
+<p><strong>Q139.</strong> Why not always choose the highest-availability architecture?</p>
+<p><strong>Answer:</strong> Each extra nine costs disproportionately more; match it to business need</p>
+<p>Cost versus risk.</p>
+<p><strong>Q140.</strong> What is an error budget?</p>
+<p><strong>Answer:</strong> The allowed unreliability implied by the SLO, spent on changes and incidents</p>
+<p>Balance velocity and reliability.</p>
+<h3 id="06-cost-aware-infrastructure-design"><a href="../level-4/06-cost-aware-infrastructure-design/">06 · Cost-Aware Infrastructure Design</a><a class="headerlink" href="#06-cost-aware-infrastructure-design" title="Permanent link">&para;</a></h3>
+<p><strong>Q141.</strong> What is rightsizing?</p>
+<p><strong>Answer:</strong> Matching instance sizes to actual utilisation</p>
+<p>Review sustained usage.</p>
+<p><strong>Q142.</strong> What are reserved or committed-use discounts for?</p>
+<p><strong>Answer:</strong> Predictable baseline workloads</p>
+<p>Use on-demand for spikes.</p>
+<p><strong>Q143.</strong> What is a hidden cost in cloud architectures?</p>
+<p><strong>Answer:</strong> Data transfer between zones and regions</p>
+<p>Design for locality.</p>
+<p><strong>Q144.</strong> What should you tag resources with?</p>
+<p><strong>Answer:</strong> Owner, environment and cost centre</p>
+<p>Cost allocation.</p>
+<h3 id="07-compliance-audit-considerations-for-ops"><a href="../level-4/07-compliance-audit-considerations/">07 · Compliance &amp; Audit Considerations for Ops</a><a class="headerlink" href="#07-compliance-audit-considerations-for-ops" title="Permanent link">&para;</a></h3>
+<p><strong>Q145.</strong> What is the principle of least privilege in IAM?</p>
+<p><strong>Answer:</strong> Grant only the permissions needed for the task</p>
+<p>Scope deploy roles narrowly.</p>
+<p><strong>Q146.</strong> Why keep audit logs?</p>
+<p><strong>Answer:</strong> To show who did what and when, for compliance and forensics</p>
+<p>Protect them from tampering.</p>
+<p><strong>Q147.</strong> What is separation of duties?</p>
+<p><strong>Answer:</strong> No single person can complete a sensitive process alone</p>
+<p>Reduces fraud and error.</p>
+<p><strong>Q148.</strong> What is evidence-as-code?</p>
+<p><strong>Answer:</strong> Automated, repeatable collection of compliance evidence</p>
+<p>Cheaper audits.</p>
+<h3 id="08-on-call-culture-escalation-design"><a href="../level-4/08-oncall-culture-escalation-design/">08 · On-Call Culture &amp; Escalation Design</a><a class="headerlink" href="#08-on-call-culture-escalation-design" title="Permanent link">&para;</a></h3>
+<p><strong>Q149.</strong> What makes a good alert?</p>
+<p><strong>Answer:</strong> Actionable, tied to user impact and with an owner</p>
+<p>Avoid alert fatigue.</p>
+<p><strong>Q150.</strong> Why page on sustained error rates, not every 5xx?</p>
+<p><strong>Answer:</strong> Isolated errors are noise; sustained ones indicate ongoing impact</p>
+<p>Threshold plus duration.</p>
+<p><strong>Q151.</strong> What is a healthy on-call practice?</p>
+<p><strong>Answer:</strong> Rotation, escalation paths, handoffs and retros to reduce toil</p>
+<p>Sustainable.</p>
+<p><strong>Q152.</strong> What does an escalation policy define?</p>
+<p><strong>Answer:</strong> Who is paged next if the first person does not respond</p>
+<p>Avoid unacknowledged pages.</p>
+<h3 id="09-platform-engineering-internal-developer-experience"><a href="../level-4/09-platform-engineering-devex/">09 · Platform Engineering &amp; Internal Developer Experience</a><a class="headerlink" href="#09-platform-engineering-internal-developer-experience" title="Permanent link">&para;</a></h3>
+<p><strong>Q153.</strong> What does platform engineering provide?</p>
+<p><strong>Answer:</strong> Self-service paved roads for developers (templates, pipelines, environments)</p>
+<p>Reduce cognitive load.</p>
+<p><strong>Q154.</strong> What does a service template give new services?</p>
+<p><strong>Answer:</strong> Good defaults: CI, logging, health checks and security</p>
+<p>Golden paths.</p>
+<p><strong>Q155.</strong> How do you measure platform success?</p>
+<p><strong>Answer:</strong> Developer adoption, lead time and satisfaction</p>
+<p>Treat devs as customers.</p>
+<p><strong>Q156.</strong> What is a risk of a platform team?</p>
+<p><strong>Answer:</strong> Building what developers do not need without feedback</p>
+<p>Product mindset.</p>
+<h3 id="10-capstone-designing-a-resilient-global-platform"><a href="../level-4/10-capstone-resilient-global-platform/">10 · Capstone — Designing a Resilient Global Platform</a><a class="headerlink" href="#10-capstone-designing-a-resilient-global-platform" title="Permanent link">&para;</a></h3>
+<p><strong>Q157.</strong> What is the capstone's goal?</p>
+<p><strong>Answer:</strong> Design a resilient global platform meeting stated SLOs, cost and compliance needs</p>
+<p>Trade-offs explicit.</p>
+<p><strong>Q158.</strong> What belongs in the design doc?</p>
+<p><strong>Answer:</strong> Requirements, architecture, failure modes, runbooks and costs</p>
+<p>Defend the decisions.</p>
+<p><strong>Q159.</strong> What evidence shows resilience?</p>
+<p><strong>Answer:</strong> Failure tests, restore drills and measured recovery times</p>
+<p>Prove it.</p>
+<p><strong>Q160.</strong> What should you do about residual risks?</p>
+<p><strong>Answer:</strong> Document them and decide explicitly to accept, mitigate or transfer</p>
+<p>Risk register.</p>
+<h2 id="mixed-questions-across-all-levels">Mixed questions across all levels<a class="headerlink" href="#mixed-questions-across-all-levels" title="Permanent link">&para;</a></h2>
+<p><strong>Q161.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nb">set</span><span class="w"> </span>-eu
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="nv">x</span><span class="o">=</span><span class="m">5</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$x</span><span class="s2">"</span><span class="w"> </span>-gt<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span>big<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span>small
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="nv">name</span><span class="o">=</span><span class="s2">""</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">name</span><span class="k">:-</span><span class="nv">anon</span><span class="si">}</span><span class="s2">"</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="nv">n</span><span class="o">=</span><span class="m">0</span><span class="p">;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nv">n</span><span class="o">=</span><span class="k">$((</span><span class="nv">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">i</span><span class="k">))</span><span class="p">;</span><span class="w"> </span><span class="k">done</span><span class="p">;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$n</span>
+</code></pre></div>
+<p><strong>Answer:</strong> big
+anon
+6</p>
+<p>${var:-default} substitutes when empty; arithmetic expansion sums the loop. Verified by running it in bash.</p>
+<p><strong>Q162.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nb">printf</span><span class="w"> </span><span class="s1">'a 1\nb 2\na 3\n'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{s[$1]+=$2} END {for (k in s) print k, s[k]}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort
+</code></pre></div>
+<p><strong>Answer:</strong> a 4
+b 2</p>
+<p>awk accumulates per key. Verified by running it in bash.</p>
+<p><strong>Q163.</strong> What does this print?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nb">set</span><span class="w"> </span>-e
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>f<span class="o">()</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span>start<span class="p">;</span><span class="w"> </span>false<span class="p">;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span>not-reached<span class="p">;</span><span class="w"> </span><span class="o">}</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>f<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span>handled
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="nb">echo</span><span class="w"> </span>after
+</code></pre></div>
+<p><strong>Answer:</strong> start
+not-reached
+after</p>
+<p>A well-known gotcha: set -e is ignored inside a function that is called as part of an || list, so false does not stop f, f returns the status of its last command (0) and handled never prints. Verified by running it in bash.</p>
+<p><strong>Q164.</strong> How many minutes of downtime does a 99.95% monthly SLA allow in 30 days? (1 decimal)</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="mi">30</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mf">0.9995</span><span class="p">),</span><span class="mi">1</span><span class="p">))</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 21.6</p>
+<p>43,200 minutes x 0.05% = 21.6. Verified by running it.</p>
+<p><strong>Q165.</strong> A service needs 450 req/s peak; each instance handles 60 req/s. With N+1 how many instances? (round up for peak, then add one)</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="mi">450</span><span class="o">/</span><span class="mi">60</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Answer:</strong> 9</p>
+<p>8 for peak (7.5 rounded up) plus one spare. Verified by running it.</p>
+<p><strong>Q166.</strong> You disable SSH password login and close your only session; key login then fails. What should you have done?</p>
+<p><strong>Answer:</strong> Test key login in a second session first, validate with sshd -t and keep the first session open</p>
+<p>Lock-out is the classic hardening mistake.</p>
+<p><strong>Q167.</strong> A deploy script fails halfway and is re-run. What property makes that safe?</p>
+<p><strong>Answer:</strong> Idempotency: every step checks state first so re-running reaches the same end state</p>
+<p>mkdir -p, ln -sfn, check-then-append.</p>
+<p><strong>Q168.</strong> Why is renaming a symlink over 'current' used for deploys?</p>
+<p><strong>Answer:</strong> It switches releases atomically, so requests never see a half-deployed directory</p>
+<p>Rollback is the same swap in reverse.</p>
+<p><strong>Q169.</strong> Your secrets file was committed to git by mistake. What is the correct response?</p>
+<p><strong>Answer:</strong> Rotate the exposed secrets immediately; removing the commit is not enough</p>
+<p>Assume exposure.</p>
+<p><strong>Q170.</strong> Why should the same build artifact go to staging and production?</p>
+<p><strong>Answer:</strong> What was tested is exactly what ships; only configuration differs</p>
+<p>Build once, promote.</p>
+<p><strong>Q171.</strong> What does a blue-green deploy let you do that an in-place deploy does not?</p>
+<p><strong>Answer:</strong> Test the new version fully before real traffic and roll back instantly by switching back</p>
+<p>Cost: duplicate capacity.</p>
+<p><strong>Q172.</strong> Which alert is better: 'any 5xx' or 'error rate above 5% for 5 minutes'?</p>
+<p><strong>Answer:</strong> The sustained rate: it indicates ongoing user impact and avoids paging on noise</p>
+<p>Alert fatigue hides real incidents.</p>
+<p><strong>Q173.</strong> What is the RPO of a nightly backup at best?</p>
+<p><strong>Answer:</strong> Up to 24 hours of data loss</p>
+<p>RPO is bounded by backup frequency.</p>
+<p><strong>Q174.</strong> Why test restores rather than only checking that backups ran?</p>
+<p><strong>Answer:</strong> A backup that was never restored is unproven</p>
+<p>Restore drills find broken backups.</p>
+<p><strong>Q175.</strong> Two independent web servers sit behind one load balancer and one database. What is the single point of failure?</p>
+<p><strong>Answer:</strong> The load balancer and the database (unless they are redundant too)</p>
+<p>Redundancy must exist at every layer.</p>
+<p><strong>Q176.</strong> What is configuration drift and how do you detect it?</p>
+<p><strong>Answer:</strong> Reality diverging from declared config; detect with terraform plan or Ansible --check --diff on a schedule</p>
+<p>Alert on unexpected diffs.</p>
+<p><strong>Q177.</strong> What is the first priority during an incident?</p>
+<p><strong>Answer:</strong> Mitigate user impact, then diagnose the root cause</p>
+<p>Stop the bleeding first.</p>
+<p><strong>Q178.</strong> Why run containers as non-root and keep state outside them?</p>
+<p><strong>Answer:</strong> Limits compromise impact and keeps containers disposable and replaceable</p>
+<p>Volumes or external services hold state.</p>
+<p><strong>Q179.</strong> What belongs in a runbook?</p>
+<p><strong>Answer:</strong> Symptoms, checks, safe fix steps, escalation contacts and how to verify recovery</p>
+<p>Written before the incident.</p>
+<h2 id="practical-coding-questions">Practical coding questions<a class="headerlink" href="#practical-coding-questions" title="Permanent link">&para;</a></h2>
+<h3 id="atomic-releases-with-health-check-and-rollback">Atomic releases with health check and rollback<a class="headerlink" href="#atomic-releases-with-health-check-and-rollback" title="Permanent link">&para;</a></h3>
+<p>Write a bash release manager: each release is a directory, 'current' is a symlink swapped atomically, a failed health check rolls back automatically, and old releases are pruned. It runs in a temp directory so it needs no root and touches no real server; real deployments also need service restarts and drained connections.</p>
+<p>Starter code:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>#!/usr/bin/env bash
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a># Atomic release switching with health check and automatic rollback (runs in a temp dir, no root needed)
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>set -euo pipefail
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>ROOT=$(mktemp -d)
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>mkdir -p "$ROOT/releases"
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a># TODO: switch_to &lt;version&gt;   point "$ROOT/current" at the release by creating a fresh symlink and renaming it over "current"
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>#       (rename is atomic; BSD mv uses -h, GNU mv uses -T)
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a># TODO: deploy &lt;version&gt; &lt;healthy|broken&gt;   create the release (write the mode to STATUS), remember the previous release,
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>#       switch, then "health check" by reading current/STATUS; if it is not "healthy" print "deploy &lt;v&gt;: health check FAILED",
+<a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>#       switch back to the previous release and print "rolled back to &lt;prev&gt;", and return 1; otherwise print "deploy &lt;v&gt;: ok"
+<a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a># TODO: prune &lt;n&gt;   keep the newest n releases (sorted by name), printing "pruned &lt;name&gt;" for each one removed (portable: no head -n -N)
+<a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>
+<a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>deploy v1 healthy
+<a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a>deploy v2 healthy
+<a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a>deploy v3 broken || true
+<a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a>echo "current -&gt; $(basename "$(readlink "$ROOT/current")")"
+<a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a>deploy v4 healthy
+<a id="__codelineno-23-19" name="__codelineno-23-19" href="#__codelineno-23-19"></a>prune 2
+<a id="__codelineno-23-20" name="__codelineno-23-20" href="#__codelineno-23-20"></a>echo "releases: $(ls -1 "$ROOT/releases" | tr '\n' ' ')"
+<a id="__codelineno-23-21" name="__codelineno-23-21" href="#__codelineno-23-21"></a>echo "current -&gt; $(basename "$(readlink "$ROOT/current")")"
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>deploy v1: ok
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>deploy v2: ok
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>deploy v3: health check FAILED
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>rolled back to v2
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>current -&gt; v2
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>deploy v4: ok
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>pruned v1
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>pruned v2
+<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>releases: v3 v4 
+<a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a>current -&gt; v4
+</code></pre></div>
+<p>??? success "Show a solution"</p>
+<div class="highlight"><pre><span></span><code>```
+#!/usr/bin/env bash
+# Atomic release switching with health check and automatic rollback (runs in a temp dir, no root needed)
+set -euo pipefail
+ROOT=$(mktemp -d)
+mkdir -p "$ROOT/releases"
+
+switch_to() {                    # point "current" at a release by renaming a fresh symlink over it
+  ln -sfn "$ROOT/releases/$1" "$ROOT/current.tmp"
+  mv -fh "$ROOT/current.tmp" "$ROOT/current" 2&gt;/dev/null || mv -fT "$ROOT/current.tmp" "$ROOT/current"   # BSD -h, GNU -T
+}
+
+deploy() {                       # deploy &lt;version&gt; &lt;healthy|broken&gt;
+  local ver=$1 mode=$2 prev=""
+  mkdir -p "$ROOT/releases/$ver"
+  echo "$mode" &gt; "$ROOT/releases/$ver/STATUS"
+  [ -L "$ROOT/current" ] &amp;&amp; prev=$(basename "$(readlink "$ROOT/current")")
+  switch_to "$ver"
+  if [ "$(cat "$ROOT/current/STATUS")" != healthy ]; then
+    echo "deploy $ver: health check FAILED"
+    if [ -n "$prev" ]; then switch_to "$prev"; echo "rolled back to $prev"; fi
+    return 1
+  fi
+  echo "deploy $ver: ok"
+}
+
+prune() {                        # keep the newest $1 releases (portable: no head -n -N)
+  ls -1 "$ROOT/releases" | sort | awk -v keep="$1" '{a[NR]=$0} END {for (i = 1; i &lt;= NR - keep; i++) print a[i]}' |
+  while read -r old; do rm -rf "$ROOT/releases/$old"; echo "pruned $old"; done
+}
+
+deploy v1 healthy
+deploy v2 healthy
+deploy v3 broken || true
+echo "current -&gt; $(basename "$(readlink "$ROOT/current")")"
+deploy v4 healthy
+prune 2
+echo "releases: $(ls -1 "$ROOT/releases" | tr '\n' ' ')"
+echo "current -&gt; $(basename "$(readlink "$ROOT/current")")"
+```
+
+Creating the new symlink beside 'current' and renaming it over the old one is atomic, so readers never see a half-switched state; rollback is the same swap. Note that pruning by name keeps the broken v3 here, which is why real pipelines also delete or mark failed releases. Verified by running the script in bash on macOS.
+</code></pre></div>
+<h3 id="an-access-log-health-report">An access-log health report<a class="headerlink" href="#an-access-log-health-report" title="Permanent link">&para;</a></h3>
+<p>Parse a small access log with awk: count statuses, compute the server-error rate, find the slowest path by average latency and decide whether to raise an alert. The log is generated inside the script, so no real server logs are used.</p>
+<p>Starter code:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>#!/usr/bin/env bash
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a># Access-log health report: status counts, error rate, slowest path and an alert decision
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>set -euo pipefail
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>LOG=$(mktemp)
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>cat &gt; "$LOG" &lt;&lt;'LOGS'
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>10.0.0.1 GET /home 200 35
+<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>10.0.0.2 GET /api/items 200 120
+<a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>10.0.0.3 POST /api/pay 500 910
+<a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>10.0.0.1 GET /home 200 40
+<a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a>10.0.0.4 GET /api/items 503 30
+<a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a>10.0.0.2 POST /api/pay 500 880
+<a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a>10.0.0.5 GET /missing 404 12
+<a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a>10.0.0.3 GET /api/items 200 150
+<a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a>10.0.0.9 GET /home 200 33
+<a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a>10.0.0.6 POST /api/pay 200 420
+<a id="__codelineno-26-16" name="__codelineno-26-16" href="#__codelineno-26-16"></a>LOGS
+<a id="__codelineno-26-17" name="__codelineno-26-17" href="#__codelineno-26-17"></a>
+<a id="__codelineno-26-18" name="__codelineno-26-18" href="#__codelineno-26-18"></a># TODO: print the status counts (sorted), then the totals line, the slowest path by average latency and the alert decision:
+<a id="__codelineno-26-19" name="__codelineno-26-19" href="#__codelineno-26-19"></a>#   status counts:
+<a id="__codelineno-26-20" name="__codelineno-26-20" href="#__codelineno-26-20"></a>#   &lt;status&gt; &lt;count&gt; ...
+<a id="__codelineno-26-21" name="__codelineno-26-21" href="#__codelineno-26-21"></a>#   requests=&lt;n&gt; server_errors=&lt;5xx count&gt; rate=&lt;percent with 1 decimal&gt;%
+<a id="__codelineno-26-22" name="__codelineno-26-22" href="#__codelineno-26-22"></a>#   slowest=&lt;path&gt; avg=&lt;rounded&gt;ms
+<a id="__codelineno-26-23" name="__codelineno-26-23" href="#__codelineno-26-23"></a>#   ALERT: error rate above 15%   (or OK when the rate is 15% or less)
+<a id="__codelineno-26-24" name="__codelineno-26-24" href="#__codelineno-26-24"></a># Columns are: client method path status milliseconds
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>status counts:
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>200 6
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>404 1
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>500 2
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>503 1
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>requests=10 server_errors=3 rate=30.0%
+<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>slowest=/api/pay avg=737ms
+<a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>ALERT: error rate above 15%
+</code></pre></div>
+<p>??? success "Show a solution"</p>
+<div class="highlight"><pre><span></span><code>```
+#!/usr/bin/env bash
+# Access-log health report: status counts, error rate, slowest path and an alert decision
+set -euo pipefail
+LOG=$(mktemp)
+cat &gt; "$LOG" &lt;&lt;'LOGS'
+10.0.0.1 GET /home 200 35
+10.0.0.2 GET /api/items 200 120
+10.0.0.3 POST /api/pay 500 910
+10.0.0.1 GET /home 200 40
+10.0.0.4 GET /api/items 503 30
+10.0.0.2 POST /api/pay 500 880
+10.0.0.5 GET /missing 404 12
+10.0.0.3 GET /api/items 200 150
+10.0.0.9 GET /home 200 33
+10.0.0.6 POST /api/pay 200 420
+LOGS
+
+echo "status counts:"
+awk '{c[$4]++} END {for (s in c) print s, c[s]}' "$LOG" | sort
+
+awk -v limit=15 '
+  {total++; if ($4 &gt;= 500) err++; sum[$3] += $5; n[$3]++}
+  END {
+    rate = 100 * err / total
+    printf "requests=%d server_errors=%d rate=%.1f%%\n", total, err, rate
+    worst = ""; wavg = 0
+    for (p in sum) { avg = sum[p] / n[p]; if (avg &gt; wavg) { wavg = avg; worst = p } }
+    printf "slowest=%s avg=%.0fms\n", worst, wavg
+    print (rate &gt; limit ? "ALERT: error rate above " limit "%" : "OK")
+  }' "$LOG"
+```
+
+One awk pass accumulates totals and per-path sums, then END computes the rate and picks the path with the highest average. Alerting on a rate over a threshold is the same idea as the sustained-error alert in the monitoring lessons. Verified by running the script in bash on macOS.
+</code></pre></div>
+<hr />
+<p>More free practice: the <a href="../">Server Ops Mastery Path</a> curriculum, the <a href="https://learnmasterypath.com/interview-pack/">Interview Prep Pack</a> and the <a href="https://learnmasterypath.com/resume/">free resume ATS check</a>.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+  
+  <nav class="mp-related" aria-label="Related free courses">
+    <h2>Related free courses</h2>
+    <ul>
+      <li><a href="https://learnmasterypath.com/linux-mastery-path/">Linux</a></li><li><a href="https://learnmasterypath.com/nodemcu-mastery-path/">NodeMCU/IoT</a></li><li><a href="https://learnmasterypath.com/terraform-mastery-path/">Terraform</a></li><li><a href="https://learnmasterypath.com/kubernetes-mastery-path/">Kubernetes</a></li><li><a href="https://learnmasterypath.com/docker-mastery-path/">Docker</a></li>
+      <li><a href="https://learnmasterypath.com/">All 100+ courses &rarr;</a></li>
+    </ul>
+  </nav>
+  
+
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Home
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../level-1/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Overview
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+  <div class="mp-foot">
+    <div class="mp-foot-inner">
+      <a class="mp-foot-brand" href="https://learnmasterypath.com/"><svg class="mp-mark" viewBox="0 0 160 160" role="img" aria-label="Mastery Path logo">
+  <circle cx="80" cy="80" r="74" fill="#FAF7EF" stroke="#2FA98D" stroke-width="5"/>
+  <rect class="mp-bar mp-bar-1" x="36" y="90" width="17" height="24" rx="5" fill="#2FA98D"/>
+  <rect class="mp-bar mp-bar-2" x="59" y="74" width="17" height="40" rx="5" fill="#7FC9B7"/>
+  <rect class="mp-bar mp-bar-3" x="82" y="56" width="17" height="58" rx="5" fill="#E0B457"/>
+  <rect class="mp-bar mp-bar-4" x="105" y="38" width="17" height="76" rx="5" fill="#C97B4A"/>
+  <circle class="mp-dot" cx="44.5" cy="82" r="7" fill="#22261f"/>
+</svg><span>Mastery Path</span></a>
+      <nav class="mp-sitelinks" aria-label="Site and legal links">
+        <a href="https://learnmasterypath.com/">All courses</a>
+        <a href="https://learnmasterypath.com/about.html">About</a>
+        <a href="https://learnmasterypath.com/contact.html">Contact</a>
+        <a href="https://learnmasterypath.com/server-ops-mastery-path/privacy/">Privacy Policy</a>
+        <a href="https://learnmasterypath.com/terms.html">Terms</a>
+        <a href="https://learnmasterypath.com/server-ops-mastery-path/license/">License</a>
+        <a href="https://learnmasterypath.com/verify/">Verify a certificate</a>
+      </nav>
+    </div>
+    <p class="mp-license-note">
+      © 2026 Vinod Kumar Sigilipelli · Except where otherwise noted, lesson content is licensed under
+      <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> and code examples under the
+      <a href="https://opensource.org/license/mit">MIT License</a>.
+    </p>
+  </div>
+
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.path", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "navigation.indexes", "toc.follow", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../javascripts/progress-tracker.js"></script>
+      
+        <script src="../javascripts/final-quiz.js"></script>
+      
+    
+  </body>
+</html>
